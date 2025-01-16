@@ -44,6 +44,6 @@ public record PatientDTO(
         @Size(min = 8, max = 25)
         String responsiblePhoneNumber,
 
-        RelationshipDegree RelationshipDegree
+        RelationshipDegree relationshipDegree
 ) {
 }
