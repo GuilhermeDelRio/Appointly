@@ -4,8 +4,10 @@ import appointly.com.appointly_api.controller.mappers.PatientMapper;
 import appointly.com.appointly_api.dto.patient.GetPatientDTO;
 import appointly.com.appointly_api.dto.patient.PatientDTO;
 import appointly.com.appointly_api.exceptions.DuplicateDataException;
+import appointly.com.appointly_api.exceptions.InvalidEnumValueException;
 import appointly.com.appointly_api.exceptions.NotAllowedException;
 import appointly.com.appointly_api.model.Patient;
+import appointly.com.appointly_api.model.enums.RelationshipDegree;
 import appointly.com.appointly_api.repository.PatientRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -27,6 +29,8 @@ public class PatientService {
     private final PatientMapper mapper;
 
     public Patient createPatient(PatientDTO dto) {
+        validateIfEnumExists(dto);
+
         Patient patient = mapper.toEntity(dto);
 
         Optional<Patient> alreadyExistsPatient = patientRepository
@@ -37,7 +41,6 @@ public class PatientService {
         }
 
         verifyIfPatientIsMinor(patient);
-
         return patientRepository.save(patient);
     }
 
@@ -47,7 +50,9 @@ public class PatientService {
                 .orElseThrow(() -> new EntityNotFoundException("Patient not found"));
     }
 
-    public void updatePatient(UUID id, @Valid PatientDTO dto) {
+    public void updatePatient(UUID id, PatientDTO dto) {
+        validateIfEnumExists(dto);
+
         Patient patient = patientRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Patient not found"));
 
@@ -87,6 +92,14 @@ public class PatientService {
                 patient.getResponsiblePhoneNumber() == null ||
                 patient.getRelationshipDegree() == null) {
             throw new NotAllowedException("The patient is a minor, fill in the guardian's details");
+        }
+    }
+
+    private static void validateIfEnumExists(PatientDTO dto) {
+        try {
+            RelationshipDegree.valueOf(dto.relationshipDegree());
+        } catch (IllegalArgumentException e) {
+            throw new InvalidEnumValueException("Invalid relationship degree: " + dto.relationshipDegree(), e);
         }
     }
 

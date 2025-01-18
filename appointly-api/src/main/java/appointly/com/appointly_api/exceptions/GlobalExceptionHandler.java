@@ -16,6 +16,12 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(InvalidEnumValueException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleInvalidEnumExpection(InvalidEnumValueException e) {
+        return ErrorResponse.defaultResponse(e.getMessage());
+    }
+
     @ExceptionHandler(NotAllowedException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleNotAllowedExpection(NotAllowedException e) {

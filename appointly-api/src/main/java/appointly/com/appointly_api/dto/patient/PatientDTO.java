@@ -45,6 +45,6 @@ public record PatientDTO(
         @Size(min = 8, max = 25, message = "Field must have between 8 and 25 characters")
         String responsiblePhoneNumber,
 
-        RelationshipDegree relationshipDegree
+        String relationshipDegree
 ) {
 }
