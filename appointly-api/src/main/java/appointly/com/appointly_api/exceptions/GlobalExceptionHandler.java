@@ -16,6 +16,12 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(NotAllowedException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleNotAllowedExpection(NotAllowedException e) {
+        return ErrorResponse.defaultResponse(e.getMessage());
+    }
+
     @ExceptionHandler(DuplicateDataException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public ErrorResponse handleDuplicateDataException(DuplicateDataException e) {

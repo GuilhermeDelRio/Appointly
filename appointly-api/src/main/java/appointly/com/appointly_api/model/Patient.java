@@ -53,7 +53,7 @@ public class Patient {
     private String responsiblePhoneNumber;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "relationship_degree", length = 30, nullable = false)
+    @Column(name = "relationship_degree", length = 30)
     private RelationshipDegree relationshipDegree;
 
     // AUDITY
