@@ -1,7 +1,6 @@
 package appointly.com.appointly_api.controller;
 
 import appointly.com.appointly_api.controller.common.GenericController;
-import appointly.com.appointly_api.controller.mappers.PatientMapper;
 import appointly.com.appointly_api.dto.patient.GetPatientDTO;
 import appointly.com.appointly_api.dto.patient.PatientDTO;
 import appointly.com.appointly_api.model.Patient;
@@ -20,8 +19,6 @@ import java.util.UUID;
 public class PatientController implements GenericController {
 
     private final PatientService patientService;
-    private final PatientMapper mapper;
-
 
     @PostMapping
     public ResponseEntity<Object> create(@RequestBody @Valid PatientDTO dto) {
@@ -29,7 +26,6 @@ public class PatientController implements GenericController {
         URI location = generateHeaderLocation(patient.getId());
         return ResponseEntity.created(location).build();
     }
-
 
     @GetMapping("{id}")
     public ResponseEntity<GetPatientDTO> getById(@PathVariable String id) {

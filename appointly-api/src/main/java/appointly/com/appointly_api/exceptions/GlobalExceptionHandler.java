@@ -16,7 +16,11 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-
+    @ExceptionHandler(DuplicateDataException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorResponse handleDuplicateDataException(DuplicateDataException e) {
+        return ErrorResponse.conflict(e.getMessage());
+    }
 
     @ExceptionHandler(EntityNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)

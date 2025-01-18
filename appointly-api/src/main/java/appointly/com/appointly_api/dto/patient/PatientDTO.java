@@ -1,47 +1,48 @@
 package appointly.com.appointly_api.dto.patient;
 
 import appointly.com.appointly_api.model.enums.RelationshipDegree;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Past;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 
 public record PatientDTO(
-        @NotBlank
-        @Size(min = 2, max = 25)
+        @NotBlank(message = "Required field")
+        @Size(min = 2, max = 25, message = "Field must have between 2 and 25 characters")
         String firstName,
 
-        @NotBlank
-        @Size(min = 2, max = 50)
+        @NotBlank(message = "Required field")
+        @Size(min = 2, max = 50, message = "Field must have between 2 and 50 characters")
         String surname,
 
-        @NotNull
-        @Past
+        @NotNull(message = "Required field")
+        @Past(message = "The date cannot be in the future")
         LocalDate dateOfBirth,
 
-        @NotBlank
-        @Size(max = 25)
+        @Pattern(
+                regexp = "^\\+?[0-9. ()-]{7,25}$",
+                message = "Field must be a valid number and have between 8 and 50 characters"
+        )
         String phoneNumber,
 
-        @NotBlank
-        @Size(min = 8, max = 50)
+        @Email(message = "Invalid email")
+        @NotBlank(message = "Required field")
+        @Size(min = 8, max = 50, message = "Field must have between 8 and 50 characters")
         String email,
 
-        @NotNull
+        @NotNull(message = "Required field")
         boolean specialPatient,
 
-        @NotNull
+        @NotNull(message = "Required field")
         boolean underage,
 
-        @Size(min = 2, max = 25)
+        @Size(min = 2, max = 25, message = "Field must have between 2 and 25 characters")
         String responsibleName,
 
-        @Size(min = 8, max = 50)
+        @Email(message = "Invalid email")
+        @Size(min = 8, max = 50, message = "Field must have between 8 and 50 characters")
         String responsibleEmail,
 
-        @Size(min = 8, max = 25)
+        @Size(min = 8, max = 25, message = "Field must have between 8 and 25 characters")
         String responsiblePhoneNumber,
 
         RelationshipDegree relationshipDegree

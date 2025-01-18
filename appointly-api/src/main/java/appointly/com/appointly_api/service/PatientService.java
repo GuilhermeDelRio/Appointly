@@ -3,6 +3,7 @@ package appointly.com.appointly_api.service;
 import appointly.com.appointly_api.controller.mappers.PatientMapper;
 import appointly.com.appointly_api.dto.patient.GetPatientDTO;
 import appointly.com.appointly_api.dto.patient.PatientDTO;
+import appointly.com.appointly_api.exceptions.DuplicateDataException;
 import appointly.com.appointly_api.model.Patient;
 import appointly.com.appointly_api.repository.PatientRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -10,6 +11,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -21,6 +23,14 @@ public class PatientService {
 
     public Patient createPatient(PatientDTO dto) {
         Patient patient = mapper.toEntity(dto);
+
+        Optional<Patient> patientByFullName = patientRepository
+                .findByFirstNameIgnoreCaseAndSurnameIgnoreCase(patient.getFirstName(), patient.getSurname());
+
+        if (patientByFullName.isPresent()) {
+            throw new DuplicateDataException("Already exists a patient with the same first name and surname.");
+        }
+
         return patientRepository.save(patient);
     }
 
@@ -33,6 +43,13 @@ public class PatientService {
     public void updatePatient(UUID id, @Valid PatientDTO dto) {
         Patient patient = patientRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Patient not found"));
+
+        patientRepository.findByFirstNameIgnoreCaseAndSurnameIgnoreCase(dto.firstName(), dto.surname())
+               .ifPresent(existingPatient -> {
+                   if (!existingPatient.getId().equals(id)) {
+                       throw new DuplicateDataException("Already exists a patient with the same first name and surname.");
+                   }
+               });
 
         mapper.updatePatientFromDto(dto, patient);
         patientRepository.save(patient);
