@@ -14,7 +14,7 @@ import java.net.URI;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/patients")
+@RequestMapping("api/patients")
 @RequiredArgsConstructor
 public class PatientController implements GenericController {
 

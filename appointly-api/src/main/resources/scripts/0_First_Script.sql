@@ -13,10 +13,10 @@ CREATE TABLE tb_patient(
     relationship_degree VARCHAR(30),
     responsible_phone_number VARCHAR(25),
 
-    created_date timestamp,
-    last_modified_date timestamp,
+    created_date TIMESTAMP,
+    last_modified_date TIMESTAMP,
 
-    CONSTRAINT CHK_RELATIONSHIP_DEGREE CHECK (relationship_degree in (
+    CONSTRAINT CHK_RELATIONSHIP_DEGREE CHECK (relationship_degree IN (
         'PARENT',
         'CHILD',
         'SIBLING',
@@ -26,5 +26,25 @@ CREATE TABLE tb_patient(
         'AUNT_UNCLE',
         'NIECE_NEPHEW',
         'COUSIN'
+    ))
+);
+
+CREATE TABLE tb_appointment(
+    id uuid NOT NULL PRIMARY KEY,
+    appointment_date DATE NOT NULL,
+    appointment_status VARCHAR(15),
+    id_patient uuid NOT NULL REFERENCES tb_patient(id),
+
+    created_date TIMESTAMP,
+    last_modified_date TIMESTAMP,
+
+    CONSTRAINT CHK_APPOINTMENT_STATUS CHECK (appointment_status IN (
+        'CANCELED',
+        'COMPLETED',
+        'CONFIRMED',
+        'NO_SHOW',
+        'PENDING',
+        'RESCHEDULED',
+        'SCHEDULED'
     ))
 );

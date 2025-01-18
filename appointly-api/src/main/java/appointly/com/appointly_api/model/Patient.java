@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -55,6 +56,9 @@ public class Patient {
     @Enumerated(EnumType.STRING)
     @Column(name = "relationship_degree", length = 30)
     private RelationshipDegree relationshipDegree;
+
+    @OneToMany(mappedBy = "patient")
+    private List<Appointment> appointment;
 
     // AUDITY
 //    @Column(name = "id_user", length = 100)
