@@ -22,7 +22,7 @@ public class AppointmentController implements GenericController {
     private final AppointmentService appointmentService;
 
     @PostMapping
-    public ResponseEntity<Void> createNewAppointment(@RequestBody @Valid CreateAppointmentDTO dto) {
+    public ResponseEntity<Object> createNewAppointment(@RequestBody @Valid CreateAppointmentDTO dto) {
         Appointment patient = appointmentService.createNewAppointment(dto);
         URI location = generateHeaderLocation(patient.getId());
         return ResponseEntity.created(location).build();

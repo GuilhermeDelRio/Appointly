@@ -1,6 +1,5 @@
 package appointly.com.appointly_api.dto.patient;
 
-import appointly.com.appointly_api.model.enums.RelationshipDegree;
 import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;

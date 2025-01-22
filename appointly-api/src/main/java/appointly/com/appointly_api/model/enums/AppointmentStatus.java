@@ -8,5 +8,4 @@ public enum AppointmentStatus {
     PENDING,
     RESCHEDULED,
     SCHEDULED
-
 }

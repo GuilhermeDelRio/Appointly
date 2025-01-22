@@ -21,11 +21,14 @@ public class Appointment {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "appointment_date", nullable = false)
-    private LocalDateTime appointmentDate;
+    @Column(name = "initial_date", nullable = false)
+    private LocalDateTime initialDate;
+
+    @Column(name = "final_date", nullable = false)
+    private LocalDateTime finalDate;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "appointment_status", length = 15)
+    @Column(name = "appointment_status", length = 15, nullable = false)
     private AppointmentStatus appointmentStatus;
 
     @ManyToOne

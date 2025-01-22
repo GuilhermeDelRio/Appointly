@@ -31,8 +31,9 @@ CREATE TABLE tb_patient(
 
 CREATE TABLE tb_appointment(
     id uuid NOT NULL PRIMARY KEY,
-    appointment_date DATE NOT NULL,
-    appointment_status VARCHAR(15),
+    initial_date TIMESTAMP NOT NULL,
+    final_date TIMESTAMP NOT NULL,
+    appointment_status VARCHAR(15) NOT NULL,
     id_patient uuid NOT NULL REFERENCES tb_patient(id),
 
     created_date TIMESTAMP,
@@ -47,4 +48,9 @@ CREATE TABLE tb_appointment(
         'RESCHEDULED',
         'SCHEDULED'
     ))
+);
+
+CREATE TABLE tb_systeminfo(
+    id uuid NOT NULL PRIMARY KEY,
+    appointment_duration INTEGER
 );
