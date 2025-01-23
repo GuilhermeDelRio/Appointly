@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public record CreateAppointmentDTO(
+public record AppointmentDTO(
         @NotNull(message = "Field Required")
 
         @Future(message = "The date cannot be in the past")
