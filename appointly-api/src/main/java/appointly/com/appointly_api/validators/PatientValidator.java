@@ -1,9 +1,9 @@
 package appointly.com.appointly_api.validators;
 
 import appointly.com.appointly_api.dto.patient.PatientDTO;
-import appointly.com.appointly_api.exceptions.InvalidEnumValueException;
 import appointly.com.appointly_api.exceptions.NotAllowedException;
 import appointly.com.appointly_api.model.enums.RelationshipDegree;
+import appointly.com.appointly_api.utils.EnumUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +21,7 @@ public class PatientValidator {
 
         if (patientAge < LEGAL_ADULT_AGE) {
             validateResponsibleData(dto);
-            validateIfEnumExists(dto.relationshipDegree());
+            EnumUtils.validateIfEnumExists(RelationshipDegree.class ,dto.relationshipDegree());
 
             if (!dto.underage()) {
                 throw new NotAllowedException("The patient should be considered underage");
@@ -35,14 +35,6 @@ public class PatientValidator {
                 dto.responsiblePhoneNumber() == null ||
                 dto.relationshipDegree() == null) {
             throw new NotAllowedException("The patient is a minor, fill in the guardian's details");
-        }
-    }
-
-    private void validateIfEnumExists(String relationshipDegree) {
-        try {
-            RelationshipDegree.valueOf(relationshipDegree);
-        } catch (IllegalArgumentException e) {
-            throw new InvalidEnumValueException("Invalid relationship degree: " + relationshipDegree, e);
         }
     }
 

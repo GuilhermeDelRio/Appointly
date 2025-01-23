@@ -5,8 +5,10 @@ import appointly.com.appointly_api.dto.appointment.CreateAppointmentDTO;
 import appointly.com.appointly_api.exceptions.DuplicateDataException;
 import appointly.com.appointly_api.exceptions.NotAllowedException;
 import appointly.com.appointly_api.model.Appointment;
+import appointly.com.appointly_api.model.enums.AppointmentStatus;
 import appointly.com.appointly_api.repository.AppointmentRepository;
 import appointly.com.appointly_api.repository.SystemInfoRepository;
+import appointly.com.appointly_api.utils.EnumUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,9 @@ public class AppointmentService {
     private final AppointmentMapper mapper;
 
     public Appointment createNewAppointment(CreateAppointmentDTO dto) {
+
+        EnumUtils.validateIfEnumExists(AppointmentStatus.class, dto.appointmentStatus());
+
         validateAppointment(dto.initialDate(), dto.finalDate());
         Appointment appointment = mapper.toEntity(dto);
         return appointmentRepository.save(appointment);
