@@ -3,12 +3,18 @@ package appointly.com.appointly_api.service;
 import appointly.com.appointly_api.controller.mappers.PatientMapper;
 import appointly.com.appointly_api.dto.patient.GetPatientDTO;
 import appointly.com.appointly_api.dto.patient.PatientDTO;
+import appointly.com.appointly_api.dto.patient.SearchPatientQueryDTO;
 import appointly.com.appointly_api.exceptions.DuplicateDataException;
 import appointly.com.appointly_api.model.Patient;
 import appointly.com.appointly_api.repository.PatientRepository;
+import appointly.com.appointly_api.repository.specs.PatientSpecifications;
 import appointly.com.appointly_api.validators.PatientValidator;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -43,6 +49,50 @@ public class PatientService {
                 .orElseThrow(() -> new EntityNotFoundException("Patient not found"));
     }
 
+    public Page<GetPatientDTO> searchPatient(SearchPatientQueryDTO query) {
+
+        Specification<Patient> specs = Specification
+                .where((root, query1, cb) -> cb.conjunction());
+
+        if (query.firstName() != null) {
+            specs = specs.and(PatientSpecifications.firstNameLike(query.firstName()));
+        }
+
+        if (query.surname() != null) {
+            specs = specs.and(PatientSpecifications.surnameLike(query.surname()));
+        }
+
+        if (query.email() != null) {
+            specs = specs.and(PatientSpecifications.emailLike(query.email()));
+        }
+
+        if (query.specialPatient() != null) {
+            specs = specs.and(PatientSpecifications.specialPatientEqual(query.specialPatient()));
+        }
+
+        if (query.underage() != null) {
+            specs = specs.and(PatientSpecifications.underageEqual(query.underage()));
+        }
+
+        if (query.responsibleName() != null) {
+            specs = specs.and(PatientSpecifications.responsibleNameLike(query.responsibleName()));
+        }
+
+        if (query.responsibleEmail() != null) {
+            specs = specs.and(PatientSpecifications.responsibleEmailLike(query.responsibleEmail()));
+        }
+
+        if (query.dateOfBirth() != null) {
+            specs = specs.and(PatientSpecifications.dateOfBirthEquals(query.dateOfBirth()));
+        }
+
+        Pageable pageRequest = PageRequest.of(query.page(), query.pageSize());
+
+        return patientRepository
+                .findAll(specs, pageRequest)
+                .map(mapper::toDTO);
+    }
+
     public void updatePatient(UUID id, PatientDTO dto) {
         Patient patient = patientRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Patient not found"));
@@ -66,5 +116,4 @@ public class PatientService {
 
         patientRepository.deleteById(id);
     }
-
 }

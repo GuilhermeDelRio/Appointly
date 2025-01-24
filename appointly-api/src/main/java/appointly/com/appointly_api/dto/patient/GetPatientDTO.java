@@ -1,5 +1,7 @@
 package appointly.com.appointly_api.dto.patient;
 
+import appointly.com.appointly_api.model.enums.RelationshipDegree;
+
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -15,5 +17,5 @@ public record GetPatientDTO(
         String responsibleName,
         String responsibleEmail,
         String responsiblePhoneNumber,
-        appointly.com.appointly_api.model.enums.RelationshipDegree RelationshipDegree) {
+        RelationshipDegree relationshipDegree) {
 }

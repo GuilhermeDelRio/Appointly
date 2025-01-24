@@ -3,10 +3,12 @@ package appointly.com.appointly_api.controller;
 import appointly.com.appointly_api.controller.common.GenericController;
 import appointly.com.appointly_api.dto.patient.GetPatientDTO;
 import appointly.com.appointly_api.dto.patient.PatientDTO;
+import appointly.com.appointly_api.dto.patient.SearchPatientQueryDTO;
 import appointly.com.appointly_api.model.Patient;
 import appointly.com.appointly_api.service.PatientService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +32,12 @@ public class PatientController implements GenericController {
     @GetMapping("{id}")
     public ResponseEntity<GetPatientDTO> getById(@PathVariable String id) {
         GetPatientDTO dto = patientService.getPatientById(UUID.fromString(id));
+        return ResponseEntity.ok(dto);
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<GetPatientDTO>> searchPatient(@ModelAttribute SearchPatientQueryDTO query) {
+        Page<GetPatientDTO> dto = patientService.searchPatient(query);
         return ResponseEntity.ok(dto);
     }
 
