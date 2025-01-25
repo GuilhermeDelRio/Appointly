@@ -1,12 +1,14 @@
 package appointly.com.appointly_api.controller;
 
 import appointly.com.appointly_api.controller.common.GenericController;
-import appointly.com.appointly_api.dto.appointment.ReadAppointmentDTO;
 import appointly.com.appointly_api.dto.appointment.AppointmentDTO;
+import appointly.com.appointly_api.dto.appointment.ReadAppointmentDTO;
+import appointly.com.appointly_api.dto.appointment.SearchAppointmentQueryDTO;
 import appointly.com.appointly_api.model.Appointment;
 import appointly.com.appointly_api.service.AppointmentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,14 +24,20 @@ public class AppointmentController implements GenericController {
 
     @PostMapping
     public ResponseEntity<Object> createNewAppointment(@RequestBody @Valid AppointmentDTO dto) {
-        Appointment patient = appointmentService.createNewAppointment(dto);
-        URI location = generateHeaderLocation(patient.getId());
+        Appointment appointment = appointmentService.createNewAppointment(dto);
+        URI location = generateHeaderLocation(appointment.getId());
         return ResponseEntity.created(location).build();
     }
 
     @GetMapping("{id}")
     public ResponseEntity<ReadAppointmentDTO> getAppointmentById(@PathVariable String id) {
         ReadAppointmentDTO dto = appointmentService.getAppointmentById(UUID.fromString(id));
+        return ResponseEntity.ok(dto);
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<ReadAppointmentDTO>> searchAppointment(@ModelAttribute SearchAppointmentQueryDTO query) {
+        Page<ReadAppointmentDTO> dto = appointmentService.searchAppointment(query);
         return ResponseEntity.ok(dto);
     }
 
