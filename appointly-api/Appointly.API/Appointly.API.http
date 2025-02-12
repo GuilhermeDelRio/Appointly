@@ -1,0 +1,6 @@
+@Appointly.API_HostAddress = http://localhost:5094
+
+GET {{Appointly.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

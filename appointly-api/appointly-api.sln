@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Appointly.Domain", "Appointly.Domain\Appointly.Domain.csproj", "{E3246DF0-8853-4186-8DE5-36AE525065E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Appointly.Persistence", "Appointly.Persistence\Appointly.Persistence.csproj", "{95471D00-F11C-43BC-BC1E-8FF1F255D6DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Appointly.Application", "Appointly.Application\Appointly.Application.csproj", "{B39BCBD3-A6E4-4B5E-85A1-4D6FCF890815}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Appointly.API", "Appointly.API\Appointly.API.csproj", "{07FE77C1-5D2C-4971-8A01-375D792FA85A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E3246DF0-8853-4186-8DE5-36AE525065E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3246DF0-8853-4186-8DE5-36AE525065E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3246DF0-8853-4186-8DE5-36AE525065E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3246DF0-8853-4186-8DE5-36AE525065E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95471D00-F11C-43BC-BC1E-8FF1F255D6DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95471D00-F11C-43BC-BC1E-8FF1F255D6DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95471D00-F11C-43BC-BC1E-8FF1F255D6DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95471D00-F11C-43BC-BC1E-8FF1F255D6DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B39BCBD3-A6E4-4B5E-85A1-4D6FCF890815}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B39BCBD3-A6E4-4B5E-85A1-4D6FCF890815}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B39BCBD3-A6E4-4B5E-85A1-4D6FCF890815}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B39BCBD3-A6E4-4B5E-85A1-4D6FCF890815}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07FE77C1-5D2C-4971-8A01-375D792FA85A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07FE77C1-5D2C-4971-8A01-375D792FA85A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07FE77C1-5D2C-4971-8A01-375D792FA85A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07FE77C1-5D2C-4971-8A01-375D792FA85A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
