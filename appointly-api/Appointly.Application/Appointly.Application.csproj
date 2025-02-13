@@ -8,7 +8,6 @@
 
     <ItemGroup>
       <Folder Include="Features\PatientFeatures\Queries\" />
-      <Folder Include="Mappers\" />
     </ItemGroup>
 
     <ItemGroup>

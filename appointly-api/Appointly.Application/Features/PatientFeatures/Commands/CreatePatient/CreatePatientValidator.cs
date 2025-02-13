@@ -42,11 +42,11 @@ public class CreatePatientValidator : AbstractValidator<CreatePatientRequest>
             .WithMessage(x => string.Format(ValidationMessages.GraterThanZero, nameof(x.Fee)));
 
         RuleFor(x => x.IsSpecialPatient)
-            .NotEmpty()
+            .NotNull()
             .WithMessage(x => string.Format(ValidationMessages.RequiredField, nameof(x.IsSpecialPatient)));
         
         RuleFor(x => x.IsUnderage)
-            .NotEmpty()
+            .NotNull()
             .WithMessage(x => string.Format(ValidationMessages.RequiredField, nameof(x.IsUnderage)));
         
         // Secondary fields
