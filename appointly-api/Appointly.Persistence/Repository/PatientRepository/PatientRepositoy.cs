@@ -1,5 +1,5 @@
 using Appointly.Domain.Entities;
-using Appointly.Domain.Interfaces;
+using Appointly.Domain.Interfaces.Repository;
 using Appointly.Persistence.Repository.Common;
 using MongoDB.Driver;
 

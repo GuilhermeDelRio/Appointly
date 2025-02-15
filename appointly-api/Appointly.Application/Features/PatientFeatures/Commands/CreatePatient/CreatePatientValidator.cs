@@ -1,4 +1,5 @@
 using Appointly.Application.Resources;
+using Appointly.Domain.Enums;
 using FluentValidation;
 
 namespace Appointly.Application.Features.PatientFeatures.Commands.CreatePatient;
@@ -45,9 +46,9 @@ public class CreatePatientValidator : AbstractValidator<CreatePatientRequest>
             .NotNull()
             .WithMessage(x => string.Format(ValidationMessages.RequiredField, nameof(x.IsSpecialPatient)));
         
-        RuleFor(x => x.IsUnderage)
+        RuleFor(x => x.HasAResponsible)
             .NotNull()
-            .WithMessage(x => string.Format(ValidationMessages.RequiredField, nameof(x.IsUnderage)));
+            .WithMessage(x => string.Format(ValidationMessages.RequiredField, nameof(x.HasAResponsible)));
         
         // Secondary fields
         
@@ -58,5 +59,8 @@ public class CreatePatientValidator : AbstractValidator<CreatePatientRequest>
         RuleFor(x => x.ResponsibleEmail)
             .EmailAddress()
             .WithMessage(x => string.Format(ValidationMessages.NotValidField, nameof(x.ResponsibleEmail)));
+
+        RuleFor(x => x.RelationshipDegree)
+            .IsEnumName(typeof(RelationshipDegree), false);
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
+using Appointly.Application.Behaviors;
 using FluentValidation;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Appointly.Application;
@@ -8,8 +10,11 @@ public static class ServiceExtensions
 {
     public static void ConfigureApplication(this IServiceCollection services)
     {
-        services.AddAutoMapper(Assembly.GetExecutingAssembly());
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
-        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+        var assembly = Assembly.GetExecutingAssembly();
+        
+        services.AddAutoMapper(assembly);
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(assembly));
+        services.AddValidatorsFromAssembly(assembly);
+        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
     }
 }

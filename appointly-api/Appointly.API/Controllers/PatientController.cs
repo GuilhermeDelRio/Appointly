@@ -6,7 +6,7 @@ namespace Appointly.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class PatientController : Controller
+public class PatientController : ControllerBase
 {
     private readonly IMediator _mediator;
 

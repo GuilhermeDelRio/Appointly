@@ -1,5 +1,7 @@
 ﻿#nullable disable
-using Appointly.Domain.Interfaces;
+using Appointly.Domain.Interfaces.Repository;
+using Appointly.Domain.Interfaces.Services;
+using Appointly.Domain.Services;
 using Appointly.Persistence.Repository.PatientRepository;
 using Appointly.Persistence.Settings;
 using Microsoft.Extensions.Configuration;
@@ -20,5 +22,8 @@ public static class PersistenceServiceRegistration
         
         services.AddSingleton(mongoDatabase);
         services.AddScoped<IPatientRepository, PatientRepositoy>();
+        
+        // validators
+        services.AddScoped<IPatientValidationService ,PatientValidationService>();
     }
 }   

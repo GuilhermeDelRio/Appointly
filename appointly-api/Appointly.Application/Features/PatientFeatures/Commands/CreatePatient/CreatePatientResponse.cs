@@ -8,7 +8,7 @@ public sealed record CreatePatientResponse(
     string Email,
     decimal Fee,
     bool IsSpecialPatient,
-    bool IsUnderage,
+    bool HasAResponsible,
     
     string ResponsibleName,
     string ResponsibleEmail,

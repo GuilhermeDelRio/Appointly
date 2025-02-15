@@ -1,3 +1,4 @@
+using Appointly.Domain.Enums;
 using MediatR;
 
 namespace Appointly.Application.Features.PatientFeatures.Commands.CreatePatient;
@@ -10,9 +11,9 @@ public sealed record CreatePatientRequest(
     string Email,
     decimal Fee,
     bool IsSpecialPatient,
-    bool IsUnderage,
+    bool HasAResponsible,
     
-    string ResponsibleName,
-    string ResponsibleEmail,
-    string ResponsiblePhoneNumber,
-    string RelationshipDegree) : IRequest<CreatePatientResponse>;
+    string? ResponsibleName,
+    string? ResponsibleEmail,
+    string? ResponsiblePhoneNumber,
+    string? RelationshipDegree) : IRequest<CreatePatientResponse>;

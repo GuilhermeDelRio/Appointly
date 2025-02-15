@@ -1,3 +1,4 @@
+using Appointly.API.Middlewares;
 using Appointly.Application;
 using Appointly.Persistence;
 
@@ -18,18 +19,19 @@ builder.Services.ConfigureApplication();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
 
+app.UseMiddleware<ValidationExceptionMiddleware>();
+
 app.UseCors();
 
 app.UseHttpsRedirection();
-// app.UseAuthorization();
+
 app.MapControllers();
+
 app.Run();
