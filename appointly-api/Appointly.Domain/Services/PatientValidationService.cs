@@ -1,22 +1,37 @@
-
 using Appointly.Domain.Entities;
 using Appointly.Domain.Exceptions;
+using Appointly.Domain.Interfaces.Repository;
 using Appointly.Domain.Interfaces.Services;
 
 namespace Appointly.Domain.Services;
 
 public class PatientValidationService : IPatientValidationService
 {
+    private readonly IPatientRepository _patientRepository;
     private const int LEGAL_ADULT_AGE = 18;
 
-    public void ValidatePatientData(Patient patient)
+    public PatientValidationService(IPatientRepository patientRepository)
     {
+        _patientRepository = patientRepository;
+    }
+
+    public async Task ValidatePatientData(Patient patient)
+    {
+        var patientExists = await CheckIfPatientAlreadyExists(patient.FirstName, patient.LastName);
+
+        if (patientExists) throw new DuplicateDataException("Already exists a patient with the same first name and last name.");
+        
         var patientAge = CalculateExactAge(patient.DateOfBirth);
 
         if (patientAge.Years >= LEGAL_ADULT_AGE && !patient.HasAResponsible) return;
         if (!patient.HasAResponsible) patient.HasAResponsible = true;
         
         validateResponsibleData(patient);
+    }
+
+    private async Task<bool> CheckIfPatientAlreadyExists(string  firstName, string lastName)
+    {
+        return await _patientRepository.FindByFirstNameAndLastName(firstName.ToUpper(), lastName.ToUpper());
     }
 
     private static void validateResponsibleData(Patient patient)

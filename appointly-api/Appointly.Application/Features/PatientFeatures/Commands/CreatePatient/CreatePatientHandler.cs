@@ -34,7 +34,7 @@ public class CreatePatientHandler : IRequestHandler<CreatePatientRequest, Create
         
         var patient = _mapper.Map<Patient>(request);
         
-        _patientValidationService.ValidatePatientData(patient);
+        await _patientValidationService.ValidatePatientData(patient);
         
         await _patientRepository.Create(patient);
         return _mapper.Map<CreatePatientResponse>(patient);

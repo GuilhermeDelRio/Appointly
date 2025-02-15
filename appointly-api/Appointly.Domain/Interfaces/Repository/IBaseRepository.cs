@@ -1,6 +1,6 @@
 using Appointly.Domain.Common;
 
-namespace Appointly.Domain.Interfaces;
+namespace Appointly.Domain.Interfaces.Repository;
 
 public interface IBaseRepository<T> where T : BaseModel
 {

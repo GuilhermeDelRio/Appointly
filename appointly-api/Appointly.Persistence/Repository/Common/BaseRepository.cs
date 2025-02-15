@@ -1,14 +1,14 @@
 using Appointly.Domain.Common;
-using Appointly.Domain.Interfaces;
+using Appointly.Domain.Interfaces.Repository;
 using MongoDB.Driver;
 
 namespace Appointly.Persistence.Repository.Common;
 
 public class BaseRepository<T> : IBaseRepository<T> where T : BaseModel
 {
-    private readonly IMongoCollection<T> _collection;
+    protected readonly IMongoCollection<T> _collection;
 
-    public BaseRepository(IMongoDatabase database, string collectionName)
+    protected BaseRepository(IMongoDatabase database, string collectionName)
     {
         _collection = database.GetCollection<T>(collectionName);
     }

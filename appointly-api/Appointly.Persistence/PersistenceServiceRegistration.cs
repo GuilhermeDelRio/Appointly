@@ -21,7 +21,7 @@ public static class PersistenceServiceRegistration
         var mongoDatabase = mongoClient.GetDatabase(mongoConfig.DatabaseName);
         
         services.AddSingleton(mongoDatabase);
-        services.AddScoped<IPatientRepository, PatientRepositoy>();
+        services.AddScoped<IPatientRepository, PatientRepository>();
         
         // validators
         services.AddScoped<IPatientValidationService ,PatientValidationService>();

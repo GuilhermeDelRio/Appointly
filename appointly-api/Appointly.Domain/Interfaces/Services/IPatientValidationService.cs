@@ -4,5 +4,5 @@ namespace Appointly.Domain.Interfaces.Services;
 
 public interface IPatientValidationService
 {
-    void ValidatePatientData(Patient patient);
+    Task ValidatePatientData(Patient patient);
 }
