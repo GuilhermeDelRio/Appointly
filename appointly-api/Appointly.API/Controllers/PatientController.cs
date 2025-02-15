@@ -1,4 +1,4 @@
-using Appointly.Application.Features.PatientFeatures.Commands.CreatePatient;
+using Appointly.Application.Dtos.PatientDTOs;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,18 +18,18 @@ public class PatientController : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<CreatePatientResponse>> CreatePatient(
-        [FromBody] CreatePatientRequest request, CancellationToken cancellationToken)
+    public async Task<ActionResult<PatientResponseDTO>> CreatePatient(
+        [FromBody] PatientRequestDTO requestDto, CancellationToken cancellationToken)
     {
-        var response = await _mediator.Send(request, cancellationToken);
+        var response = await _mediator.Send(requestDto, cancellationToken);
         return Ok(response);
     }
 
-    [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public string GetAllPatients(CancellationToken cancellationToken)
-    {
-        return "All patients";
-    }
+    // [HttpGet]
+    // [ProducesResponseType(StatusCodes.Status200OK)]
+    // [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    // public async Task<ActionResult<List<PatientResponseDTO>>> GetAllPatients(CancellationToken cancellationToken)
+    // {
+    //     var response = await 
+    // }
 }

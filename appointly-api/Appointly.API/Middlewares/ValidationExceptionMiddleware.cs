@@ -1,3 +1,4 @@
+using Appointly.Domain.Exceptions;
 using FluentValidation;
 
 namespace Appointly.API.Middlewares;
@@ -21,19 +22,45 @@ public class ValidationExceptionMiddleware
         {
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = StatusCodes.Status400BadRequest;
-            
+
             var errors = ex.Errors.GroupBy(e => e.PropertyName)
-                .ToDictionary(g => g.Key, g => 
+                .ToDictionary(g => g.Key, g =>
                     g.Select(e => e.ErrorMessage).ToArray());
-            
+
             var response = new
             {
                 title = "Validation Failed",
                 status = 400,
                 errors = errors
             };
-            
+
             await context.Response.WriteAsJsonAsync(response);
+        }
+        catch (DuplicateDataException ex)
+        {
+            context.Response.ContentType = "application/json";
+            context.Response.StatusCode = StatusCodes.Status409Conflict;
+
+            var response = new
+            {
+                title = "Duplicate Data",
+                status = 409,
+                message = ex.Message
+            };
+
+            await context.Response.WriteAsJsonAsync(response);
+        }
+        catch (NotFilledFieldsException ex)
+        {
+            context.Response.ContentType = "application/json";
+            context.Response.StatusCode = StatusCodes.Status400BadRequest;
+
+            var response = new
+            {
+                title = "Duplicate Data",
+                status = 400,
+                message = ex.Message
+            };
         }
         catch (Exception ex)
         {

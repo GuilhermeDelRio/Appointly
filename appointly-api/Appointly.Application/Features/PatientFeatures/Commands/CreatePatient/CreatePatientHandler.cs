@@ -1,42 +1,39 @@
-using Appointly.Domain.Entities;
+using Appointly.Application.Dtos.PatientDTOs;
 using Appointly.Domain.Interfaces.Repository;
 using Appointly.Domain.Interfaces.Services;
-using AutoMapper;
 using FluentValidation;
 using MediatR;
 
 namespace Appointly.Application.Features.PatientFeatures.Commands.CreatePatient;
 
-public class CreatePatientHandler : IRequestHandler<CreatePatientRequest, CreatePatientResponse>{
+public class CreatePatientHandler : IRequestHandler<PatientRequestDTO, PatientResponseDTO>{
     
     private readonly IPatientRepository _patientRepository;
     private readonly IPatientValidationService _patientValidationService;
-    private readonly IValidator<CreatePatientRequest> _validator;
-    private readonly IMapper _mapper;
+    private readonly IValidator<PatientRequestDTO> _validator;
 
     public CreatePatientHandler(
         IPatientRepository patientRepository, 
         IPatientValidationService patientValidationService, 
-        IValidator<CreatePatientRequest> validator, IMapper mapper)
+        IValidator<PatientRequestDTO> validator)
     {
         _patientRepository = patientRepository;
         _patientValidationService = patientValidationService;
         _validator = validator;
-        _mapper = mapper;
     }
 
-    public async Task<CreatePatientResponse> Handle(CreatePatientRequest request, CancellationToken cancellationToken)
+    public async Task<PatientResponseDTO> Handle(PatientRequestDTO request, CancellationToken cancellationToken)
     {
         var validationResult = await _validator.ValidateAsync(request, cancellationToken);
         
         if (!validationResult.IsValid)
             throw new ValidationException(validationResult.Errors);
-        
-        var patient = _mapper.Map<Patient>(request);
+
+        var patient = request.ToEntity();
         
         await _patientValidationService.ValidatePatientData(patient);
         
         await _patientRepository.Create(patient);
-        return _mapper.Map<CreatePatientResponse>(patient);
+        return PatientResponseDTO.ToDTO(patient);
     }
 }

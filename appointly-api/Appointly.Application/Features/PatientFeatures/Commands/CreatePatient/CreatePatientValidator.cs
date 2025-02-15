@@ -1,10 +1,11 @@
+using Appointly.Application.Dtos.PatientDTOs;
 using Appointly.Application.Resources;
 using Appointly.Domain.Enums;
 using FluentValidation;
 
 namespace Appointly.Application.Features.PatientFeatures.Commands.CreatePatient;
 
-public class CreatePatientValidator : AbstractValidator<CreatePatientRequest>
+public class CreatePatientValidator : AbstractValidator<PatientRequestDTO>
 {
     public CreatePatientValidator()
     {

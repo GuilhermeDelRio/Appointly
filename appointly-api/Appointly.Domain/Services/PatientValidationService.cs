@@ -31,7 +31,7 @@ public class PatientValidationService : IPatientValidationService
 
     private async Task<bool> CheckIfPatientAlreadyExists(string  firstName, string lastName)
     {
-        return await _patientRepository.FindByFirstNameAndLastName(firstName.ToUpper(), lastName.ToUpper());
+        return await _patientRepository.FindByFirstNameAndLastName(firstName, lastName);
     }
 
     private static void validateResponsibleData(Patient patient)
