@@ -38,9 +38,8 @@ public class BaseRepository<T> : IBaseRepository<T> where T : BaseModel
             .FirstOrDefaultAsync(cancellationToken);
     }
 
-    public async Task<IReadOnlyList<T>> GetAll(CancellationToken cancellationToken)
+    public IQueryable<T> GetAll(CancellationToken cancellationToken)
     {
-        List<T> result = await _collection.Find(_ => true).ToListAsync(cancellationToken);
-        return result.AsReadOnly();
+        return _collection.AsQueryable();
     }
 }

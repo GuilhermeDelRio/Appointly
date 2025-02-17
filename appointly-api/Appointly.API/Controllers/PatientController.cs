@@ -1,4 +1,5 @@
 using Appointly.Application.Dtos.PatientDTOs;
+using Appointly.Application.Features.PatientFeatures.Queries.GetPatients;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,11 +26,12 @@ public class PatientController : ControllerBase
         return Ok(response);
     }
 
-    // [HttpGet]
-    // [ProducesResponseType(StatusCodes.Status200OK)]
-    // [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    // public async Task<ActionResult<List<PatientResponseDTO>>> GetAllPatients(CancellationToken cancellationToken)
-    // {
-    //     var response = await 
-    // }
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<List<PatientResponseDTO>>> GetPatients(string? searchTerm, CancellationToken cancellationToken)
+    {
+        var patients = await _mediator.Send(new GetPatientsQuery(searchTerm), cancellationToken);
+        return Ok(patients);
+    }
 }

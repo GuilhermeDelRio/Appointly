@@ -8,5 +8,5 @@ public interface IBaseRepository<T> where T : BaseModel
     Task Update(T entity);
     Task Delete(T entity);
     Task<T> GetById(string id, CancellationToken cancellationToken);
-    Task<IReadOnlyList<T>> GetAll(CancellationToken cancellationToken);
+    IQueryable<T> GetAll(CancellationToken cancellationToken);
 }
