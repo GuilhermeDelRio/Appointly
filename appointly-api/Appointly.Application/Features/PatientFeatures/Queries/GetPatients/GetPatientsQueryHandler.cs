@@ -27,6 +27,8 @@ public sealed class GetPatientsQueryHandler : IRequestHandler<GetPatientsQuery, 
         }
 
         return await patientsQuery
+            .Skip((request.page - 1) * request.pageSize)
+            .Take(request.pageSize)
             .Select((p) => new PatientResponseDTO
             {
                 Id = p.Id,

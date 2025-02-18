@@ -29,9 +29,12 @@ public class PatientController : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<List<PatientResponseDTO>>> GetPatients(string? searchTerm, CancellationToken cancellationToken)
+    public async Task<ActionResult<List<PatientResponseDTO>>> GetPatients(
+        string? searchTerm, int page, int pageSize, CancellationToken cancellationToken)
     {
-        var patients = await _mediator.Send(new GetPatientsQuery(searchTerm), cancellationToken);
+        var patients = await _mediator.Send(
+            new GetPatientsQuery(searchTerm, page, pageSize), cancellationToken);
+        
         return Ok(patients);
     }
 }
