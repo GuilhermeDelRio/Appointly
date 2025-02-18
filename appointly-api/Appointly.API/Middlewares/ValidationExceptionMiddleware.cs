@@ -36,6 +36,20 @@ public class ValidationExceptionMiddleware
 
             await context.Response.WriteAsJsonAsync(response);
         }
+        catch (NotFoundException ex)
+        {
+            context.Response.ContentType = "application/json";
+            context.Response.StatusCode = StatusCodes.Status404NotFound;
+
+            var response = new
+            {
+                title = "Entity Not Found",
+                status = 404,
+                message = ex.Message
+            };
+
+            await context.Response.WriteAsJsonAsync(response);
+        }
         catch (DuplicateDataException ex)
         {
             context.Response.ContentType = "application/json";

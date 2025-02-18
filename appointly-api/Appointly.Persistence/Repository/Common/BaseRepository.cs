@@ -25,9 +25,9 @@ public class BaseRepository<T> : IBaseRepository<T> where T : BaseModel
         await _collection.ReplaceOneAsync(filter, entity);
     }
 
-    public async Task Delete(T entity)
+    public async Task Delete(string id)
     {
-        var filter = Builders<T>.Filter.Eq(x => x.Id, entity.Id);
+        var filter = Builders<T>.Filter.Eq(x => x.Id, id);
         await _collection.DeleteOneAsync(filter);
     }
 
