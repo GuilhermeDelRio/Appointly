@@ -35,7 +35,7 @@ public class AppointmentValidationService : IAppointmentValidationService
             TimeSpan duration = endDate - initialDate;
             
             if (duration.Duration().Minutes != preSetDurationMin)
-                throw new OutOfRageException($"Appointment should last {preSetDurationMin} minutes.");
+                throw new OutOfRangeException($"Appointment should last {preSetDurationMin} minutes.");
         }
         
         if (await _appointmentRepository.GetAppointmentsInInterval(initialDate, endDate) > 0)

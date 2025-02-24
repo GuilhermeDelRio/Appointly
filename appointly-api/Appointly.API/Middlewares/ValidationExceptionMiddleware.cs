@@ -36,6 +36,34 @@ public class ValidationExceptionMiddleware
 
             await context.Response.WriteAsJsonAsync(response);
         }
+        catch (OutOfRangeException ex)
+        {
+            context.Response.ContentType = "application/json";
+            context.Response.StatusCode = StatusCodes.Status404NotFound;
+
+            var response = new
+            {
+                title = "Out Of Range",
+                status = 404,
+                message = ex.Message
+            };
+
+            await context.Response.WriteAsJsonAsync(response);
+        }
+        catch (InvalidDateException ex)
+        {
+            context.Response.ContentType = "application/json";
+            context.Response.StatusCode = StatusCodes.Status404NotFound;
+
+            var response = new
+            {
+                title = "Invalid Date",
+                status = 404,
+                message = ex.Message
+            };
+
+            await context.Response.WriteAsJsonAsync(response);
+        }
         catch (NotFoundException ex)
         {
             context.Response.ContentType = "application/json";
