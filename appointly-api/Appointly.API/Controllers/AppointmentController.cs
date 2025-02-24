@@ -17,12 +17,12 @@ public class AppointmentController : ControllerBase
     }
     
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<AppointmentResponseDTO>> CreatePatient(
         [FromBody] AppointmentRequestDTO requestDto, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(requestDto, cancellationToken);
-        return Ok(response);
+        return NoContent();
     }
 }

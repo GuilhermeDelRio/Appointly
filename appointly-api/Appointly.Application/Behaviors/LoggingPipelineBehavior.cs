@@ -25,7 +25,7 @@ public class LoggingPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TR
             "Completed request {@RequestName}, {@DateTimeUtc}", 
             typeof(TRequest).Name, 
             DateTime.UtcNow);
-        
-        throw new NotImplementedException();
+
+        return result;
     }
 }
