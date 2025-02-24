@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
 using Appointly.Application.Behaviors;
+using Appointly.Application.Interfaces.Services;
+using Appointly.Application.Services;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,5 +18,9 @@ public static class ServiceExtensions
         services.AddValidatorsFromAssembly(assembly);
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingPipelineBehavior<,>));
+        
+        // validators
+        services.AddScoped<IPatientValidationService ,PatientValidationService>();
+        services.AddScoped<IAppointmentValidationService , AppointmentValidationService>();
     }
 }

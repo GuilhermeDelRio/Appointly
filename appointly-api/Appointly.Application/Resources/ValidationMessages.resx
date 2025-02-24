@@ -33,4 +33,7 @@
     <data name="GraterThanZero" xml:space="preserve">
         <value>The field {0} must be grater than zero.</value>
     </data>
+    <data name="PastDate" xml:space="preserve">
+        <value>The {0} cannot be in the past</value>
+    </data>
 </root>

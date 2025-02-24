@@ -74,5 +74,13 @@ namespace Appointly.Application.Resources {
                 return ResourceManager.GetString("GraterThanZero", resourceCulture);
             }
         }
+
+        internal static string PastDate
+        {
+            get
+            {
+                return ResourceManager.GetString("PastDate", resourceCulture);
+            }
+        }
     }
 }

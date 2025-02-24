@@ -16,4 +16,6 @@ public class AppDbContext : DbContext
     }
     
     public IMongoCollection<Patient> Patients => _database.GetCollection<Patient>("patients");
+    public IMongoCollection<Appointment> Appointments => _database.GetCollection<Appointment>("appointments");
+    public IMongoCollection<SystemInfo> SystemInfo => _database.GetCollection<SystemInfo>("systemInfo");
 }

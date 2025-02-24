@@ -1,9 +1,9 @@
+using Appointly.Application.Interfaces.Services;
 using Appointly.Domain.Entities;
 using Appointly.Domain.Exceptions;
 using Appointly.Domain.Interfaces.Repository;
-using Appointly.Domain.Interfaces.Services;
 
-namespace Appointly.Domain.Services;
+namespace Appointly.Application.Services;
 
 public class PatientValidationService : IPatientValidationService
 {

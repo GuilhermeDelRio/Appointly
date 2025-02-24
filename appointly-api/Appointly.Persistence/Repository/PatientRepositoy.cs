@@ -4,7 +4,7 @@ using Appointly.Persistence.Repository.Common;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
-namespace Appointly.Persistence.Repository.PatientRepository;
+namespace Appointly.Persistence.Repository;
 
 public class PatientRepository : BaseRepository<Patient>, IPatientRepository
 {

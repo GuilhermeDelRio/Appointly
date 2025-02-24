@@ -20,18 +20,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <EmbeddedResource Update="Resources\ValidationMessages.resx">
-        <Generator>ResXFileCodeGenerator</Generator>
-        <LastGenOutput>ValidationMenssages.Designer.cs</LastGenOutput>
-      </EmbeddedResource>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Compile Update="Resources\ValidationMessages.Designer.cs">
-        <DesignTime>True</DesignTime>
-        <AutoGen>True</AutoGen>
-        <DependentUpon>ValidationMessages.resx</DependentUpon>
-      </Compile>
+      <Folder Include="Features\AppointmentFeatures\Queries\" />
+      <Folder Include="Interfaces\" />
     </ItemGroup>
 
 </Project>

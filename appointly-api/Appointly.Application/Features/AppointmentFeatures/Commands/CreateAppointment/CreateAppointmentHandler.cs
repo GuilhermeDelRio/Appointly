@@ -1,0 +1,43 @@
+using Appointly.Application.Dtos.AppointmentDTOs;
+using Appointly.Application.Interfaces.Services;
+using Appointly.Domain.Entities;
+using Appointly.Domain.Interfaces.Repository;
+using FluentValidation;
+using MediatR;
+
+namespace Appointly.Application.Features.AppointmentFeatures.Commands.CreateAppointment;
+
+public class CreateAppointmentHandler : IRequestHandler<AppointmentRequestDTO, Unit>
+{
+    private readonly IAppointmentRepository _appointmentRepository;
+    private readonly IAppointmentValidationService _appointmentValidationService;
+    private readonly IValidator<AppointmentRequestDTO> _validator;
+
+    public CreateAppointmentHandler(
+        IAppointmentRepository appointmentRepository, 
+        IAppointmentValidationService appointmentValidationService, 
+        IValidator<AppointmentRequestDTO> validator)
+    {
+        _appointmentRepository = appointmentRepository;
+        _appointmentValidationService = appointmentValidationService;
+        _validator = validator;
+    }
+
+
+    public async Task<Unit> Handle(AppointmentRequestDTO request, CancellationToken cancellationToken)
+    {
+        var validationResult = await _validator.ValidateAsync(request, cancellationToken);
+        
+        if (!validationResult.IsValid) 
+            throw new ValidationException(validationResult.Errors);
+
+        await _appointmentValidationService
+            .ValidateAppointment(request.InitialDate, request.EndDate, cancellationToken);
+        
+        Appointment appointment = request.ToEntity();
+        
+        await _appointmentRepository.Create(appointment);
+        
+        return Unit.Value;
+    }
+}
