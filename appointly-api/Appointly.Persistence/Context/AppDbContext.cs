@@ -1,21 +1,22 @@
 using Appointly.Domain.Entities;
-using Appointly.Persistence.Settings;
+using Appointly.Persistence.Configurations;
 using Microsoft.EntityFrameworkCore;
-using MongoDB.Driver;
 
 namespace Appointly.Persistence.Context;
 
 public class AppDbContext : DbContext
 {
-    private readonly IMongoDatabase _database;
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
     
-    public AppDbContext(MongoSettings settings)
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        MongoClient client = new MongoClient(settings.ConnectionString);
-        _database = client.GetDatabase(settings.DatabaseName);
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.ApplyConfiguration(new PatientConfig());
+        modelBuilder.ApplyConfiguration(new SystemInfoConfig());
     }
     
-    public IMongoCollection<Patient> Patients => _database.GetCollection<Patient>("patients");
-    public IMongoCollection<Appointment> Appointments => _database.GetCollection<Appointment>("appointments");
-    public IMongoCollection<SystemInfo> SystemInfo => _database.GetCollection<SystemInfo>("systemInfo");
+    public DbSet<Patient> Patients { get; set; }
+    public DbSet<Appointment> Appointments { get; set; }
+    public DbSet<SystemInfo> SystemInfo { get; set; }
 }

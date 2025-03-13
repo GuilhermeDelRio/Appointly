@@ -1,26 +1,29 @@
 ﻿#nullable disable
 using Appointly.Domain.Interfaces.Repository;
+using Appointly.Persistence.Context;
 using Appointly.Persistence.Repository;
-using Appointly.Persistence.Settings;
+using Appointly.Persistence.Repository.Common;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using MongoDB.Driver;
 
 namespace Appointly.Persistence;
 
 public static class PersistenceServiceRegistration
 {
-    public static void ConfigurePersistence(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection ConfigurePersistence(
+        this IServiceCollection services, IConfiguration configuration)
     {
-        var section = configuration.GetSection("MongoDB");
+        services.AddDbContext<AppDbContext>(opt => 
+            opt.UseNpgsql(configuration.GetConnectionString("AppointlyConnectionString")));
 
-        var mongoConfig = section.Get<MongoSettings>();
-        MongoClient mongoClient = new MongoClient(mongoConfig.ConnectionString);
-        var mongoDatabase = mongoClient.GetDatabase(mongoConfig.DatabaseName);
+        services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
         
-        services.AddSingleton(mongoDatabase);
         services.AddScoped<IPatientRepository, PatientRepository>();
         services.AddScoped<IAppointmentRepository, AppointmentRepository>();
         services.AddScoped<ISystemInfoRepository, SystemInfoRepository>();
+        
+        return services;
     }
 }   

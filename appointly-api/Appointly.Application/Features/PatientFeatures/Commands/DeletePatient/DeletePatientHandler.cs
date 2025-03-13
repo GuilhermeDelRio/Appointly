@@ -7,10 +7,12 @@ namespace Appointly.Application.Features.PatientFeatures.Commands.DeletePatient;
 public class DeletePatientHandler : IRequestHandler<DeletePatientCommand, Unit>
 {
     private readonly IPatientRepository _patientRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public DeletePatientHandler(IPatientRepository patientRepository)
+    public DeletePatientHandler(IPatientRepository patientRepository, IUnitOfWork unitOfWork)
     {
         _patientRepository = patientRepository;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<Unit> Handle(DeletePatientCommand request, CancellationToken cancellationToken)
@@ -19,7 +21,8 @@ public class DeletePatientHandler : IRequestHandler<DeletePatientCommand, Unit>
         
         if (hasPatient is null) throw new NotFoundException("Patient not found");
         
-        await _patientRepository.Delete(request.Id);
+        _patientRepository.Delete(hasPatient);
+        await _unitOfWork.Commit(cancellationToken);
         
         return Unit.Value;
     }

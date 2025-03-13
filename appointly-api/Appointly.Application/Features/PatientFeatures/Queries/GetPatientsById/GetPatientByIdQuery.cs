@@ -6,5 +6,5 @@ namespace Appointly.Application.Features.PatientFeatures.Queries.GetPatientsById
 
 public class GetPatientByIdQuery : IRequest<PatientResponseDTO>
 {
-    public string Id { get; set; }
+    public Guid Id { get; set; }
 }
