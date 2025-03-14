@@ -51,7 +51,8 @@ public class PatientConfig : IEntityTypeConfiguration<Patient>
             .HasMaxLength(15);
 
         builder.Property(p => p.RelationshipDegree)
-            .HasColumnType("RelationshipDegree")
+            .HasColumnName("RelationshipDegree")
+            .HasColumnType("VARCHAR(30)")
             .HasConversion<string>();
     }
 }

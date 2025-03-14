@@ -1,6 +1,0 @@
-﻿services:
-  appointly.api:
-    image: appointly.api
-    build:
-      context: .
-      dockerfile: Appointly.API/Dockerfile
