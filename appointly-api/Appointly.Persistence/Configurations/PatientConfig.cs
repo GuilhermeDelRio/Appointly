@@ -54,5 +54,9 @@ public class PatientConfig : IEntityTypeConfiguration<Patient>
             .HasColumnName("RelationshipDegree")
             .HasColumnType("VARCHAR(30)")
             .HasConversion<string>();
+        
+        builder.HasMany(p => p.Appointments)
+            .WithOne(a => a.Patient)
+            .HasForeignKey(a => a.PatientId);
     }
 }

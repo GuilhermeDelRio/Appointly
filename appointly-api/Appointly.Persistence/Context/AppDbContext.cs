@@ -13,6 +13,7 @@ public class AppDbContext : DbContext
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.ApplyConfiguration(new PatientConfig());
+        modelBuilder.ApplyConfiguration(new AppointmentConfig());
         modelBuilder.ApplyConfiguration(new SystemInfoConfig());
     }
     

@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Appointly.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250314010650_InitialMigration")]
+    [Migration("20250314224908_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -31,8 +31,10 @@ namespace Appointly.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<int>("AppointmentStatus")
-                        .HasColumnType("integer");
+                    b.Property<string>("AppointmentStatus")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR(30)")
+                        .HasColumnName("AppointmentStatus");
 
                     b.Property<DateTimeOffset>("DateCreated")
                         .HasColumnType("timestamp with time zone");
@@ -52,12 +54,14 @@ namespace Appointly.Persistence.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("PatientId")
-                        .HasColumnType("text");
+                    b.Property<Guid>("PatientId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Appointments");
+                    b.HasIndex("PatientId");
+
+                    b.ToTable("TB_Appointments", (string)null);
                 });
 
             modelBuilder.Entity("Appointly.Domain.Entities.Patient", b =>
@@ -155,6 +159,22 @@ namespace Appointly.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TB_SystemInfo", (string)null);
+                });
+
+            modelBuilder.Entity("Appointly.Domain.Entities.Appointment", b =>
+                {
+                    b.HasOne("Appointly.Domain.Entities.Patient", "Patient")
+                        .WithMany("Appointments")
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Patient");
+                });
+
+            modelBuilder.Entity("Appointly.Domain.Entities.Patient", b =>
+                {
+                    b.Navigation("Appointments");
                 });
 #pragma warning restore 612, 618
         }
