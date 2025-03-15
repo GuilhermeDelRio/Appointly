@@ -38,6 +38,7 @@ public class CreatePatientHandler : IRequestHandler<PatientRequestDTO, PatientRe
         
         _patientRepository.Create(patient);
         await _unitOfWork.Commit(cancellationToken);
+        
         return PatientResponseDTO.ToDTO(patient);
     }
 }

@@ -28,9 +28,9 @@ namespace Appointly.Persistence.Migrations
                     ResponsibleEmail = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
                     ResponsiblePhoneNumber = table.Column<string>(type: "character varying(15)", maxLength: 15, nullable: true),
                     RelationshipDegree = table.Column<string>(type: "VARCHAR(30)", nullable: true),
-                    DateCreated = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    DateUpdated = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
-                    DateDeleted = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    DateDeleted = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
@@ -44,9 +44,9 @@ namespace Appointly.Persistence.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     AppointmentDuration = table.Column<int>(type: "integer", nullable: false),
-                    DateCreated = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    DateUpdated = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
-                    DateDeleted = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    DateDeleted = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
@@ -63,9 +63,9 @@ namespace Appointly.Persistence.Migrations
                     EndDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     AppointmentStatus = table.Column<string>(type: "VARCHAR(30)", nullable: false),
                     PatientId = table.Column<Guid>(type: "uuid", nullable: false),
-                    DateCreated = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    DateUpdated = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
-                    DateDeleted = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    DateDeleted = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     IsDeleted = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>

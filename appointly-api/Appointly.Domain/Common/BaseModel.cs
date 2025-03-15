@@ -4,8 +4,8 @@ namespace Appointly.Domain.Common;
 public class BaseModel
 {
     public Guid Id { get; set; }
-    public DateTimeOffset DateCreated { get; set; } = DateTimeOffset.UtcNow;
-    public DateTimeOffset? DateUpdated { get; set; }
-    public DateTimeOffset? DateDeleted { get; set; }
+    public DateTime DateCreated { get; set; } = DateTime.UtcNow;
+    public DateTime? DateUpdated { get; set; }
+    public DateTime? DateDeleted { get; set; }
     public bool IsDeleted { get; set; } = false;
 }
