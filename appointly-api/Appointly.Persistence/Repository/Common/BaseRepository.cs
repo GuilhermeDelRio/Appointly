@@ -1,45 +1,46 @@
 using Appointly.Domain.Common;
 using Appointly.Domain.Interfaces.Repository;
-using MongoDB.Driver;
+using Appointly.Persistence.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace Appointly.Persistence.Repository.Common;
 
 public class BaseRepository<T> : IBaseRepository<T> where T : BaseModel
 {
-    protected readonly IMongoCollection<T> _collection;
+    protected readonly AppDbContext _context;
 
-    protected BaseRepository(IMongoDatabase database, string collectionName)
+    protected BaseRepository(AppDbContext context)
     {
-        _collection = database.GetCollection<T>(collectionName);
+        _context = context;
     }
-    public async Task Create(T entity)
+    
+    public void Create(T entity)
     {
         entity.DateCreated = DateTime.UtcNow;
-        await _collection.InsertOneAsync(entity);
+        _context.Add(entity);
     }
 
-    public async Task Update(T entity)
+    public async Task<T> GetById(Guid id, CancellationToken cancellationToken)
+    {
+        return await _context.Set<T>()
+            .AsNoTracking()
+            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+    }
+
+    public void Update(T entity)
     {
         entity.DateUpdated = DateTime.UtcNow;
-        var filter = Builders<T>.Filter.Eq(x => x.Id, entity.Id);
-        await _collection.ReplaceOneAsync(filter, entity);
+        _context.Update(entity);
     }
 
-    public async Task Delete(string id)
+    public void Delete(T entity)
     {
-        var filter = Builders<T>.Filter.Eq(x => x.Id, id);
-        await _collection.DeleteOneAsync(filter);
-    }
-
-    public async Task<T> GetById(string id, CancellationToken cancellationToken)
-    {
-        return await _collection
-            .Find(entity => entity.Id == id)
-            .FirstOrDefaultAsync(cancellationToken);
+        entity.DateDeleted = DateTime.UtcNow;
+        _context.Remove(entity);
     }
 
     public IQueryable<T> GetAll(CancellationToken cancellationToken)
     {
-        return _collection.AsQueryable();
+        return _context.Set<T>().AsNoTracking();
     }
 }

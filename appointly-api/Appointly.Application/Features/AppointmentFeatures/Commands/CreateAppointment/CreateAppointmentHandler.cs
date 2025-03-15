@@ -12,15 +12,18 @@ public class CreateAppointmentHandler : IRequestHandler<AppointmentRequestDTO, U
     private readonly IAppointmentRepository _appointmentRepository;
     private readonly IAppointmentValidationService _appointmentValidationService;
     private readonly IValidator<AppointmentRequestDTO> _validator;
+    private readonly IUnitOfWork _unitOfWork;
 
     public CreateAppointmentHandler(
         IAppointmentRepository appointmentRepository, 
         IAppointmentValidationService appointmentValidationService, 
-        IValidator<AppointmentRequestDTO> validator)
+        IValidator<AppointmentRequestDTO> validator, 
+        IUnitOfWork unitOfWork)
     {
         _appointmentRepository = appointmentRepository;
         _appointmentValidationService = appointmentValidationService;
         _validator = validator;
+        _unitOfWork = unitOfWork;
     }
 
 
@@ -36,7 +39,8 @@ public class CreateAppointmentHandler : IRequestHandler<AppointmentRequestDTO, U
         
         Appointment appointment = request.ToEntity();
         
-        await _appointmentRepository.Create(appointment);
+        _appointmentRepository.Create(appointment);
+        await _unitOfWork.Commit(cancellationToken);
         
         return Unit.Value;
     }

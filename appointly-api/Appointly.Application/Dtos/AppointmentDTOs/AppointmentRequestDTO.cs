@@ -8,7 +8,7 @@ public record AppointmentRequestDTO(
     DateTime InitialDate,
     DateTime EndDate,
     string AppointmentStatus,
-    string PatientId
+    Guid PatientId
     ) : IRequest<Unit>
 {
     public Appointment ToEntity()

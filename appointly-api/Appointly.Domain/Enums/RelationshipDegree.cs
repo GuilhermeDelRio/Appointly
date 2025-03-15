@@ -2,13 +2,13 @@ namespace Appointly.Domain.Enums;
 
 public enum RelationshipDegree
 {
-    Parent,
-    Child,
-    Sibling,
-    Spouse,
-    Grandparent,
-    Grandchild,
-    AuntUncle,
-    NieceNephew,
-    Cousin
+    PARENT,
+    CHILD,
+    SIBLING,
+    SPOUSE,
+    GRANDPARENT,
+    GRANDCHILD,
+    AUNT_UNCLE,
+    NIECE_NEPHEW,
+    COUSIN
 }

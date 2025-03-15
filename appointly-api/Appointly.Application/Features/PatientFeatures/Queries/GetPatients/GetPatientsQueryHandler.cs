@@ -2,7 +2,7 @@ using Appointly.Application.Dtos.PatientDTOs;
 using Appointly.Domain.Entities;
 using Appointly.Domain.Interfaces.Repository;
 using MediatR;
-using MongoDB.Driver.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Appointly.Application.Features.PatientFeatures.Queries.GetPatients;
 

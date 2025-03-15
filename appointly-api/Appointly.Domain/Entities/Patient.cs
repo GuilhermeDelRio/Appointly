@@ -14,8 +14,11 @@ public class Patient : BaseModel
     public bool IsSpecialPatient { get; set; }
     public bool HasAResponsible { get; set; }
     
+    // criar entidade reposponsible
     public string? ResponsibleName { get; set; }
     public string? ResponsibleEmail { get; set; }
     public string? ResponsiblePhoneNumber { get; set; }
     public RelationshipDegree? RelationshipDegree { get; set; }
+    
+    public List<Appointment> Appointments { get; set; }
 }

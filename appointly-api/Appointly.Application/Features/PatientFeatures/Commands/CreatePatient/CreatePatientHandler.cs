@@ -11,15 +11,18 @@ public class CreatePatientHandler : IRequestHandler<PatientRequestDTO, PatientRe
     private readonly IPatientRepository _patientRepository;
     private readonly IPatientValidationService _patientValidationService;
     private readonly IValidator<PatientRequestDTO> _validator;
+    private readonly IUnitOfWork _unitOfWork;
 
     public CreatePatientHandler(
         IPatientRepository patientRepository, 
         IPatientValidationService patientValidationService, 
-        IValidator<PatientRequestDTO> validator)
+        IValidator<PatientRequestDTO> validator, 
+        IUnitOfWork unitOfWork)
     {
         _patientRepository = patientRepository;
         _patientValidationService = patientValidationService;
         _validator = validator;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<PatientResponseDTO> Handle(PatientRequestDTO request, CancellationToken cancellationToken)
@@ -33,7 +36,9 @@ public class CreatePatientHandler : IRequestHandler<PatientRequestDTO, PatientRe
         
         await _patientValidationService.ValidatePatientData(patient);
         
-        await _patientRepository.Create(patient);
+        _patientRepository.Create(patient);
+        await _unitOfWork.Commit(cancellationToken);
+        
         return PatientResponseDTO.ToDTO(patient);
     }
 }
