@@ -1,0 +1,20 @@
+{
+  "extends": "./tsconfig.json", // Herda configurações de um tsconfig base
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "outDir": "./dist", // Diretório de saída para os arquivos compilados
+    "rootDir": "./src", // Diretório raiz dos arquivos TypeScript
+    "module": "ESNext", // Tipo de módulo
+    "target": "ES6", // Versão do ECMAScript
+    "jsx": "react-jsx", // Suporte a JSX
+    "strict": true, // Ativa verificações rigorosas
+    "esModuleInterop": true, // Permite importações de CommonJS
+    "skipLibCheck": true, // Ignora verificação de tipos em bibliotecas
+    "forceConsistentCasingInFileNames": true // Força consistência no casing de arquivos
+  },
+  "include": ["src/**/*"], // Inclui todos os arquivos na pasta src
+  "exclude": ["node_modules", "dist"] // Exclui pastas desnecessárias
+}
