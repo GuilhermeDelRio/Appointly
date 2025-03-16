@@ -35,7 +35,9 @@ interface LanguageOptions {
 export function UserSettingsDialog({ open, onOpenChange }: UserSettingsDialogProps) {
   const { t, i18n } = useTranslation()
 
-  const [selectedLanguage, setSelectedLanguage] = useState<string | undefined>(undefined)
+  const [selectedLanguage, setSelectedLanguage] = useState<string | undefined>(
+    () => localStorage.getItem('appLanguage') || i18n.language
+  )
 
   const languagesList: LanguageOptions[] = [
     {
@@ -49,7 +51,10 @@ export function UserSettingsDialog({ open, onOpenChange }: UserSettingsDialogPro
   ]
 
   const handleSaveChanges = () => {
-    i18n.changeLanguage(selectedLanguage)
+    if (selectedLanguage) {
+      i18n.changeLanguage(selectedLanguage)
+      localStorage.setItem('appLanguage', selectedLanguage)
+    }
   }
 
   return (
