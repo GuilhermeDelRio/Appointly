@@ -4,6 +4,8 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/sidebar/app-sidebar"
 import { GlobalDialog } from "./components/GlobalDialog/GlobalDialog"
 
+import { Toaster } from 'sonner'
+
 export function App({ children }: { children: React.ReactNode }) {
   const { i18n } = useTranslation()
 
@@ -18,6 +20,7 @@ export function App({ children }: { children: React.ReactNode }) {
     <SidebarProvider>
       <AppSidebar />
       <GlobalDialog />
+      <Toaster />
       <main className="flex flex-col w-full h-screen overflow-y-hidden">
         <SidebarTrigger />
         {children}

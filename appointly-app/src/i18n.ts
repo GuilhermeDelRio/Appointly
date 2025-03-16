@@ -25,6 +25,7 @@ const resources = {
     },
     language: {
       selectLang: "Select a language",
+      changeLangMsg: "Language changed to",
       english: "English",
       portuguese: "Portuguese",
     }
@@ -52,6 +53,7 @@ const resources = {
     },
     language: {
       selectLang: "Selecione um idioma",
+      changeLangMsg: "Idioma alterado para",
       english: "Inglês",
       portuguese: "Português",
     }

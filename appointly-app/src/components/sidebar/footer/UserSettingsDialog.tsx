@@ -20,6 +20,8 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 
+import { toast } from 'sonner'
+
 import { Settings, Earth } from 'lucide-react'
 
 interface UserSettingsDialogProps {
@@ -54,6 +56,8 @@ export function UserSettingsDialog({ open, onOpenChange }: UserSettingsDialogPro
     if (selectedLanguage) {
       i18n.changeLanguage(selectedLanguage)
       localStorage.setItem('appLanguage', selectedLanguage)
+
+      toast(`${t("language:changeLangMsg")} ${selectedLanguage}`)
     }
   }
 
@@ -92,7 +96,7 @@ export function UserSettingsDialog({ open, onOpenChange }: UserSettingsDialogPro
             className="cursor-pointer" 
             type="submit" 
             onClick={handleSaveChanges}>
-              Save changes
+              {t('common:save')}
           </Button>
         </DialogFooter>
       </DialogContent>
