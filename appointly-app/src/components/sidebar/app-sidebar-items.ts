@@ -15,13 +15,13 @@ export const sidebarItems: Item[] = [
     icon: Grid
   },
   {
+    title: 'Patients',
+    url: '/patients',
+    icon: Users
+  },
+  {
     title: 'Appointments',
     url: '/appointments',
     icon: Calendar
   },
-  {
-    title: 'Patients',
-    url: '/patients',
-    icon: Users
-  }
 ]
