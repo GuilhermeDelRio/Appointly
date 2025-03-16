@@ -12,8 +12,8 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu"
 
-import { ChevronDown } from "@mynaui/icons-react"
-import { Cog } from "@mynaui/icons-react"
+import { ChevronDown } from 'lucide-react'
+import { Settings } from 'lucide-react'
 
 export function AppSidebarHeader() {
   return (
@@ -34,7 +34,7 @@ export function AppSidebarHeader() {
             <DropdownMenuContent className="w-[--radix-popper-anchor-width]">
 
               <DropdownMenuItem>
-                <Cog className="mr-2" />
+                <Settings className="mr-2" />
                 <span>Settings</span>
               </DropdownMenuItem>
 

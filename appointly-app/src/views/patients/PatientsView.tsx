@@ -1,7 +1,14 @@
+import { Users } from 'lucide-react'
+import { Header } from "@/components/header/Header"
+
 export function PatientsView() {
   return (
-    <div className="m-2">
-      <h1 className="text-2xl font-medium">Patients</h1>
+    <div>
+      <Header 
+        titleLabel="Patients" 
+        titleIcon={ Users }
+        buttonLabel="New patient" 
+      />
     </div>
   )
 }

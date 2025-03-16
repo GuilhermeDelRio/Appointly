@@ -1,6 +1,6 @@
-import { Grid } from "@mynaui/icons-react"
-import { Users } from "@mynaui/icons-react"
-import { Calendar } from "@mynaui/icons-react"
+import { LayoutDashboard } from 'lucide-react'
+import { Users } from 'lucide-react'
+import { CalendarDays } from 'lucide-react'
 
 interface Item {
   title: string
@@ -12,7 +12,7 @@ export const sidebarItems: Item[] = [
   {
     title: 'Dashboard',
     url: '/dashboard',
-    icon: Grid
+    icon: LayoutDashboard
   },
   {
     title: 'Patients',
@@ -22,6 +22,6 @@ export const sidebarItems: Item[] = [
   {
     title: 'Appointments',
     url: '/appointments',
-    icon: Calendar
+    icon: CalendarDays
   },
 ]

@@ -12,10 +12,10 @@ import {
   DropdownMenuItem
 } from "@/components/ui/dropdown-menu"
 
-import { ChevronUpDown } from "@mynaui/icons-react"
-import { User } from "@mynaui/icons-react"
-import { Cog } from "@mynaui/icons-react"
-import { Logout } from "@mynaui/icons-react"
+import { ChevronsDownUp } from 'lucide-react'
+import { User } from 'lucide-react'
+import { Settings } from 'lucide-react'
+import { LogOut } from 'lucide-react'
 
 export function AppSidebarFooter() {
   return (
@@ -30,7 +30,7 @@ export function AppSidebarFooter() {
                 </div>
 
                 Guilherme Del Rio
-                <ChevronUpDown className="ml-auto" />
+                <ChevronsDownUp className="ml-auto" />
               </SidebarMenuButton>
             </DropdownMenuTrigger>
             <DropdownMenuContent
@@ -43,12 +43,12 @@ export function AppSidebarFooter() {
               </DropdownMenuItem>
 
               <DropdownMenuItem>
-                <Cog className="mr-2" />
+                <Settings className="mr-2" />
                 <span>Settings</span>
               </DropdownMenuItem>
 
               <DropdownMenuItem>
-                <Logout className="mr-2" />
+                <LogOut className="mr-2" />
                 <span>Sign out</span>
               </DropdownMenuItem>
 

@@ -5,7 +5,7 @@ export function App({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
       <AppSidebar />
-      <main>
+      <main className="flex flex-col w-full h-screen overflow-y-hidden">
         <SidebarTrigger />
         {children}
       </main>

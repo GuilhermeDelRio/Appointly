@@ -1,7 +1,13 @@
+import { LayoutDashboard } from 'lucide-react'
+import { Header } from "@/components/header/Header"
+
 export function DashboardView() {
   return (
     <div>
-      <h1>Dashboard</h1>
+      <Header 
+        titleLabel="Dashboard" 
+        titleIcon={ LayoutDashboard }
+      />
     </div>
   )
 }
