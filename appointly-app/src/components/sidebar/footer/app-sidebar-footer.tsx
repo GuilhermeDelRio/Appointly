@@ -1,5 +1,5 @@
-import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useDialogStore } from '@/stores/dialogStore'
 
 import {
   SidebarFooter,
@@ -18,17 +18,13 @@ import {
 import { ChevronsDownUp } from 'lucide-react'
 
 import { getFooterItems } from './app-sidebar-footer-items'
-import { UserSettingsDialog } from './UserSettingsDialog'
-
 
 export function AppSidebarFooter() {
   const { t } = useTranslation()
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const openDialog = useDialogStore((state) => state.open)
 
-  const handleUserSettings = () => {
-    setIsDialogOpen(true)
-  }
-  
+  const handleUserSettings = () => openDialog('userSettings')
+
   const footerItems = getFooterItems(handleUserSettings)
 
   return (
@@ -63,8 +59,6 @@ export function AppSidebarFooter() {
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>
-      
-      <UserSettingsDialog open={isDialogOpen} onOpenChange={setIsDialogOpen} />
     </> 
   )
 }
