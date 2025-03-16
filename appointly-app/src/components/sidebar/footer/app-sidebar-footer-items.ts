@@ -2,20 +2,32 @@ import { Users, Settings, LogOut} from 'lucide-react'
 
 interface Item {
   title: string
-  icon: React.ComponentType
+  icon: React.ComponentType,
+  action: () => void
 }
 
-export const footerItems: Item[] = [
+const handleAccount = () => {
+  console.log('handleAccount')
+}
+
+const handleSignOut = () => {
+  console.log('handleSignOut')
+}
+
+export const getFooterItems = (handleUserSettings: () => void): Item[] => [
   {
     title: "common:account",
-    icon: Users
+    icon: Users,
+    action: handleAccount
   },
   {
     title: "common:settings",
-    icon: Settings
+    icon: Settings,
+    action: handleUserSettings
   },
   {
     title: "common:signOut",
-    icon: LogOut
+    icon: LogOut,
+    action: handleSignOut
   }
 ]

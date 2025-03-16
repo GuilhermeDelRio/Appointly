@@ -21,6 +21,12 @@ const resources = {
       save: "Save",
       cancel: "Cancel",
       loading: "Loading...",
+      language: "Language"
+    },
+    language: {
+      selectLang: "Select a language",
+      english: "English",
+      portuguese: "Portuguese",
     }
   },
   pt: {
@@ -42,6 +48,12 @@ const resources = {
       save: "Salvar",
       cancel: "Cancelar",
       loading: "Carregando...",
+      language: "Idioma"
+    },
+    language: {
+      selectLang: "Selecione um idioma",
+      english: "Inglês",
+      portuguese: "Português",
     }
   },
 }
