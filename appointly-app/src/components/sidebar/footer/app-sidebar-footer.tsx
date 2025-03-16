@@ -48,7 +48,7 @@ export function AppSidebarFooter() {
                 className="w-[--radix-popper-anchor-width]"
               >
                 {footerItems.map((item) => (
-                    <DropdownMenuItem key={item.title} onClick={item.action}>
+                    <DropdownMenuItem key={item.title} onClick={item.action} className="cursor-pointer">
                       <item.icon />
                       <span>{ t(item.title) }</span>
                     </DropdownMenuItem>

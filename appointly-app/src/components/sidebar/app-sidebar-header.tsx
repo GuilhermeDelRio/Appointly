@@ -37,7 +37,7 @@ export function AppSidebarHeader() {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-[--radix-popper-anchor-width]">
 
-              <DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer">
                 <Settings className="mr-2" />
                 <span>{t('common:settings')}</span>
               </DropdownMenuItem>
