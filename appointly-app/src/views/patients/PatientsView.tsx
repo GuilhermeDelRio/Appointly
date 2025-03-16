@@ -5,9 +5,9 @@ export function PatientsView() {
   return (
     <div>
       <Header 
-        titleLabel="Patients" 
+        titleLabel="patients:name"
         titleIcon={ Users }
-        buttonLabel="New patient" 
+        buttonLabel="patients:btnAdd"
       />
     </div>
   )

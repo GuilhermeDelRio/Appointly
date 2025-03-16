@@ -5,7 +5,7 @@ export function DashboardView() {
   return (
     <div>
       <Header 
-        titleLabel="Dashboard" 
+        titleLabel="dashboard:name" 
         titleIcon={ LayoutDashboard }
       />
     </div>

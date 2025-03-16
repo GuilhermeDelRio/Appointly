@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { Button } from "@/components/ui/button"
 import { Plus } from "lucide-react"
 
@@ -8,17 +9,19 @@ type HeaderProps = {
 }
 
 export function Header({ titleLabel, titleIcon: TitleIcon, buttonLabel }: HeaderProps) {
+  const { t } = useTranslation()
+
   return (
     <div className="mr-5 ml-2 mt-4 flex justify-between items-center">
       <div className="flex items-center">
         <TitleIcon />
-        <h1 className="text-2xl ml-2 font-medium">{titleLabel}</h1>
+        <h1 className="text-2xl ml-2 font-medium">{t(titleLabel)}</h1>
       </div>
 
       {buttonLabel && (
         <Button>
           <Plus />
-          {buttonLabel}
+          {t(buttonLabel)}
         </Button>
       )}
     </div>

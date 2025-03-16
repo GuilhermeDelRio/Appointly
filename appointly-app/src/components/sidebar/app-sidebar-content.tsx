@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+
 import {
   SidebarContent,
   SidebarGroup,
@@ -10,6 +12,9 @@ import { sidebarItems } from "./app-sidebar-items"
 import { Link } from "react-router-dom"
 
 export function AppSidebarContent() {
+
+  const { t } = useTranslation()
+
   return (
     <SidebarContent>
       <SidebarGroup>
@@ -19,7 +24,7 @@ export function AppSidebarContent() {
               <SidebarMenuButton asChild>
                 <Link to={item.url}>
                   <item.icon />
-                  <span>{item.title}</span>
+                  <span>{t(item.title)}</span>
                 </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>

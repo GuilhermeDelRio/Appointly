@@ -10,17 +10,17 @@ interface Item {
 
 export const sidebarItems: Item[] = [
   {
-    title: 'Dashboard',
+    title: 'dashboard:name',
     url: '/dashboard',
     icon: LayoutDashboard
   },
   {
-    title: 'Patients',
+    title: 'patients:name',
     url: '/patients',
     icon: Users
   },
   {
-    title: 'Appointments',
+    title: 'appointments:name',
     url: '/appointments',
     icon: CalendarDays
   },

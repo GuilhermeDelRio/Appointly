@@ -5,9 +5,9 @@ export function AppointmentsView() {
   return (
     <div>
       <Header 
-        titleLabel="Appointments"
+        titleLabel="appointments:name"
         titleIcon={ CalendarDays }
-        buttonLabel="New appointment" 
+        buttonLabel="appointments:btnAdd"
       />
     </div>
   )
