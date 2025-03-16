@@ -1,9 +1,14 @@
-import { Button } from "@/components/ui/button"
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { AppSidebar } from "@/components/sidebar/app-sidebar"
 
-export function App() {
+export function App({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col items-center justify-center min-h-svh">
-      <Button>Click me</Button>
-    </div>
+    <SidebarProvider>
+      <AppSidebar />
+      <main>
+        <SidebarTrigger />
+        {children}
+      </main>
+    </SidebarProvider>
   )
 }
