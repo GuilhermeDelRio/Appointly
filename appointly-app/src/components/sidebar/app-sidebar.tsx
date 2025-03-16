@@ -2,7 +2,7 @@ import { Sidebar } from "@/components/ui/sidebar"
 
 import { AppSidebarHeader } from "./app-sidebar-header"
 import { AppSidebarContent } from "./app-sidebar-content"
-import { AppSidebarFooter } from "./app-sidebar-footer"
+import { AppSidebarFooter } from "./footer/app-sidebar-footer"
 
 export function AppSidebar() {
   return (

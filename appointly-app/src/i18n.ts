@@ -16,7 +16,7 @@ const resources = {
     },
     common: {
       settings: "Settings",
-      logout: "Sign out",
+      signOut: "Sign out",
       account: "Account",
       save: "Save",
       cancel: "Cancel",
@@ -37,7 +37,7 @@ const resources = {
     },
     common: {
       settings: "Configurações",
-      logout: "Sair",
+      signOut: "Sair",
       account: "Conta",
       save: "Salvar",
       cancel: "Cancelar",

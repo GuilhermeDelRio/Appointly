@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+
 import {
   SidebarHeader,
   SidebarMenu,
@@ -16,6 +18,8 @@ import { ChevronDown } from 'lucide-react'
 import { Settings } from 'lucide-react'
 
 export function AppSidebarHeader() {
+  const { t } = useTranslation()
+
   return (
     <SidebarHeader>
       <SidebarMenu>
@@ -35,7 +39,7 @@ export function AppSidebarHeader() {
 
               <DropdownMenuItem>
                 <Settings className="mr-2" />
-                <span>Settings</span>
+                <span>{t('common:settings')}</span>
               </DropdownMenuItem>
 
             </DropdownMenuContent>

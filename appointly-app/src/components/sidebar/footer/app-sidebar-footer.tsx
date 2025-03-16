@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+
 import {
   SidebarFooter,
   SidebarMenu,
@@ -13,11 +15,12 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 import { ChevronsDownUp } from 'lucide-react'
-import { User } from 'lucide-react'
-import { Settings } from 'lucide-react'
-import { LogOut } from 'lucide-react'
+
+import { footerItems } from './app-sidebar-footer-items'
 
 export function AppSidebarFooter() {
+  const { t } = useTranslation()
+
   return (
     <SidebarFooter>
       <SidebarMenu>
@@ -37,21 +40,13 @@ export function AppSidebarFooter() {
               side="top"
               className="w-[--radix-popper-anchor-width]"
             >
-              <DropdownMenuItem>
-                <User className="mr-2" />
-                <span>Account</span>
-              </DropdownMenuItem>
-
-              <DropdownMenuItem>
-                <Settings className="mr-2" />
-                <span>Settings</span>
-              </DropdownMenuItem>
-
-              <DropdownMenuItem>
-                <LogOut className="mr-2" />
-                <span>Sign out</span>
-              </DropdownMenuItem>
-
+              {footerItems.map((item) => (
+                  <DropdownMenuItem key={item.title}>
+                    <item.icon />
+                    <span>{ t(item.title) }</span>
+                  </DropdownMenuItem>
+                ))
+              }
             </DropdownMenuContent>
           </DropdownMenu>
         </SidebarMenuItem>
