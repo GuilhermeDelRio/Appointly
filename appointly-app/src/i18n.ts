@@ -37,7 +37,11 @@ const resources = {
       cancel: "Cancel",
       loading: "Loading...",
       language: "Language",
-      actions: "Actions"
+      actions: "Actions",
+      rowPerPage: "Rows per page",
+      rowsSelected: "row(s) selected.",
+      page: "Page",
+      of: "of"
     },
     language: {
       selectLang: "Select a language",
@@ -81,7 +85,11 @@ const resources = {
       cancel: "Cancelar",
       loading: "Carregando...",
       language: "Idioma",
-      actions: "Ações"
+      actions: "Ações",
+      rowPerPage: "Linhas por página",
+      rowsSelected: "linhas(s) selecionadas.",
+      page: "Página",
+      of: "de"
     },
     language: {
       selectLang: "Selecione um idioma",
