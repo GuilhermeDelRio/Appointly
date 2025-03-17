@@ -1,5 +1,5 @@
 import { DataTable } from '@/components/DataTable/DataTable'
-import { columns } from './columns'
+import { usePatientColumns } from './columns'
 import { Patient } from './patient'
 
 import { Users } from 'lucide-react'
@@ -41,6 +41,7 @@ function getData(): Patient[] {
 }
 
 export function PatientsView() {
+  const columns = usePatientColumns()
   const data = getData()
   
   return (

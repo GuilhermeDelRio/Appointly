@@ -13,15 +13,31 @@ const resources = {
     patients: {
       name: "Patients",
       btnAdd: "New patient",
+      fields: {
+        firstName: "First Name",
+        lastName: "Last Name",
+        dateOfBirth: "Date of Birth",
+        phoneNumber: "Phone Number",
+        email: "E-mail",
+        fee: "Fee",
+        isSpecialPatient: "Special Patient?",
+        hasAResponsible: "Has Responsible?",
+        responsibleName: "Responsible Name",
+        responsiblePhoneNumber: "Responsible Phone",
+        relationshipDegree: "Relationship Degree"
+      }
     },
     common: {
       settings: "Settings",
       signOut: "Sign out",
       account: "Account",
       save: "Save",
+      edit: "Edit",
+      delete: "Delete",
       cancel: "Cancel",
       loading: "Loading...",
-      language: "Language"
+      language: "Language",
+      actions: "Actions"
     },
     language: {
       selectLang: "Select a language",
@@ -41,15 +57,31 @@ const resources = {
     patients: {
       name: "Pacientes",
       btnAdd: "Novo paciente",
+      fields: {
+        firstName: "Nome",
+        lastName: "Sobrenome",
+        dateOfBirth: "Data de Nascimento",
+        phoneNumber: "Telefone",
+        email: "E-mail",
+        fee: "Taxa",
+        isSpecialPatient: "Paciente Especial?",
+        hasAResponsible: "Tem Responsável?",
+        responsibleName: "Nome do Responsável",
+        responsiblePhoneNumber: "Telefone do Responsável",
+        relationshipDegree: "Grau de Parentesco"
+      }
     },
     common: {
       settings: "Configurações",
       signOut: "Sair",
       account: "Conta",
       save: "Salvar",
+      edit: "Editar",
+      delete: "Deletar",
       cancel: "Cancelar",
       loading: "Carregando...",
-      language: "Idioma"
+      language: "Idioma",
+      actions: "Ações"
     },
     language: {
       selectLang: "Selecione um idioma",
