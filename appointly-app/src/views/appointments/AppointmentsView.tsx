@@ -3,7 +3,7 @@ import { Header } from "@/components/header/Header"
 
 export function AppointmentsView() {
   return (
-    <div>
+    <div className="flex flex-col p-2">
       <Header 
         titleLabel="appointments:name"
         titleIcon={ CalendarDays }

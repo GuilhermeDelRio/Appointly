@@ -12,7 +12,7 @@ export function Header({ titleLabel, titleIcon: TitleIcon, buttonLabel }: Header
   const { t } = useTranslation()
 
   return (
-    <div className="mr-5 ml-2 mt-4 flex justify-between items-center">
+    <div className="flex justify-between items-center mb-4">
       <div className="flex items-center">
         <TitleIcon />
         <h1 className="text-2xl ml-2 font-medium">{t(titleLabel)}</h1>

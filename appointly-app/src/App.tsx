@@ -21,7 +21,7 @@ export function App({ children }: { children: React.ReactNode }) {
       <AppSidebar />
       <GlobalDialog />
       <Toaster />
-      <main className="flex flex-col w-full h-screen overflow-y-hidden">
+      <main style={{ width: '100%', flexGrow: 1 }}>
         <SidebarTrigger />
         {children}
       </main>
