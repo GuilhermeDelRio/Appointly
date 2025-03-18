@@ -1,48 +1,31 @@
-import { DataTable } from '@/components/DataTable/DataTable'
+import { useEffect, useState } from 'react'
+import requestServices from '@/api/requestServices'
+import type { RequestParams } from '@/types/http'
 import { usePatientColumns } from './columns'
 import { Patient } from './patient'
-
+import { DataTable } from '@/components/DataTable/DataTable'
 import { Users } from 'lucide-react'
 import { Header } from "@/components/header/Header"
 
-function getData(): Patient[] {
-  return [
-    {
-      "id": "0195975c-4a67-7a6a-b196-5ad1efcfacd0",
-      "firstName": "Lady",
-      "lastName": "GAGA",
-      "dateOfBirth": "2000-10-12T00:00:00Z",
-      "phoneNumber": "+1234567890",
-      "email": "john.doe@example.com",
-      "fee": 100.00,
-      "isSpecialPatient": true,
-      "hasAResponsible": false,
-      "responsibleName": "Jane Doe",
-      "responsibleEmail": null,
-      "responsiblePhoneNumber": "+0987654321",
-      "relationshipDegree": "CHILD"
-    },
-    {
-      "id": "0195975c-4a67-7a6a-b196-5ad1efcfacd1",
-      "firstName": "hahahah",
-      "lastName": "GAGA",
-      "dateOfBirth": "2000-10-12T00:00:00Z",
-      "phoneNumber": "+1234567890",
-      "email": "john.doe@example.com",
-      "fee": 100.00,
-      "isSpecialPatient": true,
-      "hasAResponsible": false,
-      "responsibleName": "Jane Doe",
-      "responsibleEmail": null,
-      "responsiblePhoneNumber": "+0987654321",
-      "relationshipDegree": "CHILD"
-    }
-  ]
-}
-
 export function PatientsView() {
   const columns = usePatientColumns()
-  const data = getData()
+  const [data, setData] = useState<Patient[]>([])
+
+  useEffect(() => {
+    const fetchPatients = async() => {
+      const config: RequestParams = {
+        params: {
+          page: 1,
+          pageSize: 10,
+        }
+      }
+
+      const response = await requestServices.get<Patient[]>('/patient', config)
+      setData(response)
+    }
+
+    fetchPatients()
+  }, [])
   
   return (
     <div className="flex flex-col p-2">
