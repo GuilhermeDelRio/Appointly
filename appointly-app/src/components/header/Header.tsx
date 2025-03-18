@@ -19,7 +19,7 @@ export function Header({ titleLabel, titleIcon: TitleIcon, buttonLabel }: Header
       </div>
 
       {buttonLabel && (
-        <Button>
+        <Button className='cursor-pointer'>
           <Plus />
           {t(buttonLabel)}
         </Button>

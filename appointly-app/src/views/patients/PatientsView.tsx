@@ -6,12 +6,17 @@ import { Patient } from './patient'
 import { DataTable } from '@/components/DataTable/DataTable'
 import { Users } from 'lucide-react'
 import { Header } from "@/components/header/Header"
+import { Skeleton } from '@/components/ui/skeleton'
 
 export function PatientsView() {
   const columns = usePatientColumns()
   const [data, setData] = useState<Patient[]>([])
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
+
+    setIsLoading(true)
+
     const fetchPatients = async() => {
       const config: RequestParams = {
         params: {
@@ -22,6 +27,7 @@ export function PatientsView() {
 
       const response = await requestServices.get<Patient[]>('/patient', config)
       setData(response)
+      setIsLoading(false)
     }
 
     fetchPatients()
@@ -36,7 +42,10 @@ export function PatientsView() {
       />
 
       <div className="flex-grow">
-        <DataTable columns={columns} data={data} />
+        {isLoading 
+          ? <Skeleton className=" h-[500px] " /> 
+          : <DataTable columns={columns} data={data} />
+        }
       </div>
     </div>
   )
