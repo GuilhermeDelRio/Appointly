@@ -39,6 +39,7 @@ export function PatientsView() {
         titleLabel="patients:name"
         titleIcon={ Users }
         buttonLabel="patients:btnAdd"
+        dialogType="patientsDialog"
       />
 
       <div className="flex-grow">

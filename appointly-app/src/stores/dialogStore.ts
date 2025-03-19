@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-type DialogType = 'userSettings' | 'account' | null
+export type DialogType = 'userSettings' | 'account' | 'patientsDialog' | 'appointmentsDialog' |null
 
 interface DialogState {
   openDialog: DialogType

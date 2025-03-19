@@ -8,6 +8,7 @@ export function AppointmentsView() {
         titleLabel="appointments:name"
         titleIcon={ CalendarDays }
         buttonLabel="appointments:btnAdd"
+        dialogType="appointmentsDialog"
       />
     </div>
   )

@@ -1,15 +1,21 @@
 import { useTranslation } from 'react-i18next'
+import { useDialogStore, DialogType } from '@/stores/dialogStore'
 import { Button } from "@/components/ui/button"
 import { Plus } from "lucide-react"
 
 type HeaderProps = {
   titleLabel: string
   titleIcon: React.ComponentType
-  buttonLabel?: string
+  buttonLabel?: string,
+  dialogType: DialogType
 }
 
-export function Header({ titleLabel, titleIcon: TitleIcon, buttonLabel }: HeaderProps) {
+export function Header({ titleLabel, titleIcon: TitleIcon, buttonLabel, dialogType }: HeaderProps) {
   const { t } = useTranslation()
+
+    const openDialog = useDialogStore((state) => state.open)
+  
+    const handleHeaderAction = () => openDialog(dialogType)
 
   return (
     <div className="flex justify-between items-center mb-4">
@@ -19,7 +25,7 @@ export function Header({ titleLabel, titleIcon: TitleIcon, buttonLabel }: Header
       </div>
 
       {buttonLabel && (
-        <Button className='cursor-pointer'>
+        <Button className='cursor-pointer' onClick={handleHeaderAction}>
           <Plus />
           {t(buttonLabel)}
         </Button>
