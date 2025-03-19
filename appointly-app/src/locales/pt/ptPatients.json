@@ -1,0 +1,22 @@
+{
+  "name": "Pacientes",
+  "btnAdd": "Novo paciente",
+  "fields": {
+    "firstName": "Nome",
+    "lastName": "Sobrenome",
+    "dateOfBirth": "Data de Nascimento",
+    "phoneNumber": "Telefone",
+    "email": "E-mail",
+    "fee": "Taxa",
+    "isSpecialPatient": "Paciente Especial?",
+    "hasAResponsible": "Tem Responsável?",
+    "responsibleName": "Nome do Responsável",
+    "responsiblePhoneNumber": "Telefone do Responsável",
+    "relationshipDegree": "Grau de Parentesco"
+  },
+  "validation": {
+  "minValidation": "{{field}} deve ter pelo menos {{value}} caracteres.",
+  "maxValidation": "{{field}} deve ter no máximo {{value}} caracteres.",
+  "requiredValidation": "{{field}} é obrigatório."
+  }
+}

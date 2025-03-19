@@ -1,0 +1,16 @@
+{
+  "settings": "Settings",
+  "signOut": "Sign out",
+  "account": "Account",
+  "save": "Save",
+  "edit": "Edit",
+  "delete": "Delete",
+  "cancel": "Cancel",
+  "loading": "Loading...",
+  "language": "Language",
+  "actions": "Actions",
+  "rowPerPage": "Rows per page",
+  "rowsSelected": "row(s) selected.",
+  "page": "Page",
+  "of": "of"
+}

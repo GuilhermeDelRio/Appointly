@@ -1,0 +1,16 @@
+{
+  "settings": "Configurações",
+  "signOut": "Sair",
+  "account": "Conta",
+  "save": "Salvar",
+  "edit": "Editar",
+  "delete": "Deletar",
+  "cancel": "Cancelar",
+  "loading": "Carregando...",
+  "language": "Idioma",
+  "actions": "Ações",
+  "rowPerPage": "Linhas por página",
+  "rowsSelected": "linhas(s) selecionadas.",
+  "page": "Página",
+  "of": "de"
+}

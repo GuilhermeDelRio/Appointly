@@ -44,50 +44,50 @@ const createPatientFormSchema = (t: (key: string, options?: any) => string): z.Z
 
     firstName: z
       .string()
-      .min(2, { message: t('patients:validation:minValidation', { field: t('patients:firstName'), value: 2 }) })
-      .max(25, { message: t('patients:validation:maxValidation', { field: t('patients:firstName'), value: 25 }) })
-      .nonempty({ message: t('patients:validation:requiredValidation', { field: t('patients:firstName') }) }),
+      .min(2, { message: t('patients:validation:minValidation', { field: t('patients:fields:firstName'), value: 2 }) })
+      .max(25, { message: t('patients:validation:maxValidation', { field: t('patients:fields:firstName'), value: 25 }) })
+      .nonempty({ message: t('patients:validation:requiredValidation', { field: t('patients:fields:firstName') }) }),
 
     lastName: z
       .string()
-      .min(2, { message: t('patients:validation:minValidation', { field: t('patients:lastName'), value: 2 }) })
-      .max(50, { message: t('patients:validation:maxValidation', { field: t('patients:lastName'), value: 50 }) })
-      .nonempty({ message: t('patients:validation:requiredValidation', { field: t('patients:lastName') }) }),
+      .min(2, { message: t('patients:validation:minValidation', { field: t('patients:fields:lastName'), value: 2 }) })
+      .max(50, { message: t('patients:validation:maxValidation', { field: t('patients:fields:lastName'), value: 50 }) })
+      .nonempty({ message: t('patients:validation:requiredValidation', { field: t('patients:fields:lastName') }) }),
 
     dateOfBirth: z
       .string()
-      .nonempty({ message: t('patients:validation:requiredValidation', { field: t('patients:dateOfBirth') }) })
+      .nonempty({ message: t('patients:validation:requiredValidation', { field: t('patients:fields:dateOfBirth') }) })
       .refine(isNotFutureDate, {
-        message: t('patients:validation:noFutureDate', { field: t('patients:dateOfBirth') }),
+        message: t('patients:validation:noFutureDate', { field: t('patients:fields:dateOfBirth') }),
       }),
 
     phoneNumber: z
       .string()
-      .nonempty({ message: t('patients:validation:requiredValidation', { field: t('patients:phoneNumber') }) }),
+      .nonempty({ message: t('patients:validation:requiredValidation', { field: t('patients:fields:phoneNumber') }) }),
 
     email: z
       .string()
-      .nonempty({ message: t('patients:validation:requiredValidation', { field: t('patients:email') }) })
-      .email({ message: t('patients:validation:email', { field: t('patients:email') }) }),
+      .nonempty({ message: t('patients:validation:requiredValidation', { field: t('patients:fields:email') }) })
+      .email({ message: t('patients:validation:email', { field: t('patients:fields:email') }) }),
 
     fee: z
-      .number({ required_error: t('patients:validation:requiredValidation', { field: t('patients:fee') }) })
-      .min(0, { message: t('patients:validation:minValue', { field: t('patients:fee'), value: 0 }) }),
+      .number({ required_error: t('patients:validation:requiredValidation', { field: t('patients:fields:fee') }) })
+      .min(0, { message: t('patients:validation:minValue', { field: t('patients:fields:fee'), value: 0 }) }),
 
-    isSpecialPatient: z.boolean({ required_error: t('patients:validation:requiredValidation', { field: t('patients:isSpecialPatient') }) }),
+    isSpecialPatient: z.boolean({ required_error: t('patients:validation:requiredValidation', { field: t('patients:fields:isSpecialPatient') }) }),
 
-    hasAResponsible: z.boolean({ required_error: t('patients:validation:requiredValidation', { field: t('patients:hasAResponsible') }) }),
+    hasAResponsible: z.boolean({ required_error: t('patients:validation:requiredValidation', { field: t('patients:fields:hasAResponsible') }) }),
 
     responsibleName: z
       .string()
-      .min(2, { message: t('patients:validation:minValidation', { field: t('patients:responsibleName'), value: 2 }) })
-      .max(25, { message: t('patients:validation:maxValidation', { field: t('patients:responsibleName'), value: 25 }) })
+      .min(2, { message: t('patients:validation:minValidation', { field: t('patients:fields:responsibleName'), value: 2 }) })
+      .max(25, { message: t('patients:validation:maxValidation', { field: t('patients:fields:responsibleName'), value: 25 }) })
       .nullable()
       .optional(),
 
     responsibleEmail: z
       .string()
-      .email({ message: t('validation:email', { field: t('patients:responsibleEmail') }) })
+      .email({ message: t('validation:email', { field: t('patients:fields:responsibleEmail') }) })
       .nullable()
       .optional(),
 
@@ -148,9 +148,9 @@ export function PatientsDialog({ open, onOpenChange }: DialogProps) {
                 name="firstName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t('patients:firstName')}</FormLabel>
+                    <FormLabel>{t('patients:fields:firstName')}</FormLabel>
                     <FormControl>
-                      <Input placeholder={t('patients:firstNamePlaceholder')} {...field} />
+                      <Input {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -163,9 +163,9 @@ export function PatientsDialog({ open, onOpenChange }: DialogProps) {
                 name="lastName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t('patients:lastName')}</FormLabel>
+                    <FormLabel>{t('patients:fields:lastName')}</FormLabel>
                     <FormControl>
-                      <Input placeholder={t('patients:lastNamePlaceholder')} {...field} />
+                      <Input {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -178,7 +178,7 @@ export function PatientsDialog({ open, onOpenChange }: DialogProps) {
                 name="dateOfBirth"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t('patients:dateOfBirth')}</FormLabel>
+                    <FormLabel>{t('patients:fields:dateOfBirth')}</FormLabel>
                     <FormControl>
                       <Input type="date" {...field} />
                     </FormControl>
@@ -193,7 +193,7 @@ export function PatientsDialog({ open, onOpenChange }: DialogProps) {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t('patients:email')}</FormLabel>
+                    <FormLabel>{t('patients:fields:email')}</FormLabel>
                     <FormControl>
                       <Input type="email" placeholder="email@example.com" {...field} />
                     </FormControl>
@@ -208,7 +208,7 @@ export function PatientsDialog({ open, onOpenChange }: DialogProps) {
                 name="fee"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t('patients:fee')}</FormLabel>
+                    <FormLabel>{t('patients:fields:fee')}</FormLabel>
                     <FormControl>
                       <Input type="number" step="0.01" placeholder="R$ 100,00" {...field} />
                     </FormControl>
@@ -223,9 +223,9 @@ export function PatientsDialog({ open, onOpenChange }: DialogProps) {
                 name="responsibleName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t('patients:responsibleName')}</FormLabel>
+                    <FormLabel>{t('patients:fields:responsibleName')}</FormLabel>
                     <FormControl>
-                      <Input placeholder={t('patients:responsibleNamePlaceholder')} {...field} value={field.value ?? ''}/>
+                      <Input {...field} value={field.value ?? ''}/>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -238,9 +238,9 @@ export function PatientsDialog({ open, onOpenChange }: DialogProps) {
                 name="relationshipDegree"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>{t('patients:relationshipDegree')}</FormLabel>
+                    <FormLabel>{t('patients:fields:relationshipDegree')}</FormLabel>
                     <FormControl>
-                      <Input placeholder={t('patients:relationshipDegreePlaceholder')} {...field} value={field.value ?? ''} />
+                      <Input {...field} value={field.value ?? ''} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -259,7 +259,7 @@ export function PatientsDialog({ open, onOpenChange }: DialogProps) {
                         onCheckedChange={(checked) => field.onChange(!!checked)}
                       />
                     </FormControl>
-                    <FormLabel>{t('patients:isSpecialPatient')}</FormLabel>
+                    <FormLabel>{t('patients:fields:isSpecialPatient')}</FormLabel>
                     <FormMessage />
                   </FormItem>
                 )}
