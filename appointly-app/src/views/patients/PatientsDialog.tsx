@@ -23,13 +23,9 @@ import {
 import { toast } from 'sonner'
 
 import { Settings, Earth } from 'lucide-react'
+import { DialogProps } from '@/types/dialogProps'
 
-interface UserSettingsDialogProps {
-  open: boolean
-  onOpenChange: (open: boolean) => void
-}
-
-export function PatientsDialog({ open, onOpenChange }: UserSettingsDialogProps) {
+export function PatientsDialog({ open, onOpenChange }: DialogProps) {
   const { t } = useTranslation()
 
   return (

@@ -23,18 +23,14 @@ import {
 import { toast } from 'sonner'
 
 import { Settings, Earth } from 'lucide-react'
-
-interface UserSettingsDialogProps {
-  open: boolean
-  onOpenChange: (open: boolean) => void
-}
+import { DialogProps } from '@/types/dialogProps'
 
 interface LanguageOptions {
   lng: string
   name: string
 }
 
-export function UserSettingsDialog({ open, onOpenChange }: UserSettingsDialogProps) {
+export function UserSettingsDialog({ open, onOpenChange }: DialogProps) {
   const { t, i18n } = useTranslation()
 
   const [selectedLanguage, setSelectedLanguage] = useState<string | undefined>(
