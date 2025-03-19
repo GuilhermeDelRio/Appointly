@@ -25,6 +25,11 @@ const resources = {
         responsibleName: "Responsible Name",
         responsiblePhoneNumber: "Responsible Phone",
         relationshipDegree: "Relationship Degree"
+      },
+      validation: {
+        minValidation: "{{field}} must be at least {{value}} characters long.",
+        maxValidation: "{{field}} must be at most {{value}} characters long.",
+        requiredValidation: "{{field}} is required."
       }
     },
     common: {

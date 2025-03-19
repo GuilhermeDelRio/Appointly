@@ -1,17 +1,17 @@
-export type RelationshipDegree =
-  | 'PARENT'
-  | 'CHILD'
-  | 'SIBLING'
-  | 'SPOUSE'
-  | 'GRANDPARENT'
-  | 'GRANDCHILD'
-  | 'AUNT_UNCLE'
-  | 'NIECE_NEPHEW'
-  | 'COUSIN'
-
+export enum RelationshipDegreeEnum {
+  PARENT = 'PARENT',
+  CHILD = 'CHILD',
+  SIBLING = 'SIBLING',
+  SPOUSE = 'SPOUSE',
+  GRANDPARENT = 'GRANDPARENT',
+  GRANDCHILD = 'GRANDCHILD',
+  AUNT_UNCLE = 'AUNT_UNCLE',
+  NIECE_NEPHEW = 'NIECE_NEPHEW',
+  COUSIN = 'COUSIN',
+}
 
 export type Patient = {
-  id: string
+  id?: string
   firstName: string
   lastName: string
   dateOfBirth: string
@@ -20,8 +20,8 @@ export type Patient = {
   fee: number
   isSpecialPatient: boolean
   hasAResponsible: boolean
-  responsibleName: string | null
-  responsibleEmail: string | null
-  responsiblePhoneNumber: string | null
-  relationshipDegree: RelationshipDegree | null
+  responsibleName?: string | null
+  responsibleEmail?: string | null
+  responsiblePhoneNumber?: string | null
+  relationshipDegree?: RelationshipDegreeEnum | null
 }
