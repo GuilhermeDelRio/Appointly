@@ -8,6 +8,8 @@ import { z } from "zod"
 import { Patient, RelationshipDegreeEnum } from './patient'
 import { DialogProps } from '@/types/dialogProps'
 
+import { PhoneInput } from '@/components/phoneInput/PhoneInput'
+
 import {
   Form,
   FormControl,
@@ -147,9 +149,14 @@ export function PatientsDialog({ open, onOpenChange }: DialogProps) {
     [RelationshipDegreeEnum.COUSIN]: t('patients:fields:relationshipDegreeLabel:cousin'),
   }
 
-  function onSubmit(values: z.infer<typeof patientFormSchema>) {
-    console.log('aquiiiii')
+  const onSubmit = (values: z.infer<typeof patientFormSchema>) => {
     console.log(values)
+  }
+
+  const handleClose = (e: React.MouseEvent) => {
+    e.preventDefault()
+    form.reset()
+    onOpenChange(false)
   }
 
   return (
@@ -164,7 +171,7 @@ export function PatientsDialog({ open, onOpenChange }: DialogProps) {
   
         <Separator />
 
-        <ScrollArea className="h-[600px] w-[100%] rounded-md border p-4">
+        <ScrollArea className="h-[650px] w-[100%] rounded-md border p-4">
           <div className="grid gap-4 py-4 p-2">
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -223,7 +230,21 @@ export function PatientsDialog({ open, onOpenChange }: DialogProps) {
                     </FormItem>
                   )}
                 />
-            
+
+                <FormField
+                  control={form.control}
+                  name="phoneNumber"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{t('patients:fields:phoneNumber')}</FormLabel>
+                      <FormControl>
+                        <PhoneInput defaultCountry="BR" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
                 <FormField
                   control={form.control}
                   name="fee"
@@ -321,7 +342,7 @@ export function PatientsDialog({ open, onOpenChange }: DialogProps) {
                         <FormItem>
                           <FormLabel>{t('patients:fields:responsiblePhoneNumber')}</FormLabel>
                           <FormControl>
-                            <Input {...field} value={field.value ?? ''} />
+                            <PhoneInput defaultCountry="BR" {...field} value={field.value ?? undefined}/>
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -357,7 +378,7 @@ export function PatientsDialog({ open, onOpenChange }: DialogProps) {
                 )}
     
                 <DialogFooter>
-                  <Button variant="secondary" className="cursor-pointer" onClick={() => onOpenChange(false)}>
+                  <Button variant="secondary" className="cursor-pointer" onClick={(e) => handleClose(e)}>
                     {t('common:cancel')}
                   </Button>
 
