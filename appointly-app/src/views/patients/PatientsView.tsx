@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import requestServices from '@/api/requestServices'
+import { patientService } from '@/services/patientService'
 import type { RequestParams } from '@/types/http'
 import { usePatientColumns } from './columns'
 import { Patient } from './patient'
@@ -25,8 +25,8 @@ export function PatientsView() {
         }
       }
 
-      const response = await requestServices.get<Patient[]>('/patient', config)
-      setData(response)
+      const response = await patientService.getAll(config)
+      setData(response.data)
       setIsLoading(false)
     }
 
