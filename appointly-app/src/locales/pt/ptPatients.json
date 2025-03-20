@@ -11,12 +11,16 @@
     "isSpecialPatient": "Paciente Especial?",
     "hasAResponsible": "Tem Responsável?",
     "responsibleName": "Nome do Responsável",
+    "responsibleEmail": "E-mail do Responsável",
     "responsiblePhoneNumber": "Telefone do Responsável",
     "relationshipDegree": "Grau de Parentesco"
   },
   "validation": {
-  "minValidation": "{{field}} deve ter pelo menos {{value}} caracteres.",
-  "maxValidation": "{{field}} deve ter no máximo {{value}} caracteres.",
-  "requiredValidation": "{{field}} é obrigatório."
+    "minValidation": "{{field}} deve ter pelo menos {{value}} caracteres.",
+    "maxValidation": "{{field}} deve ter no máximo {{value}} caracteres.",
+    "requiredValidation": "{{field}} é obrigatório.",
+    "email": "E-mail inválido.",
+    "noFutureDate": "{{field}} não pode ser no futuro.",
+    "minValue": "{{field}} deve ser pelo menos R$: {{value}}"
   }
 }

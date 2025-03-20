@@ -1,9 +1,8 @@
-import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'sonner'
 import { User } from 'lucide-react'
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
+import { useForm, useWatch } from 'react-hook-form'
 import { z } from "zod"
 
 import { Patient, RelationshipDegreeEnum } from './patient'
@@ -12,7 +11,6 @@ import { DialogProps } from '@/types/dialogProps'
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -29,6 +27,7 @@ import {
 
 import { Button } from "@/components/ui/button"
 import { Separator } from '@/components/ui/separator'
+import { ScrollArea } from "@/components/ui/scroll-area"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
 
@@ -68,7 +67,7 @@ const createPatientFormSchema = (t: (key: string, options?: any) => string): z.Z
     email: z
       .string()
       .nonempty({ message: t('patients:validation:requiredValidation', { field: t('patients:fields:email') }) })
-      .email({ message: t('patients:validation:email', { field: t('patients:fields:email') }) }),
+      .email({ message: t('patients:validation:email') }),
 
     fee: z
       .number({ required_error: t('patients:validation:requiredValidation', { field: t('patients:fields:fee') }) })
@@ -87,7 +86,7 @@ const createPatientFormSchema = (t: (key: string, options?: any) => string): z.Z
 
     responsibleEmail: z
       .string()
-      .email({ message: t('validation:email', { field: t('patients:fields:responsibleEmail') }) })
+      .email({ message: t('patients:validation:email') })
       .nullable()
       .optional(),
 
@@ -122,6 +121,11 @@ export function PatientsDialog({ open, onOpenChange }: DialogProps) {
     },
   })
   
+  const hasResponsible = useWatch({
+    control: form.control,
+    name: 'hasAResponsible',
+    defaultValue: false
+  })
 
   function onSubmit(values: z.infer<typeof patientFormSchema>) {
     console.log(values)
@@ -138,164 +142,201 @@ export function PatientsDialog({ open, onOpenChange }: DialogProps) {
         </DialogHeader>
   
         <Separator />
-  
-        <div className="grid gap-4 py-4">
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              {/* First Name */}
-              <FormField
-                control={form.control}
-                name="firstName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{t('patients:fields:firstName')}</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-  
-              {/* Last Name */}
-              <FormField
-                control={form.control}
-                name="lastName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{t('patients:fields:lastName')}</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-  
-              {/* Date of Birth */}
-              <FormField
-                control={form.control}
-                name="dateOfBirth"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{t('patients:fields:dateOfBirth')}</FormLabel>
-                    <FormControl>
-                      <Input type="date" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-  
-              {/* Email */}
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{t('patients:fields:email')}</FormLabel>
-                    <FormControl>
-                      <Input type="email" placeholder="email@example.com" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-  
-              {/* Fee */}
-              <FormField
-                control={form.control}
-                name="fee"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{t('patients:fields:fee')}</FormLabel>
-                    <FormControl>
-                      <Input type="number" step="0.01" placeholder="R$ 100,00" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-  
-              {/* Responsible Name */}
-              <FormField
-                control={form.control}
-                name="responsibleName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{t('patients:fields:responsibleName')}</FormLabel>
-                    <FormControl>
-                      <Input {...field} value={field.value ?? ''}/>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-  
-              {/* Relationship Degree */}
-              <FormField
-                control={form.control}
-                name="relationshipDegree"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{t('patients:fields:relationshipDegree')}</FormLabel>
-                    <FormControl>
-                      <Input {...field} value={field.value ?? ''} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-  
-              {/* Is Special Patient */}
-              <FormField
-                control={form.control}
-                name="isSpecialPatient"
-                render={({ field }) => (
-                  <FormItem className="flex items-center space-x-2">
-                    <FormControl>
-                      <Checkbox
-                        checked={field.value}
-                        onCheckedChange={(checked) => field.onChange(!!checked)}
-                      />
-                    </FormControl>
-                    <FormLabel>{t('patients:fields:isSpecialPatient')}</FormLabel>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-  
-              {/* Is Active */}
-              {/* <FormField
-                control={form.control}
-                name="isActive"
-                render={({ field }) => (
-                  <FormItem className="flex items-center space-x-2">
-                    <FormControl>
-                      <Checkbox
-                        checked={field.value}
-                        onCheckedChange={(checked) => field.onChange(!!checked)}
-                      />
-                    </FormControl>
-                    <FormLabel>{t('patients:isActive')}</FormLabel>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              /> */}
-  
-              {/* Submit Button */}
-              <DialogFooter>
-                <Button variant="secondary" type="submit" className="cursor-pointer">
-                  {t('common:cancel')}
-                </Button>
 
-                <Button type="submit" className="cursor-pointer">
-                  {t('common:save')}
-                </Button>
-              </DialogFooter>
-            </form>
-          </Form>
-        </div>
+        <ScrollArea className="h-[600px] w-[100%] rounded-md border p-4">
+          <div className="grid gap-4 py-4 p-2">
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                <FormField
+                  control={form.control}
+                  name="firstName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{t('patients:fields:firstName')}</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+    
+                <FormField
+                  control={form.control}
+                  name="lastName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{t('patients:fields:lastName')}</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+    
+                <FormField
+                  control={form.control}
+                  name="dateOfBirth"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{t('patients:fields:dateOfBirth')}</FormLabel>
+                      <FormControl>
+                        <Input type="date" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+    
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{t('patients:fields:email')}</FormLabel>
+                      <FormControl>
+                        <Input type="email" placeholder="email@example.com" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+            
+                <FormField
+                  control={form.control}
+                  name="fee"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>{t('patients:fields:fee')}</FormLabel>
+                      <FormControl>
+                        <Input 
+                          type="number" 
+                          prefix="R$" 
+                          min="0" 
+                          {...field} 
+                          value={field.value ?? ''}
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            field.onChange(value === '' ? value : Number(value));
+                          }}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <div className='flex'>
+                  <FormField
+                    control={form.control}
+                    name="isSpecialPatient"
+                    render={({ field }) => (
+                      <FormItem className="flex items-center mr-2">
+                        <FormControl>
+                          <Checkbox
+                            checked={field.value}
+                            onCheckedChange={(checked) => field.onChange(!!checked)}
+                          />
+                        </FormControl>
+                        <FormLabel>{t('patients:fields:isSpecialPatient')}</FormLabel>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="hasAResponsible"
+                    render={({ field }) => (
+                      <FormItem className="flex items-center">
+                        <FormControl>
+                          <Checkbox
+                            checked={field.value}
+                            onCheckedChange={(checked) => field.onChange(!!checked)}
+                          />
+                        </FormControl>
+                        <FormLabel>{t('patients:fields:hasAResponsible')}</FormLabel>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+
+                { hasResponsible && (
+                  <>
+                    <FormField
+                      control={form.control}
+                      name="responsibleName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>{t('patients:fields:responsibleName')}</FormLabel>
+                          <FormControl>
+                            <Input {...field} value={field.value ?? ''} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="responsibleEmail"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>{t('patients:fields:responsibleEmail')}</FormLabel>
+                          <FormControl>
+                            <Input type="email" placeholder="email@example.com" {...field} value={field.value ?? ''} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="responsiblePhoneNumber"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>{t('patients:fields:responsiblePhoneNumber')}</FormLabel>
+                          <FormControl>
+                            <Input {...field} value={field.value ?? ''} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="relationshipDegree"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>{t('patients:fields:relationshipDegree')}</FormLabel>
+                          <FormControl>
+                            <Input {...field} value={field.value ?? ''} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </>
+                )}
+    
+                <DialogFooter>
+                  <Button variant="secondary" className="cursor-pointer" onClick={() => onOpenChange(false)}>
+                    {t('common:cancel')}
+                  </Button>
+
+                  <Button type="submit" className="cursor-pointer">
+                    {t('common:save')}
+                  </Button>
+                </DialogFooter>
+              </form>
+            </Form>
+          </div>
+        </ScrollArea>
+
       </DialogContent>
     </Dialog>
   )

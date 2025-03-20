@@ -11,12 +11,16 @@
     "isSpecialPatient": "Special Patient?",
     "hasAResponsible": "Has Responsible?",
     "responsibleName": "Responsible Name",
+    "responsibleEmail": "Responsible E-mail",
     "responsiblePhoneNumber": "Responsible Phone",
     "relationshipDegree": "Relationship Degree"
   },
   "validation": {
     "minValidation": "{{field}} must be at least {{value}} characters long.",
     "maxValidation": "{{field}} must be at most {{value}} characters long.",
-    "requiredValidation": "{{field}} is required."
+    "requiredValidation": "{{field}} is required.",
+    "email": "Invalid e-mail",
+    "noFutureDate": "{{field}} cannot be in the future.",
+    "minValue": "{{field}} most be at least R$: {{value}}"
   }
 }
