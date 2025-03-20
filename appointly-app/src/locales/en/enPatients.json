@@ -13,7 +13,18 @@
     "responsibleName": "Responsible Name",
     "responsibleEmail": "Responsible E-mail",
     "responsiblePhoneNumber": "Responsible Phone",
-    "relationshipDegree": "Relationship Degree"
+    "relationshipDegree": "Relationship Degree",
+    "relationshipDegreeLabel": {
+      "parent": "Parent",
+      "child": "Child",
+      "sibling": "Sibling",
+      "spouse": "Spouse",
+      "grandparent": "Grandparent",
+      "grandchild": "Grandchild",
+      "aunt_uncle": "Aunt/Uncle",
+      "niece_nephew": "Niece/Nephew",
+      "cousin": "Cousin"
+    }
   },
   "validation": {
     "minValidation": "{{field}} must be at least {{value}} characters long.",

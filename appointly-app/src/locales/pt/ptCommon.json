@@ -12,5 +12,6 @@
   "rowPerPage": "Linhas por página",
   "rowsSelected": "linhas(s) selecionadas.",
   "page": "Página",
-  "of": "de"
+  "of": "de",
+  "selectLabel": "Selecione o"
 }

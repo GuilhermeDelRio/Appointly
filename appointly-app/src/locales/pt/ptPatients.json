@@ -13,7 +13,18 @@
     "responsibleName": "Nome do Responsável",
     "responsibleEmail": "E-mail do Responsável",
     "responsiblePhoneNumber": "Telefone do Responsável",
-    "relationshipDegree": "Grau de Parentesco"
+    "relationshipDegree": "Grau de Parentesco",
+    "relationshipDegreeLabel": {
+      "parent": "Pai/Mãe",
+      "child": "Filho/Filha",
+      "sibling": "Irmão/Irmã",
+      "spouse": "Cônjuge",
+      "grandparent": "Avô/Avó",
+      "grandchild": "Neto/Neta",
+      "aunt_uncle": "Tio/Tia",
+      "niece_nephew": "Sobrinho/Sobrinha",
+      "cousin": "Primo/Prima"
+    }
   },
   "validation": {
     "minValidation": "{{field}} deve ter pelo menos {{value}} caracteres.",

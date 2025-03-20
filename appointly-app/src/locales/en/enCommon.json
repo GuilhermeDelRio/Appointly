@@ -12,5 +12,6 @@
   "rowPerPage": "Rows per page",
   "rowsSelected": "row(s) selected.",
   "page": "Page",
-  "of": "of"
+  "of": "of",
+  "selectLabel": "Select a"
 }

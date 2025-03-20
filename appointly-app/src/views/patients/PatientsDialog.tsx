@@ -25,6 +25,14 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+
 import { Button } from "@/components/ui/button"
 import { Separator } from '@/components/ui/separator'
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -127,7 +135,20 @@ export function PatientsDialog({ open, onOpenChange }: DialogProps) {
     defaultValue: false
   })
 
+  const relationshipDegreeLabels = {
+    [RelationshipDegreeEnum.PARENT]: t('patients:fields:relationshipDegreeLabel:parent'),
+    [RelationshipDegreeEnum.CHILD]: t('patients:fields:relationshipDegreeLabel:child'),
+    [RelationshipDegreeEnum.SIBLING]: t('patients:fields:relationshipDegreeLabel:sibling'),
+    [RelationshipDegreeEnum.SPOUSE]: t('patients:fields:relationshipDegreeLabel:spouse'),
+    [RelationshipDegreeEnum.GRANDPARENT]: t('patients:fields:relationshipDegreeLabel:grandparent'),
+    [RelationshipDegreeEnum.GRANDCHILD]: t('patients:fields:relationshipDegreeLabel:grandchild'),
+    [RelationshipDegreeEnum.AUNT_UNCLE]: t('patients:fields:relationshipDegreeLabel:aunt_uncle'),
+    [RelationshipDegreeEnum.NIECE_NEPHEW]: t('patients:fields:relationshipDegreeLabel:niece_nephew'),
+    [RelationshipDegreeEnum.COUSIN]: t('patients:fields:relationshipDegreeLabel:cousin'),
+  }
+
   function onSubmit(values: z.infer<typeof patientFormSchema>) {
+    console.log('aquiiiii')
     console.log(values)
   }
 
@@ -217,8 +238,8 @@ export function PatientsDialog({ open, onOpenChange }: DialogProps) {
                           {...field} 
                           value={field.value ?? ''}
                           onChange={(e) => {
-                            const value = e.target.value;
-                            field.onChange(value === '' ? value : Number(value));
+                            const value = e.target.value
+                            field.onChange(value === '' ? value : Number(value))
                           }}
                         />
                       </FormControl>
@@ -313,9 +334,21 @@ export function PatientsDialog({ open, onOpenChange }: DialogProps) {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel>{t('patients:fields:relationshipDegree')}</FormLabel>
-                          <FormControl>
-                            <Input {...field} value={field.value ?? ''} />
-                          </FormControl>
+                          <Select onValueChange={field.onChange}>
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue 
+                                  placeholder={`${t('common:selectLabel')} ${t('patients:fields:relationshipDegree')}`} />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              {Object.values(RelationshipDegreeEnum).map((degree) => (
+                                <SelectItem key={degree} value={degree}>
+                                  {relationshipDegreeLabels[degree]}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
                           <FormMessage />
                         </FormItem>
                       )}
