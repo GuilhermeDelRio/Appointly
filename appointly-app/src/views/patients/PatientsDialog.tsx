@@ -159,8 +159,15 @@ export function PatientsDialog({ open, onOpenChange }: DialogProps) {
     onOpenChange(false)
   }
 
+  const handleDialogOpenChange = (isOpen: boolean) => {
+    if (!isOpen) {
+      form.reset()
+    }
+    onOpenChange(isOpen)
+  }
+
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleDialogOpenChange}>
       <DialogContent className="sm:max-w-[700px]">
         <DialogHeader>
           <DialogTitle className="flex items-center">
