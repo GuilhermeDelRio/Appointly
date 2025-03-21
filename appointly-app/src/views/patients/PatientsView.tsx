@@ -1,35 +1,31 @@
 import { useEffect, useState } from 'react'
 import { patientService } from '@/services/patientService'
-import type { RequestParams } from '@/types/http'
+import { usePatientStore } from '@/stores/patientStore'
 import { usePatientColumns } from './columns'
-import { Patient } from './patient'
 import { DataTable } from '@/components/DataTable/DataTable'
 import { Users } from 'lucide-react'
 import { Header } from "@/components/header/Header"
 import { Skeleton } from '@/components/ui/skeleton'
+import { RequestParams } from '@/types/http'
 
 export function PatientsView() {
   const columns = usePatientColumns()
-  const [data, setData] = useState<Patient[]>([])
   const [isLoading, setIsLoading] = useState(false)
 
+  const data = usePatientStore((state) => state.data)
+  const setDataInStore = usePatientStore((state) => state.setData)
+
   useEffect(() => {
-
-    setIsLoading(true)
-
-    const fetchPatients = async() => {
-      const config: RequestParams = {
-        params: {
-          page: 1,
-          pageSize: 10,
-        }
-      }
-
+    const fetchPatients = async () => {
+      setIsLoading(true)
+      
+      const config: RequestParams = { params: { page: 1, pageSize: 10 } }
       const response = await patientService.getAll(config)
-      setData(response.data)
+
+      setDataInStore(response.data)
       setIsLoading(false)
     }
-
+  
     fetchPatients()
   }, [])
   

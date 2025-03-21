@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { patientService } from '@/services/patientService'
+import { usePatientStore } from '@/stores/patientStore'
 import { toast } from 'sonner'
 import { User } from 'lucide-react'
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -153,8 +154,14 @@ export function PatientsDialog({ open, onOpenChange }: DialogProps) {
   const onSubmit = async (values: z.infer<typeof patientFormSchema>) => {
     try {
       values.dateOfBirth = new Date(values.dateOfBirth).toISOString()
+
+      const response = await patientService.create(values)
       
-      await patientService.create(values)
+      const currentData = usePatientStore.getState().data
+      const setDataInStore = usePatientStore.getState().setData
+
+      setDataInStore([response.data, ...currentData])
+      form.reset()
       toast.success(t('common:created', { field: t('patients:singularName') }))
     } catch(ex: any) {
       toast.error(ex.message)
