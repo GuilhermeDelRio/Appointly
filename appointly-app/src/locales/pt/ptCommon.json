@@ -13,5 +13,6 @@
   "rowsSelected": "linhas(s) selecionadas.",
   "page": "Página",
   "of": "de",
-  "selectLabel": "Selecione o"
+  "selectLabel": "Selecione o",
+  "created": "{{field}} criado com sucesso."
 }

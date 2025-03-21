@@ -1,5 +1,6 @@
 {
   "name": "Patients",
+  "singularName": "Patient",
   "btnAdd": "New patient",
   "fields": {
     "firstName": "First Name",

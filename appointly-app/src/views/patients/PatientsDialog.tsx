@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { patientService } from '@/services/patientService'
 import { toast } from 'sonner'
 import { User } from 'lucide-react'
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -149,8 +150,15 @@ export function PatientsDialog({ open, onOpenChange }: DialogProps) {
     [RelationshipDegreeEnum.COUSIN]: t('patients:fields:relationshipDegreeLabel:cousin'),
   }
 
-  const onSubmit = (values: z.infer<typeof patientFormSchema>) => {
-    console.log(values)
+  const onSubmit = async (values: z.infer<typeof patientFormSchema>) => {
+    try {
+      values.dateOfBirth = new Date(values.dateOfBirth).toISOString()
+      
+      await patientService.create(values)
+      toast.success(t('common:created', { field: t('patients:singularName') }))
+    } catch(ex: any) {
+      toast.error(ex.message)
+    }
   }
 
   const handleClose = (e: React.MouseEvent) => {

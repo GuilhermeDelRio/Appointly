@@ -13,5 +13,6 @@
   "rowsSelected": "row(s) selected.",
   "page": "Page",
   "of": "of",
-  "selectLabel": "Select a"
+  "selectLabel": "Select a",
+  "created": "{{field}} created with success."
 }
