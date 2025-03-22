@@ -6,16 +6,22 @@ import { DataTable } from '@/components/DataTable/DataTable'
 import { Users } from 'lucide-react'
 import { Header } from "@/components/header/Header"
 import { RequestParams } from '@/types/http'
+import { Patient } from './patient'
+import { useDialogStore } from '@/stores/dialogStore'
 
 export function PatientsView() {
-  const columns = usePatientColumns()
-
   const [pageIndex, setPageIndex] = useState(0)
   const [pageSize, setPageSize] = useState(10)
 
   const data = usePatientStore((state) => state.data)
   const totalCount = usePatientStore((state) => state.totalCount)
   const setDataInStore = usePatientStore((state) => state.setData)
+
+  const openDialog = useDialogStore((state) => state.open)
+  const handleEdit = (patient: Patient) => openDialog("patientsDialog", patient)
+  const handleDelete = (patient: Patient) => openDialog("deleteDialog", patient.id)
+
+  const columns = usePatientColumns({ onEdit: handleEdit, onDelete: handleDelete })
 
   useEffect(() => {
     const fetchPatients = async () => {

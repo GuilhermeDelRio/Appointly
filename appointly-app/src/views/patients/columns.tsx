@@ -18,9 +18,15 @@ import {
   Pencil,
   Trash
 } from 'lucide-react'
+
 import { DataTableColumnHeader } from '@/components/DataTable/DataTableColumnHeader'
 
-export function usePatientColumns() {
+type UsePatientColumnsProps = {
+  onEdit: (patient: Patient) => void
+  onDelete: (patient: Patient) => void
+}
+
+export function usePatientColumns({ onEdit, onDelete }: UsePatientColumnsProps) {
   const { t } = useTranslation()
 
   const columns: ColumnDef<Patient>[] = [
@@ -130,11 +136,11 @@ export function usePatientColumns() {
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>{t('common:actions')}</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="cursor-pointer">
+              <DropdownMenuItem className="cursor-pointer" onClick={() => onEdit(dataRow)}>
                 <Pencil />
                 {t('common:edit')}
               </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer">
+              <DropdownMenuItem className="cursor-pointer" onClick={() => onDelete(dataRow)}>
                 <Trash />
                 {t('common:delete')}
               </DropdownMenuItem>

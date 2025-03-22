@@ -4,6 +4,7 @@
   "account": "Conta",
   "save": "Salvar",
   "edit": "Editar",
+  "new": "Novo",
   "delete": "Deletar",
   "cancel": "Cancelar",
   "loading": "Carregando...",
@@ -14,5 +15,6 @@
   "page": "Página",
   "of": "de",
   "selectLabel": "Selecione o",
-  "created": "{{field}} criado com sucesso."
+  "created": "{{field}} criado com sucesso.",
+  "edited": "{{field}} editado criado com sucesso."
 }

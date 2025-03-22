@@ -42,6 +42,8 @@ import { Separator } from '@/components/ui/separator'
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
+import { useDialogStore } from '@/stores/dialogStore'
+import { useEffect, useState } from 'react'
 
 const isNotFutureDate = (dateStr: string) => {
   const date = new Date(dateStr)
@@ -107,30 +109,37 @@ const createPatientFormSchema = (t: (key: string, options?: any) => string): z.Z
     relationshipDegree: z.nativeEnum(RelationshipDegreeEnum).nullable(),
   })
 
+  const defaultValues = {
+    id: '',
+    firstName: '',
+    lastName: '',
+    dateOfBirth: '',
+    phoneNumber: '',
+    email: '',
+
+    fee: 0,
+    isSpecialPatient: false,
+    hasAResponsible: false,
+
+    responsibleName: null,
+    responsibleEmail: null,
+    responsiblePhoneNumber: null,
+
+    relationshipDegree: null,
+  }
 
 export function PatientsDialog({ open, onOpenChange }: DialogProps) {
+
+  const [isEdit, setIsEdit] = useState(false)
+
   const { t } = useTranslation()
   const patientFormSchema = createPatientFormSchema(t)
 
+  const { dialogData } = useDialogStore()
+
   const form = useForm<z.infer<typeof patientFormSchema>>({
     resolver: zodResolver(patientFormSchema),
-    defaultValues: {  
-      firstName: '',
-      lastName: '',
-      dateOfBirth: '',
-      phoneNumber: '',
-      email: '',
-  
-      fee: 0,
-      isSpecialPatient: false,
-      hasAResponsible: false,
-  
-      responsibleName: null,
-      responsibleEmail: null,
-      responsiblePhoneNumber: null,
-  
-      relationshipDegree: null,
-    },
+    defaultValues
   })
   
   const hasResponsible = useWatch({
@@ -151,22 +160,50 @@ export function PatientsDialog({ open, onOpenChange }: DialogProps) {
     [RelationshipDegreeEnum.COUSIN]: t('patients:fields:relationshipDegreeLabel:cousin'),
   }
 
+  const getDialogTitle = () => {
+    return !isEdit 
+      ? `${t('common:new')} ${t('patients:singularName').toLocaleLowerCase()}` 
+      : `${t('common:edit')} ${t('patients:singularName').toLocaleLowerCase()}`
+  }
+
   const onSubmit = async (values: z.infer<typeof patientFormSchema>) => {
     try {
       values.dateOfBirth = new Date(values.dateOfBirth).toISOString()
-
-      const response = await patientService.create(values)
-      
-      const currentData = usePatientStore.getState().data
-      const totalCount = usePatientStore.getState().totalCount
-      const setDataInStore = usePatientStore.getState().setData
-
-      setDataInStore([response.data, ...currentData], (totalCount ?? 0) + 1)
+  
+      if (!isEdit) {
+        await createPatient(values)
+        toast.success(t('common:created', { field: t('patients:singularName') }))
+      } else {
+        await editPatient(values)
+        toast.success(t('common:edited', { field: t('patients:singularName') }))
+      }
+  
       form.reset()
-      toast.success(t('common:created', { field: t('patients:singularName') }))
-    } catch(ex: any) {
+    } catch (ex: any) {
       toast.error(ex.message)
     }
+  }
+
+  const createPatient = async (values: z.infer<typeof patientFormSchema>) => {
+    const { data: currentData, totalCount, setData } = usePatientStore.getState()
+  
+    const response = await patientService.create(values)
+    const newData = [response.data, ...currentData]
+  
+    setData(newData, (totalCount ?? 0) + 1)
+  }
+
+  const editPatient = async (values: z.infer<typeof patientFormSchema>) => {
+    const { data: currentData, totalCount, setData } = usePatientStore.getState()
+  
+    await patientService.update(values.id!, values)
+  
+    const newData = currentData.map((patient) =>
+      patient.id === values.id ? values : patient
+    )
+  
+    setData(newData, totalCount ?? 0)
+    onOpenChange(false)
   }
 
   const handleClose = (e: React.MouseEvent) => {
@@ -182,13 +219,24 @@ export function PatientsDialog({ open, onOpenChange }: DialogProps) {
     onOpenChange(isOpen)
   }
 
+  useEffect(() => {
+    if (open) {
+      setIsEdit(!!dialogData)
+  
+      form.reset({
+        ...defaultValues,
+        ...(dialogData ?? {}) 
+      })
+    }
+  }, [open, dialogData])
+
   return (
     <Dialog open={open} onOpenChange={handleDialogOpenChange}>
       <DialogContent className="sm:max-w-[700px]">
         <DialogHeader>
           <DialogTitle className="flex items-center">
             <User />
-            <span className="ml-1">{t("patients:btnAdd")}</span>
+            <span className="ml-1">{getDialogTitle()}</span>
           </DialogTitle>
         </DialogHeader>
   
