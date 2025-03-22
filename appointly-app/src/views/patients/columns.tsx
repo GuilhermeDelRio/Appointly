@@ -33,14 +33,14 @@ export function usePatientColumns() {
     },
     {
       accessorKey: "lastName",
-      size: 90,
+      size: 120,
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title={t('patients:fields:lastName')} />
       ),
     },
     {
       accessorKey: "dateOfBirth",
-      size: 120,
+      size: 160,
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title={t('patients:fields:dateOfBirth')} />
       ),
@@ -51,7 +51,7 @@ export function usePatientColumns() {
     },
     {
       accessorKey: "phoneNumber",
-      size: 100,
+      size: 140,
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title={t('patients:fields:phoneNumber')} />
       ),
@@ -100,7 +100,7 @@ export function usePatientColumns() {
     },
     {
       accessorKey: "responsiblePhoneNumber",
-      size: 180,
+      size: 200,
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title={t('patients:fields:responsiblePhoneNumber')} />
       ),
@@ -108,7 +108,7 @@ export function usePatientColumns() {
     },
     {
       accessorKey: "relationshipDegree",
-      size: 150,
+      size: 100,
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title={t('patients:fields:relationshipDegree')} />
       ),
