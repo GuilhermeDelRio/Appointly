@@ -10,24 +10,30 @@ import { RequestParams } from '@/types/http'
 
 export function PatientsView() {
   const columns = usePatientColumns()
+
   const [isLoading, setIsLoading] = useState(false)
+  const [pageIndex, setPageIndex] = useState(0)
+  const [pageSize, setPageSize] = useState(10)
 
   const data = usePatientStore((state) => state.data)
+  const totalCount = usePatientStore((state) => state.totalCount)
   const setDataInStore = usePatientStore((state) => state.setData)
 
   useEffect(() => {
     const fetchPatients = async () => {
       setIsLoading(true)
       
-      const config: RequestParams = { params: { page: 1, pageSize: 10 } }
+      const config: RequestParams = { params: { page: pageIndex + 1, pageSize } }
       const response = await patientService.getAll(config)
 
-      setDataInStore(response.data)
+      const { items, totalCount } = response.data
+
+      setDataInStore(items, totalCount)
       setIsLoading(false)
     }
   
     fetchPatients()
-  }, [])
+  }, [pageIndex, pageSize])
   
   return (
     <div className="flex flex-col p-2">
@@ -41,7 +47,15 @@ export function PatientsView() {
       <div className="flex-grow">
         {isLoading 
           ? <Skeleton className=" h-[500px] " /> 
-          : <DataTable columns={columns} data={data} />
+          : <DataTable 
+            columns={columns} 
+            data={data}
+            pageIndex={pageIndex}
+            pageSize={pageSize}
+            totalCount={totalCount}
+            setPageIndex={setPageIndex}
+            setPageSize={setPageSize}
+          />
         }
       </div>
     </div>

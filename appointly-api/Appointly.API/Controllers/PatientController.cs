@@ -32,7 +32,7 @@ public class PatientController : ControllerBase
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<List<PatientResponseDTO>>> GetPatients(
+    public async Task<ActionResult<PageResponse<PatientResponseDTO>>> GetPatients(
         string? searchTerm, int page, int pageSize, CancellationToken cancellationToken)
     {
         var patients = await _mediator.Send(
@@ -44,7 +44,7 @@ public class PatientController : ControllerBase
     [HttpGet("{id}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<PatientResponseDTO>> GetPatient(Guid Id, CancellationToken cancellationToken)
+    public async Task<ActionResult<PatientResponseDTO>> GetPatientById(Guid Id, CancellationToken cancellationToken)
     {
         var patientCommand = new GetPatientByIdQuery { Id = Id };
         return Ok(await _mediator.Send(patientCommand, cancellationToken));

@@ -1,11 +1,14 @@
+import { Patient } from '@/views/patients/patient'
 import { create } from 'zustand'
 
 interface PatientStore {
-  data: any[]
-  setData: (newData: any[]) => void
+  data: Patient[]
+  totalCount: number
+  setData: (newData: Patient[], total: number) => void
 }
 
 export const usePatientStore = create<PatientStore>((set) => ({
   data: [],
-  setData: (newData) => set({ data: newData })
+  totalCount: 0,
+  setData: (newData, total) => set({ data: newData, totalCount: total })
 }))
