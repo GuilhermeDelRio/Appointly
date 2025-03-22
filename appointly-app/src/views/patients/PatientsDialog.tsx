@@ -158,9 +158,10 @@ export function PatientsDialog({ open, onOpenChange }: DialogProps) {
       const response = await patientService.create(values)
       
       const currentData = usePatientStore.getState().data
+      const totalCount = usePatientStore.getState().totalCount
       const setDataInStore = usePatientStore.getState().setData
 
-      setDataInStore([response.data, ...currentData])
+      setDataInStore([response.data, ...currentData], (totalCount ?? 0) + 1)
       form.reset()
       toast.success(t('common:created', { field: t('patients:singularName') }))
     } catch(ex: any) {
