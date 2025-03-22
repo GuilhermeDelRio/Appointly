@@ -18,6 +18,7 @@ import {
   Pencil,
   Trash
 } from 'lucide-react'
+import { DataTableColumnHeader } from '@/components/DataTable/DataTableColumnHeader'
 
 export function usePatientColumns() {
   const { t } = useTranslation()
@@ -25,15 +26,21 @@ export function usePatientColumns() {
   const columns: ColumnDef<Patient>[] = [
     {
       accessorKey: "firstName",
-      header: t('patients:fields:firstName'),
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title={t('patients:fields:firstName')} />
+      ),
     },
     {
       accessorKey: "lastName",
-      header: t('patients:fields:lastName'),
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title={t('patients:fields:lastName')} />
+      ),
     },
     {
       accessorKey: "dateOfBirth",
-      header: t('patients:fields:dateOfBirth'),
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title={t('patients:fields:dateOfBirth')} />
+      ),
       cell: ({ getValue }) => {
         const date = new Date(getValue<string>())
         return date.toLocaleDateString()
@@ -41,15 +48,21 @@ export function usePatientColumns() {
     },
     {
       accessorKey: "phoneNumber",
-      header: t('patients:fields:phoneNumber'),
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title={t('patients:fields:phoneNumber')} />
+      ),
     },
     {
       accessorKey: "email",
-      header: t('patients:fields:email'),
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title={t('patients:fields:email')} />
+      ),
     },
     {
       accessorKey: "fee",
-      header: t('patients:fields:fee'),
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title={t('patients:fields:fee')} />
+      ),
       cell: ({ getValue }) => {
         const fee = getValue<number>()
         return `$${fee.toFixed(2)}`
@@ -57,27 +70,37 @@ export function usePatientColumns() {
     },
     {
       accessorKey: "isSpecialPatient",
-      header: t('patients:fields:isSpecialPatient'),
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title={t('patients:fields:isSpecialPatient')} />
+      ),
       cell: ({ getValue }) => (getValue<boolean>() ? "Yes" : "No"),
     },
     {
       accessorKey: "hasAResponsible",
-      header: t('patients:fields:hasAResponsible'),
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title={t('patients:fields:hasAResponsible')} />
+      ),
       cell: ({ getValue }) => (getValue<boolean>() ? "Yes" : "No"),
     },
     {
       accessorKey: "responsibleName",
-      header: t('patients:fields:responsibleName'),
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title={t('patients:fields:responsibleName')} />
+      ),
       cell: ({ getValue }) => getValue<string>() ?? "-",
     },
     {
       accessorKey: "responsiblePhoneNumber",
-      header: t('patients:fields:responsiblePhoneNumber'),
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title={t('patients:fields:responsiblePhoneNumber')} />
+      ),
       cell: ({ getValue }) => getValue<string>() ?? "-",
     },
     {
       accessorKey: "relationshipDegree",
-      header: t('patients:fields:relationshipDegree'),
+      header: ({ column }) => (
+        <DataTableColumnHeader column={column} title={t('patients:fields:relationshipDegree')} />
+      ),
       cell: ({ getValue }) => getValue<string>() ?? "-",
     },
     {
