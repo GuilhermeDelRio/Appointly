@@ -26,18 +26,21 @@ export function usePatientColumns() {
   const columns: ColumnDef<Patient>[] = [
     {
       accessorKey: "firstName",
+      size: 90,
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title={t('patients:fields:firstName')} />
       ),
     },
     {
       accessorKey: "lastName",
+      size: 90,
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title={t('patients:fields:lastName')} />
       ),
     },
     {
       accessorKey: "dateOfBirth",
+      size: 120,
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title={t('patients:fields:dateOfBirth')} />
       ),
@@ -48,18 +51,21 @@ export function usePatientColumns() {
     },
     {
       accessorKey: "phoneNumber",
+      size: 100,
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title={t('patients:fields:phoneNumber')} />
       ),
     },
     {
       accessorKey: "email",
+      size: 100,
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title={t('patients:fields:email')} />
       ),
     },
     {
       accessorKey: "fee",
+      size: 100,
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title={t('patients:fields:fee')} />
       ),
@@ -70,6 +76,7 @@ export function usePatientColumns() {
     },
     {
       accessorKey: "isSpecialPatient",
+      size: 150,
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title={t('patients:fields:isSpecialPatient')} />
       ),
@@ -77,6 +84,7 @@ export function usePatientColumns() {
     },
     {
       accessorKey: "hasAResponsible",
+      size: 150,
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title={t('patients:fields:hasAResponsible')} />
       ),
@@ -84,6 +92,7 @@ export function usePatientColumns() {
     },
     {
       accessorKey: "responsibleName",
+      size: 180,
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title={t('patients:fields:responsibleName')} />
       ),
@@ -91,6 +100,7 @@ export function usePatientColumns() {
     },
     {
       accessorKey: "responsiblePhoneNumber",
+      size: 180,
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title={t('patients:fields:responsiblePhoneNumber')} />
       ),
@@ -98,6 +108,7 @@ export function usePatientColumns() {
     },
     {
       accessorKey: "relationshipDegree",
+      size: 150,
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title={t('patients:fields:relationshipDegree')} />
       ),
@@ -106,7 +117,7 @@ export function usePatientColumns() {
     {
       id: "actions",
       cell: ({ row }) => {
-        const payment = row.original
+        const dataRow = row.original
    
         return (
           <DropdownMenu>
