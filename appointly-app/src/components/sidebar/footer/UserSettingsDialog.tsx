@@ -22,8 +22,9 @@ import {
 
 import { toast } from 'sonner'
 
-import { Settings, Earth } from 'lucide-react'
+import { Settings, Earth, SunMoon } from 'lucide-react'
 import { DialogProps } from '@/types/dialogProps'
+import { ModeToggle } from '@/components/ThemeProvider/mode-toggle'
 
 interface LanguageOptions {
   lng: string
@@ -85,6 +86,15 @@ export function UserSettingsDialog({ open, onOpenChange }: DialogProps) {
               ))}
             </SelectContent>
           </Select>
+        </div>
+
+        <div className="grid gap-4 py-4">
+          <Label>
+            <SunMoon />
+            {t('common:theme')}
+          </Label>
+
+          <ModeToggle />
         </div>
 
         <DialogFooter>
