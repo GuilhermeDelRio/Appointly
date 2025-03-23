@@ -78,7 +78,7 @@ export function usePatientColumns({ onEdit, onDelete }: UsePatientColumnsProps) 
       ),
       cell: ({ getValue }) => {
         const fee = getValue<number>()
-        return `$${fee.toFixed(2)}`
+        return `R$${fee.toFixed(2)}`
       },
     },
     {
