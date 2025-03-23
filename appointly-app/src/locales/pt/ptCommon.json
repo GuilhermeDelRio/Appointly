@@ -16,5 +16,6 @@
   "of": "de",
   "selectLabel": "Selecione o",
   "created": "{{field}} criado com sucesso.",
-  "edited": "{{field}} editado criado com sucesso."
+  "edited": "{{field}} editado criado com sucesso.",
+  "deleted": "{{field}} deletado com sucesso."
 }

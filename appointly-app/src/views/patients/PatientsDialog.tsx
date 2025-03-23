@@ -230,7 +230,6 @@ export function PatientsDialog({ open, onOpenChange }: DialogProps) {
       }
   
       if (isEditing) {
-        console.log(dialogData)
         valuesToReset.dateOfBirth = new Date(dialogData.dateOfBirth)
           .toISOString()
           .split('T')[0]

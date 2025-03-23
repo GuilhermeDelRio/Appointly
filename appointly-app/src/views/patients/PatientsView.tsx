@@ -19,7 +19,19 @@ export function PatientsView() {
 
   const openDialog = useDialogStore((state) => state.open)
   const handleEdit = (patient: Patient) => openDialog("patientsDialog", patient)
-  const handleDelete = (patient: Patient) => openDialog("deleteDialog", patient.id)
+  const handleDelete = (patient: Patient) => {
+    
+    const payload = {
+      id: patient.id,
+      entity: 'patients:singularName',
+      onDelete: async () => {
+        await patientService.remove(patient.id!)
+        usePatientStore.getState().removeById(patient.id!)
+      }
+    }
+
+    openDialog("deleteDialog", payload)
+  }
 
   const columns = usePatientColumns({ onEdit: handleEdit, onDelete: handleDelete })
 
