@@ -1,7 +1,9 @@
 import {
   ColumnDef,
+  ColumnFiltersState,
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   SortingState,
@@ -19,9 +21,12 @@ import {
 
 import { DataTablePagination } from "./DataTablePagination"
 import React from "react"
+import DataTableColumnFilter from "./DataTableColumnFilter"
 
 interface DataTableProps<TData, TValue> {
-  columns: ColumnDef<TData, TValue>[]
+  columns: ColumnDef<TData, TValue>[],
+  columnKey: string,
+  filterPlaceHolder: string,
   data: TData[]
   pageIndex: number
   pageSize: number
@@ -32,6 +37,8 @@ interface DataTableProps<TData, TValue> {
 
 export function DataTable<TData, TValue>({
   columns,
+  columnKey,
+  filterPlaceHolder,
   data,
   pageIndex,
   pageSize,
@@ -41,6 +48,7 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   
   const [sorting, setSorting] = React.useState<SortingState>([])
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
 
   const table = useReactTable({
     data,
@@ -52,6 +60,7 @@ export function DataTable<TData, TValue>({
         pageSize,
       },
       sorting,
+      columnFilters
     },
     onPaginationChange: (updater) => {
       if (typeof updater === 'function') {
@@ -70,10 +79,18 @@ export function DataTable<TData, TValue>({
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
     getSortedRowModel: getSortedRowModel(),
+    onColumnFiltersChange: setColumnFilters,
+    getFilteredRowModel: getFilteredRowModel(),
   })
 
   return (
-    <div className="rounded-md border overflow-auto">
+    <div className="rounded-md border overflow-auto p-2">
+      
+      <DataTableColumnFilter
+        table={table}
+        columnKey={columnKey}
+        placeholder={filterPlaceHolder}
+      />
       <Table style={{ tableLayout: 'fixed', width: '100%' }}>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (

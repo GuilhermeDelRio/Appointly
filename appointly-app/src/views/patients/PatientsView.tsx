@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { patientService } from '@/services/patientService'
 import { usePatientStore } from '@/stores/patientStore'
 import { usePatientColumns } from './columns'
@@ -10,6 +11,7 @@ import { Patient } from './patient'
 import { useDialogStore } from '@/stores/dialogStore'
 
 export function PatientsView() {
+  const { t } = useTranslation()
   const [pageIndex, setPageIndex] = useState(0)
   const [pageSize, setPageSize] = useState(10)
 
@@ -34,6 +36,10 @@ export function PatientsView() {
   }
 
   const columns = usePatientColumns({ onEdit: handleEdit, onDelete: handleDelete })
+
+  const getFilterPlaceholder = () => {
+    return `${t('common:filter')} ${t('patients:fields:firstName').toLowerCase()}`
+  }
 
   useEffect(() => {
     const fetchPatients = async () => {
@@ -60,6 +66,8 @@ export function PatientsView() {
       <div className="flex-grow">
         <DataTable 
           columns={columns} 
+          columnKey="firstName"
+          filterPlaceHolder={getFilterPlaceholder()}
           data={data}
           pageIndex={pageIndex}
           pageSize={pageSize}
