@@ -1,5 +1,6 @@
 using Appointly.Application.Dtos.PatientDTOs;
 using Appointly.Application.Interfaces.Services;
+using Appointly.Application.Mappers;
 using Appointly.Domain.Interfaces.Repository;
 using FluentValidation;
 using MediatR;
@@ -39,6 +40,6 @@ public class CreatePatientHandler : IRequestHandler<PatientRequestDTO, PatientRe
         _patientRepository.Create(patient);
         await _unitOfWork.Commit(cancellationToken);
         
-        return PatientResponseDTO.ToDTO(patient);
+        return patient.ToDto();
     }
 }

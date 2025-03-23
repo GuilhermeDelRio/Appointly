@@ -196,7 +196,7 @@ export function PatientsDialog({ open, onOpenChange }: DialogProps) {
   const editPatient = async (values: z.infer<typeof patientFormSchema>) => {
     const { data: currentData, totalCount, setData } = usePatientStore.getState()
   
-    await patientService.update(values.id!, values)
+    await patientService.update(values)
   
     const newData = currentData.map((patient) =>
       patient.id === values.id ? values : patient
@@ -221,12 +221,22 @@ export function PatientsDialog({ open, onOpenChange }: DialogProps) {
 
   useEffect(() => {
     if (open) {
-      setIsEdit(!!dialogData)
+      const isEditing = !!dialogData
+      setIsEdit(isEditing)
   
-      form.reset({
+      const valuesToReset = {
         ...defaultValues,
-        ...(dialogData ?? {}) 
-      })
+        ...(dialogData ?? {})
+      }
+  
+      if (isEditing) {
+        console.log(dialogData)
+        valuesToReset.dateOfBirth = new Date(dialogData.dateOfBirth)
+          .toISOString()
+          .split('T')[0]
+      }
+  
+      form.reset(valuesToReset)
     }
   }, [open, dialogData])
 

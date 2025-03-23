@@ -9,8 +9,10 @@ namespace Appointly.Persistence.Repository;
 public class PatientRepository : BaseRepository<Patient>, IPatientRepository
 {
     public PatientRepository(AppDbContext context) : base(context) { }
-    public async Task<bool> FindByFirstNameAndLastName(string firstName, string lastName)
+    public async Task<Patient?> FindByFirstNameAndLastName(string firstName, string lastName)
     {
-         return await _context.Patients.AnyAsync(p => p.FirstName == firstName && p.LastName == lastName);
+         return await _context.Patients
+             .AsNoTracking()
+             .FirstOrDefaultAsync(p => p.FirstName == firstName && p.LastName == lastName);
     }
 }

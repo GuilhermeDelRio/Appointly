@@ -51,8 +51,9 @@ export function usePatientColumns({ onEdit, onDelete }: UsePatientColumnsProps) 
         <DataTableColumnHeader column={column} title={t('patients:fields:dateOfBirth')} />
       ),
       cell: ({ getValue }) => {
-        const date = new Date(getValue<string>())
-        return date.toLocaleDateString()
+        const dateString = getValue<string>()
+        const date = new Date(dateString)
+        return date.toLocaleDateString('pt-BR', { timeZone: 'UTC' })
       },
     },
     {

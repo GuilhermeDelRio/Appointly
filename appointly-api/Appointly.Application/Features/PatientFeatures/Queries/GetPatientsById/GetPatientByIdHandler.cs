@@ -1,4 +1,5 @@
 using Appointly.Application.Dtos.PatientDTOs;
+using Appointly.Application.Mappers;
 using Appointly.Domain.Exceptions;
 using Appointly.Domain.Interfaces.Repository;
 using MediatR;
@@ -20,6 +21,6 @@ public class GetPatientByIdHandler : IRequestHandler<GetPatientByIdQuery, Patien
 
         if (patient is null) throw new NotFoundException("Patient not found");
         
-        return PatientResponseDTO.ToDTO(patient);
+        return patient.ToDto();
     }
 }

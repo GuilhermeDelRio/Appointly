@@ -19,7 +19,16 @@ public class PatientValidationService : IPatientValidationService
     {
         var patientExists = await CheckIfPatientAlreadyExists(patient.FirstName, patient.LastName);
 
-        if (patientExists) throw new DuplicateDataException("Already exists a patient with the same first name and last name.");
+        if (patientExists is not null && patient.Id == Guid.Empty)
+        {
+            throw new DuplicateDataException("Already exists a patient with the same first name and last name.");
+        }
+
+        if (patientExists is not null && patient.Id != Guid.Empty)
+        {
+            if (patientExists.Id != patient.Id) 
+                throw new DuplicateDataException("Already exists a patient with the same id.");
+        }
         
         var patientAge = CalculateExactAge(patient.DateOfBirth);
 
@@ -29,7 +38,7 @@ public class PatientValidationService : IPatientValidationService
         validateResponsibleData(patient);
     }
 
-    private async Task<bool> CheckIfPatientAlreadyExists(string  firstName, string lastName)
+    private async Task<Patient?> CheckIfPatientAlreadyExists(string  firstName, string lastName)
     {
         return await _patientRepository.FindByFirstNameAndLastName(firstName, lastName);
     }

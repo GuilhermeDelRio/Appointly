@@ -10,8 +10,8 @@ export type DialogType =
 
 interface DialogState {
   openDialog: DialogType
-  dialogData: unknown
-  open: (dialog: DialogType, data?: unknown) => void
+  dialogData: any
+  open: (dialog: DialogType, data?: any) => void
   close: () => void
 }
 

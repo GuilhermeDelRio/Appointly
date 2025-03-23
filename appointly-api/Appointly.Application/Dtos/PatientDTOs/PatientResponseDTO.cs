@@ -19,24 +19,4 @@ public record PatientResponseDTO
     public string ResponsibleEmail { get; set; }
     public string ResponsiblePhoneNumber { get; set; }
     public string RelationshipDegree { get; set; }
-
-    public static PatientResponseDTO ToDTO(Patient patient) {
-        return new PatientResponseDTO
-        {
-            Id = patient.Id,
-            FirstName = patient.FirstName,
-            LastName = patient.LastName,
-            DateOfBirth = patient.DateOfBirth,
-            PhoneNumber = patient.PhoneNumber,
-            Email = patient.Email,
-            Fee = patient.Fee,
-            IsSpecialPatient = patient.IsSpecialPatient,
-            HasAResponsible = patient.HasAResponsible,
-            ResponsibleName = patient.ResponsibleName,
-            ResponsibleEmail = patient.ResponsibleEmail,
-            ResponsiblePhoneNumber = patient.ResponsiblePhoneNumber,
-            RelationshipDegree = patient.RelationshipDegree.ToString()
-        };
-    }
-    
 }

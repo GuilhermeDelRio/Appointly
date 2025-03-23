@@ -50,15 +50,14 @@ public class PatientController : ControllerBase
         return Ok(await _mediator.Send(patientCommand, cancellationToken));
     }
 
-    [HttpPut("{id}")]
+    [HttpPut]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult> UpdatePatient(
-        [FromBody] PatientRequestDTO request, 
-        Guid Id, CancellationToken cancellationToken)
+        [FromBody] UpdatePatientCommand patientUpdateCommand, 
+        CancellationToken cancellationToken)
     {
-        var patientUpdateCommand = new UpdatePatientCommand { Id = Id, Request = request };
         await _mediator.Send(patientUpdateCommand, cancellationToken);
         return NoContent();
     }
