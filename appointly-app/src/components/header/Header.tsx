@@ -6,10 +6,10 @@ import { Actions } from '@/types/headerActions'
 type HeaderProps = {
   titleLabel: string
   titleIcon: React.ComponentType
-  actions: Actions[]
+  actions?: Actions[]
 }
 
-export function Header({ titleLabel, titleIcon: TitleIcon, actions }: HeaderProps) {
+export function Header({ titleLabel, titleIcon: TitleIcon, actions = [] }: HeaderProps) {
   const { t } = useTranslation()
   const openDialog = useDialogStore((state) => state.open)
 
