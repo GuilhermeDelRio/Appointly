@@ -6,6 +6,7 @@ interface PatientStore {
   totalCount: number
   setData: (newData: Patient[], total: number) => void,
   removeById: (id: string) => void
+  removeManyById: (ids: string[]) => void
 }
 
 export const usePatientStore = create<PatientStore>((set, get) => ({
@@ -18,6 +19,14 @@ export const usePatientStore = create<PatientStore>((set, get) => ({
     set({
       data: updatedData,
       totalCount: Math.max(totalCount - 1, 0)
+    })
+  },
+  removeManyById: (ids) => {
+    const { data, totalCount } = get()
+    const updatedData = data.filter(patient => !ids.includes(patient.id))
+    set({
+      data: updatedData,
+      totalCount: Math.max(totalCount - ids.length, 0)
     })
   }
 }))

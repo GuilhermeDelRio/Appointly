@@ -9,4 +9,5 @@ export const patientService = {
   create: (data: Patient) => requestService.post(baseUrl, data),
   update: (data: Patient) => requestService.put(`${baseUrl}`, data),
   remove: (id: string) => requestService.delete(`${baseUrl}/${id}`),
+  bulkDelete: (ids: {}) => requestService.post(`${baseUrl}/bulkDelete`, ids)
 }

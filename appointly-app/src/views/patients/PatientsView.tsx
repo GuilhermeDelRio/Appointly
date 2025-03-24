@@ -39,16 +39,19 @@ export function PatientsView() {
 
   const columns = usePatientColumns({ onEdit: handleEdit, onDelete: handleDelete })
 
-  const handleBatchDelete = () => {
+  const handleBulkDelete = () => {
     const payload = {
       id: selectedPatients.map(p => p.id),
       entity: 'patients:name',
       onDelete: async () => {
-        console.log(selectedPatients)
-        // for (const patient of selectedPatients) {
-        //   await patientService.remove(patient.id!)
-        //   usePatientStore.getState().removeById(patient.id!)
-        // }
+        let idList = selectedPatients.map(x => x.id)
+
+        const payload = {
+          ids: idList
+        }
+
+        await patientService.bulkDelete(payload)
+        usePatientStore.getState().removeManyById(idList)
       }
     }
   
@@ -71,7 +74,7 @@ export function PatientsView() {
       variant: "destructive",
       hide: !isSelectRowDelete,
       icon: Trash,
-      onClick: handleBatchDelete
+      onClick: handleBulkDelete
     },
     {
       buttonLabel: "patients:btnAdd",

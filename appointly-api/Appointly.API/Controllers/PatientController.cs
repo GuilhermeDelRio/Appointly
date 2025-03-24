@@ -1,4 +1,5 @@
 using Appointly.Application.Dtos.PatientDTOs;
+using Appointly.Application.Features.PatientFeatures.Commands.BulkDeletePatients;
 using Appointly.Application.Features.PatientFeatures.Commands.DeletePatient;
 using Appointly.Application.Features.PatientFeatures.Commands.UpdatePatient;
 using Appointly.Application.Features.PatientFeatures.Queries.GetPatients;
@@ -69,6 +70,18 @@ public class PatientController : ControllerBase
     {
         var deleteCommand = new DeletePatientCommand { Id = Id };
         await _mediator.Send(deleteCommand, cancellationToken);
+        return NoContent();
+    }
+    
+    [HttpPost("bulkDelete")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesDefaultResponseType]
+    public async Task<ActionResult> BulkDeleteExpenses(
+        [FromBody] BulkDeletePatientsCommand bulkDeleteExpensesCommand,
+        CancellationToken cancellationToken)
+    {
+        await _mediator.Send(bulkDeleteExpensesCommand, cancellationToken);
         return NoContent();
     }
 }

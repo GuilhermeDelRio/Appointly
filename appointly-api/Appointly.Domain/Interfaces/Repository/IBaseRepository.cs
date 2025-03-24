@@ -9,4 +9,5 @@ public interface IBaseRepository<T> where T : BaseModel
     void Delete(T entity);
     Task<T> GetById(Guid id, CancellationToken cancellationToken);
     IQueryable<T> GetAll(CancellationToken cancellationToken);
+    Task BulkDelete(List<Guid> ids, CancellationToken cancellation);
 }
