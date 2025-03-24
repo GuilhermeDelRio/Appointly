@@ -3,6 +3,7 @@ import { Patient } from "./patient"
 import { ColumnDef } from "@tanstack/react-table"
 
 import { Button } from "@/components/ui/button"
+import { Checkbox } from "@/components/ui/checkbox"
 
 import { 
   DropdownMenu,
@@ -30,6 +31,29 @@ export function usePatientColumns({ onEdit, onDelete }: UsePatientColumnsProps) 
   const { t } = useTranslation()
 
   const columns: ColumnDef<Patient>[] = [
+    {
+      id: "select",
+      size: 40,
+      header: ({ table }) => (
+        <Checkbox
+          checked={
+            table.getIsAllPageRowsSelected() ||
+            (table.getIsSomePageRowsSelected() && "indeterminate")
+          }
+          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+          aria-label="Select all"
+        />
+      ),
+      cell: ({ row }) => (
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={(value) => row.toggleSelected(!!value)}
+          aria-label="Select row"
+        />
+      ),
+      enableSorting: false,
+      enableHiding: false,
+    },
     {
       accessorKey: "firstName",
       size: 90,
@@ -87,7 +111,7 @@ export function usePatientColumns({ onEdit, onDelete }: UsePatientColumnsProps) 
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title={t('patients:fields:isSpecialPatient')} />
       ),
-      cell: ({ getValue }) => (getValue<boolean>() ? "Yes" : "No"),
+      cell: ({ getValue }) => (getValue<boolean>() ? t("common:yes") : t("common:no")),
     },
     {
       accessorKey: "hasAResponsible",
@@ -95,7 +119,7 @@ export function usePatientColumns({ onEdit, onDelete }: UsePatientColumnsProps) 
       header: ({ column }) => (
         <DataTableColumnHeader column={column} title={t('patients:fields:hasAResponsible')} />
       ),
-      cell: ({ getValue }) => (getValue<boolean>() ? "Yes" : "No"),
+      cell: ({ getValue }) => (getValue<boolean>() ? t("common:yes") : t("common:no")),
     },
     {
       accessorKey: "responsibleName",

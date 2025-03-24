@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { patientService } from '@/services/patientService'
 import { usePatientStore } from '@/stores/patientStore'
@@ -8,12 +8,22 @@ import { Users } from 'lucide-react'
 import { Header } from "@/components/header/Header"
 import { RequestParams } from '@/types/http'
 import { Patient } from './patient'
-import { useDialogStore } from '@/stores/dialogStore'
+import { DialogType, useDialogStore } from '@/stores/dialogStore'
+
+interface Actions {
+  buttonLabel: string,
+  dialogType: DialogType,
+  variant: 'link' | 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | null | undefined
+  hide: boolean
+  onClick?: () => void
+}
 
 export function PatientsView() {
   const { t } = useTranslation()
   const [pageIndex, setPageIndex] = useState(0)
   const [pageSize, setPageSize] = useState(10)
+  const [isSelectRowDelete, setIsSelectRowDelete] = useState(true)
+  const [selectedPatients, setSelectedPatients] = useState<Patient[]>([])
 
   const data = usePatientStore((state) => state.data)
   const totalCount = usePatientStore((state) => state.totalCount)
@@ -22,7 +32,6 @@ export function PatientsView() {
   const openDialog = useDialogStore((state) => state.open)
   const handleEdit = (patient: Patient) => openDialog("patientsDialog", patient)
   const handleDelete = (patient: Patient) => {
-    
     const payload = {
       id: patient.id,
       entity: 'patients:singularName',
@@ -37,9 +46,46 @@ export function PatientsView() {
 
   const columns = usePatientColumns({ onEdit: handleEdit, onDelete: handleDelete })
 
+  const handleBatchDelete = () => {
+    const payload = {
+      id: selectedPatients.map(p => p.id),
+      entity: 'patients:pluralName',
+      onDelete: async () => {
+        console.log(selectedPatients)
+        // for (const patient of selectedPatients) {
+        //   await patientService.remove(patient.id!)
+        //   usePatientStore.getState().removeById(patient.id!)
+        // }
+      }
+    }
+  
+    openDialog("deleteDialog", payload)
+  }
+
   const getFilterPlaceholder = () => {
     return `${t('common:filter')} ${t('patients:fields:firstName').toLowerCase()}`
   }
+
+  const handleSelectionChange = (selected: Patient[]) => {
+    setSelectedPatients(selected)
+    setIsSelectRowDelete(selected.length > 0)
+  }
+  
+  const actions: Actions[] = useMemo(() => [
+    {
+      buttonLabel: "patients:delete",
+      dialogType: "deleteDialog",
+      variant: "destructive",
+      hide: !isSelectRowDelete,
+      onClick: handleBatchDelete
+    },
+    {
+      buttonLabel: "patients:btnAdd",
+      dialogType: "patientsDialog",
+      variant: "default",
+      hide: false
+    }
+  ], [isSelectRowDelete, selectedPatients])
 
   useEffect(() => {
     const fetchPatients = async () => {
@@ -53,14 +99,13 @@ export function PatientsView() {
   
     fetchPatients()
   }, [pageIndex, pageSize])
-  
+
   return (
     <div className="flex flex-col p-2">
       <Header 
         titleLabel="patients:name"
         titleIcon={ Users }
-        buttonLabel="patients:btnAdd"
-        dialogType="patientsDialog"
+        actions={actions}
       />
 
       <div className="flex-grow">
@@ -74,6 +119,7 @@ export function PatientsView() {
           totalCount={totalCount}
           setPageIndex={setPageIndex}
           setPageSize={setPageSize}
+          onSelectionChange={handleSelectionChange}
         />
       </div>
     </div>

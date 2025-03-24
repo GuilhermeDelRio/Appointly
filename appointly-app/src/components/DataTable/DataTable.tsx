@@ -32,7 +32,8 @@ interface DataTableProps<TData, TValue> {
   pageSize: number
   totalCount: number
   setPageIndex: (pageIndex: number) => void
-  setPageSize: (pageSize: number) => void
+  setPageSize: (pageSize: number) => void,
+  onSelectionChange?: (selectedData: TData[]) => void
 }
 
 export function DataTable<TData, TValue>({
@@ -45,11 +46,13 @@ export function DataTable<TData, TValue>({
   totalCount,
   setPageIndex,
   setPageSize,
+  onSelectionChange
 }: DataTableProps<TData, TValue>) {
   
   const [sorting, setSorting] = React.useState<SortingState>([])
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
-
+  const [rowSelection, setRowSelection] = React.useState({})
+  
   const table = useReactTable({
     data,
     columns,
@@ -60,7 +63,8 @@ export function DataTable<TData, TValue>({
         pageSize,
       },
       sorting,
-      columnFilters
+      columnFilters,
+      rowSelection
     },
     onPaginationChange: (updater) => {
       if (typeof updater === 'function') {
@@ -81,7 +85,14 @@ export function DataTable<TData, TValue>({
     getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
+    onRowSelectionChange: setRowSelection,
   })
+
+  React.useEffect(() => {
+    const selectedData = table.getSelectedRowModel().rows.map(row => row.original)
+    onSelectionChange?.(selectedData)
+  }, [rowSelection])
+  
 
   return (
     <div className="rounded-md border overflow-auto p-2">
