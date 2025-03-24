@@ -1,15 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import { useDialogStore, DialogType } from '@/stores/dialogStore'
 import { Button } from "@/components/ui/button"
-import { Plus } from "lucide-react"
-
-interface Actions {
-  buttonLabel: string,
-  dialogType: DialogType,
-  variant: 'link' | 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | null | undefined
-  hide: boolean
-  onClick?: () => void
-}
+import { Actions } from '@/types/headerActions'
 
 type HeaderProps = {
   titleLabel: string
@@ -33,14 +25,14 @@ export function Header({ titleLabel, titleIcon: TitleIcon, actions }: HeaderProp
       <div className="flex gap-2">
       {actions
         .filter(action => !action.hide)
-        .map(({ buttonLabel, dialogType, variant, onClick }, index) => (
+        .map(({ buttonLabel, dialogType, variant, icon: Icon, onClick }, index) => (
           <Button
             key={index}
             className="cursor-pointer"
             variant={variant || 'default'}
             onClick={() => onClick ? onClick() : dialogType && handleHeaderAction(dialogType)}
           >
-            <Plus className="mr-1" />
+            <Icon />
             {t(buttonLabel)}
           </Button>
       ))}

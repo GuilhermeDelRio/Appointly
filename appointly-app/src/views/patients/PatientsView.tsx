@@ -4,19 +4,12 @@ import { patientService } from '@/services/patientService'
 import { usePatientStore } from '@/stores/patientStore'
 import { usePatientColumns } from './columns'
 import { DataTable } from '@/components/DataTable/DataTable'
-import { Users } from 'lucide-react'
+import { Users, Plus, Trash } from 'lucide-react'
 import { Header } from "@/components/header/Header"
 import { RequestParams } from '@/types/http'
 import { Patient } from './patient'
-import { DialogType, useDialogStore } from '@/stores/dialogStore'
-
-interface Actions {
-  buttonLabel: string,
-  dialogType: DialogType,
-  variant: 'link' | 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | null | undefined
-  hide: boolean
-  onClick?: () => void
-}
+import { useDialogStore } from '@/stores/dialogStore'
+import { Actions } from '@/types/headerActions'
 
 export function PatientsView() {
   const { t } = useTranslation()
@@ -49,7 +42,7 @@ export function PatientsView() {
   const handleBatchDelete = () => {
     const payload = {
       id: selectedPatients.map(p => p.id),
-      entity: 'patients:pluralName',
+      entity: 'patients:name',
       onDelete: async () => {
         console.log(selectedPatients)
         // for (const patient of selectedPatients) {
@@ -73,16 +66,18 @@ export function PatientsView() {
   
   const actions: Actions[] = useMemo(() => [
     {
-      buttonLabel: "patients:delete",
+      buttonLabel: "common:delete",
       dialogType: "deleteDialog",
       variant: "destructive",
       hide: !isSelectRowDelete,
+      icon: Trash,
       onClick: handleBatchDelete
     },
     {
       buttonLabel: "patients:btnAdd",
       dialogType: "patientsDialog",
       variant: "default",
+      icon: Plus,
       hide: false
     }
   ], [isSelectRowDelete, selectedPatients])
