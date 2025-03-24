@@ -1,0 +1,50 @@
+version: '3.9'  # Compose file format
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres-db
+    restart: always
+    environment:
+      POSTGRES_USER: myuser            # Set your DB username
+      POSTGRES_PASSWORD: mypassword    # Set your DB password
+      POSTGRES_DB: mydatabase          # Set your DB name
+    volumes:
+      - postgres-data:/var/lib/postgresql/data  # Persistent storage
+    ports:
+      - "5432:5432"  # Localhost:Container port
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: ./backend               # Path to your backend folder
+      dockerfile: Dockerfile
+    container_name: backend-app
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__Default=Host=postgres;Database=mydatabase;Username=myuser;Password=mypassword
+    ports:
+      - "5000:8080"   # Expose backend on localhost:5000
+    depends_on:
+      - postgres      # Start postgres before backend
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./frontend              # Path to your frontend folder
+      dockerfile: Dockerfile
+    container_name: frontend-app
+    ports:
+      - "3000:80"     # Expose frontend on localhost:3000
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+volumes:
+  postgres-data:  # Named volume for database persistence
+
+networks:
+  app-network:    # Shared network so containers can talk to each other
