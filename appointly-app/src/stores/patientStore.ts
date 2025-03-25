@@ -23,7 +23,7 @@ export const usePatientStore = create<PatientStore>((set, get) => ({
   },
   removeManyById: (ids) => {
     const { data, totalCount } = get()
-    const updatedData = data.filter(patient => !ids.includes(patient.id))
+    const updatedData = data.filter(patient => patient.id && !ids.includes(patient.id))
     set({
       data: updatedData,
       totalCount: Math.max(totalCount - ids.length, 0)

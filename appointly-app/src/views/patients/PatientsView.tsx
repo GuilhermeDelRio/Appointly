@@ -44,7 +44,7 @@ export function PatientsView() {
       id: selectedPatients.map(p => p.id),
       entity: 'patients:name',
       onDelete: async () => {
-        let idList = selectedPatients.map(x => x.id)
+        let idList = selectedPatients.map(x => x.id).filter((id): id is string => id !== undefined)
 
         const payload = {
           ids: idList
