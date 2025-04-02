@@ -6,12 +6,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
 
-builder.Services.AddCors(options => options.AddDefaultPolicy(b =>
+builder.Services.AddCors(options =>
 {
-    b.AllowAnyOrigin()
-        .AllowAnyMethod()
-        .AllowAnyHeader();
-}));
+    options.AddPolicy("AllowFrontend",
+        policy => policy.WithOrigins("http://localhost:3000", "http://localhost:5173")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod());
+});
 
 builder.Services.ConfigurePersistence(builder.Configuration);
 builder.Services.ConfigureApplication();
@@ -28,7 +29,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseMiddleware<ValidationExceptionMiddleware>();
 
-app.UseCors();
+app.UseCors("AllowFrontend");
 
 app.UseHttpsRedirection();
 

@@ -1,0 +1,56 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main   # Ou o nome do branch que você está utilizando para deploy
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U ${{ secrets.POSTGRES_USER }}"
+          --health-timeout=30s
+          --health-start-period=5s
+          --health-retries=5
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Cache Docker layers
+      uses: actions/cache@v2
+      with:
+        path: /tmp/.buildx-cache
+        key: ${{ runner.os }}-buildx-${{ github.sha }}
+        restore-keys: |
+          ${{ runner.os }}-buildx-
+
+    - name: Build and push frontend Docker image
+      run: |
+        docker build -t appointly-frontend ./appointly-app
+        docker tag appointly-frontend <your-dockerhub-username>/appointly-frontend:latest
+        docker push <your-dockerhub-username>/appointly-frontend:latest
+
+    - name: Build and push backend Docker image
+      run: |
+        docker build -t appointly-backend ./appointly-api
+        docker tag appointly-backend <your-dockerhub-username>/appointly-backend:latest
+        docker push <your-dockerhub-username>/appointly-backend:latest
+
+    - name: Deploy to EC2 (optional)
+      run: |
+        ssh -o StrictHostKeyChecking=no -i ${{ secrets.EC2_SSH_KEY }} ec2-user@<EC2_PUBLIC_IP> "docker-compose pull && docker-compose up -d"
