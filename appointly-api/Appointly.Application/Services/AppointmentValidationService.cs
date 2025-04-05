@@ -2,7 +2,7 @@ using Appointly.Application.Interfaces.Services;
 using Appointly.Domain.Entities;
 using Appointly.Domain.Exceptions;
 using Appointly.Domain.Interfaces.Repository;
-using MongoDB.Driver.Linq;
+using Microsoft.EntityFrameworkCore;
 
 namespace Appointly.Application.Services;
 

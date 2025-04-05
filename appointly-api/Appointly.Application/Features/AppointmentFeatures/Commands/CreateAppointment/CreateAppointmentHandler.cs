@@ -1,13 +1,13 @@
+using Appointly.Application.Abstractions;
 using Appointly.Application.Dtos.AppointmentDTOs;
 using Appointly.Application.Interfaces.Services;
 using Appointly.Domain.Entities;
 using Appointly.Domain.Interfaces.Repository;
 using FluentValidation;
-using MediatR;
 
 namespace Appointly.Application.Features.AppointmentFeatures.Commands.CreateAppointment;
 
-public class CreateAppointmentHandler : IRequestHandler<AppointmentRequestDTO, Unit>
+public class CreateAppointmentHandler : ICommandHandler<AppointmentRequestDTO, AppointmentResponseDTO>
 {
     private readonly IAppointmentRepository _appointmentRepository;
     private readonly IAppointmentValidationService _appointmentValidationService;
@@ -27,7 +27,7 @@ public class CreateAppointmentHandler : IRequestHandler<AppointmentRequestDTO, U
     }
 
 
-    public async Task<Unit> Handle(AppointmentRequestDTO request, CancellationToken cancellationToken)
+    public async Task<AppointmentResponseDTO> Handle(AppointmentRequestDTO request, CancellationToken cancellationToken)
     {
         var validationResult = await _validator.ValidateAsync(request, cancellationToken);
         
@@ -42,6 +42,6 @@ public class CreateAppointmentHandler : IRequestHandler<AppointmentRequestDTO, U
         _appointmentRepository.Create(appointment);
         await _unitOfWork.Commit(cancellationToken);
         
-        return Unit.Value;
+        return new AppointmentResponseDTO();
     }
 }

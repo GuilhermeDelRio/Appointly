@@ -1,5 +1,5 @@
+using Appointly.Application.Abstractions;
 using Appointly.Application.Dtos.AppointmentDTOs;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Appointly.API.Controllers;
@@ -8,12 +8,13 @@ namespace Appointly.API.Controllers;
 [Route("api/[controller]")]
 public class AppointmentController : ControllerBase
 {
-    
-    private readonly IMediator _mediator;
+    private readonly IQueryDispatcher _queryDispatcher;
+    private readonly ICommandDispatcher _commandDispatcher;
 
-    public AppointmentController(IMediator mediator)
+    public AppointmentController(IQueryDispatcher queryDispatcher, ICommandDispatcher commandDispatcher)
     {
-        _mediator = mediator;
+        _queryDispatcher = queryDispatcher;
+        _commandDispatcher = commandDispatcher;
     }
     
     [HttpPost]
@@ -22,7 +23,8 @@ public class AppointmentController : ControllerBase
     public async Task<ActionResult<AppointmentResponseDTO>> CreatePatient(
         [FromBody] AppointmentRequestDTO requestDto, CancellationToken cancellationToken)
     {
-        var response = await _mediator.Send(requestDto, cancellationToken);
+        var response = await _commandDispatcher
+            .Dispatch<AppointmentRequestDTO, AppointmentResponseDTO>(requestDto, cancellationToken);
         return NoContent();
     }
 }
