@@ -2,6 +2,8 @@ import { CalendarDays, Plus } from 'lucide-react'
 import { Header } from "@/components/header/Header"
 import { Actions } from '@/types/headerActions'
 
+import CustomCalendar from '@/components/CustomCalendar/CustomCalendar'
+
 export function AppointmentsView() {
 
   const actions: Actions[] = [
@@ -21,6 +23,8 @@ export function AppointmentsView() {
         titleIcon={ CalendarDays }
         actions={actions}
       />
+
+      <CustomCalendar />
     </div>
   )
 }

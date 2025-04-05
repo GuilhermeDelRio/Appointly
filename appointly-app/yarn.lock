@@ -290,6 +290,18 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@preact/signals-core@^1.7.0":
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/@preact/signals-core/-/signals-core-1.8.0.tgz#45ffadb81b48a298a4accd26b3f6c0140cd6dacc"
+  integrity sha512-OBvUsRZqNmjzCZXWLxkZfhcgT+Fk8DDcT/8vD6a1xhDemodyy87UJRJfASMuSD8FaAIeGgGm85ydXhm7lr4fyA==
+
+"@preact/signals@^2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@preact/signals/-/signals-2.0.2.tgz#69754650c7c6870ac6120e27e110ec5f7ef508ec"
+  integrity sha512-Qvu30QoIswaWXmFQZwzBc1CdyB+biIZCpHxoYcNplRTySLkCH6f7RMlHtwb0tmkfQJ+WBkUqR7ajPjdsc1Uq+w==
+  dependencies:
+    "@preact/signals-core" "^1.7.0"
+
 "@radix-ui/number@1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@radix-ui/number/-/number-1.1.0.tgz#1e95610461a09cdf8bb05c152e76ca1278d5da46"
@@ -882,6 +894,36 @@
   version "4.35.0"
   resolved "https://registry.yarnpkg.com/@rollup/rollup-win32-x64-msvc/-/rollup-win32-x64-msvc-4.35.0.tgz#05f25dbc9981bee1ae6e713daab10397044a46ca"
   integrity sha512-PIQeY5XDkrOysbQblSW7v3l1MDZzkTEzAfTPkj5VAu3FW8fS4ynyLg2sINp0fp3SjZ8xkRYpLqoKcYqAkhU1dw==
+
+"@schedule-x/calendar@^2.26.0":
+  version "2.26.0"
+  resolved "https://registry.yarnpkg.com/@schedule-x/calendar/-/calendar-2.26.0.tgz#02299e5ec699f2655c8e4552141917f8982f2f07"
+  integrity sha512-sOiYnsk54ipLdvANQiwXJUpUAl9O5OKr7V8H0lHydYwOzZBi+z3W2ihYQaeFUnti+F9Wlrr91Ye2kI9NWWu/OQ==
+
+"@schedule-x/drag-and-drop@^2.26.0":
+  version "2.26.0"
+  resolved "https://registry.yarnpkg.com/@schedule-x/drag-and-drop/-/drag-and-drop-2.26.0.tgz#b0fe6377c87305939ba85e8d7f09c8916f5ce962"
+  integrity sha512-vUsXsczckJXX464P+EL1f6hYw8kfUx+XB0CUrW7hixHbiHuhPM8xi3wric1Ub9EAWkBB6J5r4wsfYAHdyfsCFw==
+
+"@schedule-x/event-modal@^2.26.0":
+  version "2.26.0"
+  resolved "https://registry.yarnpkg.com/@schedule-x/event-modal/-/event-modal-2.26.0.tgz#772f93103daa0cb9d43c9c690a38b2038e08cc44"
+  integrity sha512-aJSIoc/0aiPvX0QPa2CqSPes2ELP2pjfOu8TWpkyIVzoHGAiwEsiGcEO920euS8C+vVZEkpvuj4r9InNA6JXDg==
+
+"@schedule-x/events-service@^2.26.0":
+  version "2.26.0"
+  resolved "https://registry.yarnpkg.com/@schedule-x/events-service/-/events-service-2.26.0.tgz#18080b2d94c5942702c01fe6c131ff45e74c7c40"
+  integrity sha512-DXKmHojVSQZ5Jf15xcWEikbIulExv4Zu3PODNoTar8Kv/gM5MYR+AESwDstiwfZh3WS92wM6g4yDPxo10jSoTQ==
+
+"@schedule-x/react@^2.26.0":
+  version "2.26.0"
+  resolved "https://registry.yarnpkg.com/@schedule-x/react/-/react-2.26.0.tgz#a1544e1a13675c785f5ce0e770b45009e496853a"
+  integrity sha512-d8YFTVM5SVnqlFBtifEywTi2V9YQ8EzMrALxtmjYbkzg0UG4qUaNFWu9zyA6gMjAYOWuJD8eZPUjNyT81msTFQ==
+
+"@schedule-x/theme-default@^2.26.0":
+  version "2.26.0"
+  resolved "https://registry.yarnpkg.com/@schedule-x/theme-default/-/theme-default-2.26.0.tgz#b15ad42687e2bdc5ed29e5d01753260768714e2d"
+  integrity sha512-WBmZH2Y/L1d5tBWaPhktAiBEu660YBLwaVkJIpMzCQh1AacH5+EqB/kMZK7J3jCWVGkrqYD+KaU7d9vpwpLUSg==
 
 "@standard-schema/utils@^0.3.0":
   version "0.3.0"
@@ -2109,6 +2151,11 @@ postcss@^8.5.3:
     nanoid "^3.3.8"
     picocolors "^1.1.1"
     source-map-js "^1.2.1"
+
+preact@^10.26.4:
+  version "10.26.4"
+  resolved "https://registry.yarnpkg.com/preact/-/preact-10.26.4.tgz#b514f4249453a4247c82ff6d1267d59b7d78f9f9"
+  integrity sha512-KJhO7LBFTjP71d83trW+Ilnjbo+ySsaAgCfXOXUlmGzJ4ygYPWmysm77yg4emwfmoz3b22yvH5IsVFHbhUaH5w==
 
 prelude-ls@^1.2.1:
   version "1.2.1"
