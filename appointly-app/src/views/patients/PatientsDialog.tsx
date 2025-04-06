@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm, useWatch } from 'react-hook-form'
 import { z } from "zod"
 
-import { Patient, RelationshipDegreeEnum } from './patient'
+import { Patient, RelationshipDegreeEnum } from '@/models/patient'
 import { DialogProps } from '@/types/dialogProps'
 
 import { PhoneInput } from '@/components/phoneInput/PhoneInput'

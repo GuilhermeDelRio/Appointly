@@ -7,7 +7,7 @@ import { DataTable } from '@/components/DataTable/DataTable'
 import { Users, Plus, Trash } from 'lucide-react'
 import { Header } from "@/components/header/Header"
 import { RequestParams } from '@/types/http'
-import { Patient } from './patient'
+import { Patient } from "@/models/patient"
 import { useDialogStore } from '@/stores/dialogStore'
 import { Actions } from '@/types/headerActions'
 

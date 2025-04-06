@@ -7,7 +7,7 @@ export enum RelationshipDegreeEnum {
   GRANDCHILD = 'GRANDCHILD',
   AUNT_UNCLE = 'AUNT_UNCLE',
   NIECE_NEPHEW = 'NIECE_NEPHEW',
-  COUSIN = 'COUSIN',
+  COUSIN = 'COUSIN'
 }
 
 export type Patient = {

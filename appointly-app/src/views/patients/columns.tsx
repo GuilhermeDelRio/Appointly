@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { Patient } from "./patient"
+import { Patient } from "@/models/patient"
 import { ColumnDef } from "@tanstack/react-table"
 
 import { Button } from "@/components/ui/button"

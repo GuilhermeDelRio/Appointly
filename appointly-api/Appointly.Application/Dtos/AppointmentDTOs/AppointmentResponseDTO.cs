@@ -1,5 +1,7 @@
 #nullable disable
 
+using Appointly.Domain.Entities;
+
 namespace Appointly.Application.Dtos.AppointmentDTOs;
 
 public record AppointmentResponseDTO
@@ -9,5 +11,5 @@ public record AppointmentResponseDTO
     public DateTime EndDate { get; set; }
     public string AppointmentStatus { get; set; }
     public string AppointmentLocation { get; set; }
-    public Guid PatientId { get; set; }
+    public Patient Patient { get; set; }
 }

@@ -1,15 +1,15 @@
-import { Patient } from '@/models/patient'
+import { Appointment } from '@/models/appointment'
 import { create } from 'zustand'
 
-interface PatientStore {
-  data: Patient[]
+interface AppointmentStore {
+  data: Appointment[]
   totalCount: number
-  setData: (newData: Patient[], total: number) => void,
+  setData: (newData: Appointment[], total: number) => void,
   removeById: (id: string) => void
   removeManyById: (ids: string[]) => void
 }
 
-export const usePatientStore = create<PatientStore>((set, get) => ({
+export const useAppointmentStore = create<AppointmentStore>((set, get) => ({
   data: [],
   totalCount: 0,
   setData: (newData, total) => set({ data: newData, totalCount: total }),

@@ -1,13 +1,13 @@
 import { requestService } from "@/api/requestServices"
-import { Patient } from "@/models/patient"
+import { Appointment } from "@/models/appointment"
 
-const baseUrl = '/patient'
+const baseUrl = '/appointment'
 
-export const patientService = {
+export const appointmentService = {
   getAll: (config = {}) => requestService.get(baseUrl, config),
   getById: (id: string) => requestService.get(`${baseUrl}/${id}`),
-  create: (data: Patient) => requestService.post(baseUrl, data),
-  update: (data: Patient) => requestService.put(`${baseUrl}`, data),
+  create: (data: Appointment) => requestService.post(baseUrl, data),
+  update: (data: Appointment) => requestService.put(`${baseUrl}`, data),
   remove: (id: string) => requestService.delete(`${baseUrl}/${id}`),
   bulkDelete: (ids: {}) => requestService.post(`${baseUrl}/bulkDelete`, ids)
 }

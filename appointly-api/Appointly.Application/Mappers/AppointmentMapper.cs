@@ -25,9 +25,9 @@ public static class AppointmentMapper
             Id = appointment.Id,
             InitialDate = appointment.InitialDate,
             EndDate = appointment.EndDate,
-            PatientId = appointment.PatientId,
             AppointmentStatus = appointment.AppointmentStatus.ToString(),
-            AppointmentLocation = appointment.AppointmentLocation.ToString()
+            AppointmentLocation = appointment.AppointmentLocation.ToString(),
+            Patient = appointment.Patient
         };
     }
     
