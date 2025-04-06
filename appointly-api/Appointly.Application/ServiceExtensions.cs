@@ -22,10 +22,12 @@ public static class ServiceExtensions
             .AddClasses(classes => classes.AssignableTo(typeof(ICommandHandler<,>)))
             .AsImplementedInterfaces()
             .WithScopedLifetime());
-        
-        //services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
-        //services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingPipelineBehavior<,>));
-        
+
+        services.Scan(scan => scan
+            .FromAssemblies(applicationAssembly)
+            .AddClasses(classes => classes.AssignableTo(typeof(IQueryHandler<,>)))
+            .AsImplementedInterfaces()
+            .WithScopedLifetime());
         
         // CQRS Dispatchers
         services.AddScoped<ICommandDispatcher, CommandDispatcher>();

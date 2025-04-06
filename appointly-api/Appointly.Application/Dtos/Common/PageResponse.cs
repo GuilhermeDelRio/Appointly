@@ -1,4 +1,4 @@
-namespace Appointly.Application.Dtos.PatientDTOs;
+namespace Appointly.Application.Dtos.Common;
 
 public class PageResponse<T>
 {

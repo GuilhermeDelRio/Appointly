@@ -1,4 +1,5 @@
 using Appointly.Application.Dtos.PatientDTOs;
+using Appointly.Application.Dtos.Common;
 using MediatR;
 
 namespace Appointly.Application.Features.PatientFeatures.Queries.GetPatients;

@@ -1,3 +1,4 @@
+using Appointly.Application.Dtos.Common;
 using Appointly.Application.Dtos.PatientDTOs;
 using Appointly.Application.Features.PatientFeatures.Commands.BulkDeletePatients;
 using Appointly.Application.Features.PatientFeatures.Commands.DeletePatient;

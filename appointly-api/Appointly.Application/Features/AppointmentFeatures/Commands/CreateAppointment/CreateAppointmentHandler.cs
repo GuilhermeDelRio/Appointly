@@ -1,7 +1,7 @@
 using Appointly.Application.Abstractions;
 using Appointly.Application.Dtos.AppointmentDTOs;
 using Appointly.Application.Interfaces.Services;
-using Appointly.Domain.Entities;
+using Appointly.Application.Mappers;
 using Appointly.Domain.Interfaces.Repository;
 using FluentValidation;
 
@@ -37,7 +37,7 @@ public class CreateAppointmentHandler : ICommandHandler<AppointmentRequestDTO, A
         await _appointmentValidationService
             .ValidateAppointment(request.InitialDate, request.EndDate, cancellationToken);
         
-        Appointment appointment = request.ToEntity();
+        var appointment = request.ToEntity();
         
         _appointmentRepository.Create(appointment);
         await _unitOfWork.Commit(cancellationToken);

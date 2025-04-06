@@ -1,4 +1,5 @@
 using Appointly.Application.Dtos.PatientDTOs;
+using Appointly.Application.Dtos.Common;
 using Appointly.Domain.Entities;
 using Appointly.Domain.Interfaces.Repository;
 using MediatR;
