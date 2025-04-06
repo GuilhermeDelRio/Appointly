@@ -1,4 +1,17 @@
 {
   "name": "Appointments",
-  "btnAdd": "New appointment"
+  "btnAdd": "New appointment",
+  "appointmentStatus": {
+    "scheduled": "Scheduled",
+    "completed": "Completed",
+    "canceled": "Canceled",
+    "noShow": "No Show",
+    "pending": "Pending",
+    "confirmed": "Confirmed",
+    "rescheduled": "Rescheduled"
+  },
+  "appointmentLocation": {
+    "online": "Online",
+    "office": "at the office"
+  }
 }

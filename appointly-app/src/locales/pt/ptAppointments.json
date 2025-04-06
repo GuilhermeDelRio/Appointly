@@ -1,4 +1,17 @@
 {
   "name": "Consultas",
-  "btnAdd": "Nova consulta"
+  "btnAdd": "Nova consulta",
+  "appointmentStatus": {
+    "scheduled": "Agendado",
+    "completed": "Concluído",
+    "canceled": "Cancelado",
+    "noShow": "Não compareceu",
+    "pending": "Pendente de confirmação",
+    "confirmed": "Confirmado",
+    "rescheduled": "Reagendado"
+  },
+  "appointmentLocation": {
+    "online": "Online",
+    "office": "Consultório"
+  }
 }

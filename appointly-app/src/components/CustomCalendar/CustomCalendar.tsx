@@ -1,8 +1,9 @@
 import { useAppointmentStore } from '@/stores/appointmentStore'
+import { useTranslation } from 'react-i18next'
 
 import { useCalendarApp, ScheduleXCalendar } from '@schedule-x/react'
-import { createEventModalPlugin } from '@schedule-x/event-modal'
 import { createDragAndDropPlugin } from '@schedule-x/drag-and-drop'
+import { createEventModalPlugin } from '@schedule-x/event-modal'
 import {
   createViewDay,
   createViewMonthAgenda,
@@ -15,6 +16,7 @@ import '@schedule-x/theme-default/dist/index.css'
 import { useEffect, useState } from 'react'
  
 function CustomCalendar() {
+  const { t } = useTranslation()
   const appointmentStore = useAppointmentStore()
   const eventsService = useState(() => createEventsServicePlugin())[0]
 
@@ -51,9 +53,9 @@ function CustomCalendar() {
       completed: {
         colorName: 'completed',
         lightColors: {
-          main: '#f91c45',
-          container: '#ffd2dc',
-          onContainer: '#59000d',
+          main: '#1cf9b0',
+          container: '#dafff0',
+          onContainer: '#42a297',
         }
       },
     },
@@ -61,11 +63,11 @@ function CustomCalendar() {
     locale: 'pt-BR',
     isDark: false,
     weekOptions: {
-      gridHeight: 3000
+      gridHeight: 4000
     },
     plugins: [
       eventsService,
-      // createEventModalPlugin(),
+      createEventModalPlugin(),
       createDragAndDropPlugin()
     ],
     callbacks: {
@@ -81,12 +83,13 @@ function CustomCalendar() {
         .filter((appointment) => appointment.id !== undefined)
         .map((appointment) => ({
           id: appointment.id as string,
-          title: `Appointment - ${appointment.patient.firstName} ${appointment.patient.lastName}`,
+          title: `${t(`appointments:appointmentStatus:${appointment.appointmentStatus.toLowerCase()}`)}`,
           start: formatDate(appointment.initialDate),
           end: formatDate(appointment.endDate),
           description: 'Appointment description',
-          location: appointment.appointmentLocation.toLocaleLowerCase(),
-          calendarId: appointment.appointmentStatus.toLocaleLowerCase(),
+          location: t(`appointments:appointmentLocation:${appointment.appointmentLocation.toLowerCase()}`),
+          calendarId: appointment.appointmentStatus.toLowerCase(),
+          people: [`${appointment.patient.firstName} ${appointment.patient.lastName}`],
         }))
       
       eventsService.set(events)
