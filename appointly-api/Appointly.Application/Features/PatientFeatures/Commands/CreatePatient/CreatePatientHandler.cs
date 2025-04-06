@@ -1,14 +1,14 @@
+using Appointly.Application.Abstractions;
 using Appointly.Application.Dtos.PatientDTOs;
 using Appointly.Application.Interfaces.Services;
 using Appointly.Application.Mappers;
 using Appointly.Domain.Interfaces.Repository;
 using FluentValidation;
-using MediatR;
 
 namespace Appointly.Application.Features.PatientFeatures.Commands.CreatePatient;
 
-public class CreatePatientHandler : IRequestHandler<PatientRequestDTO, PatientResponseDTO>{
-    
+public class CreatePatientHandler : ICommandHandler<PatientRequestDTO, PatientResponseDTO>
+{
     private readonly IPatientRepository _patientRepository;
     private readonly IPatientValidationService _patientValidationService;
     private readonly IValidator<PatientRequestDTO> _validator;

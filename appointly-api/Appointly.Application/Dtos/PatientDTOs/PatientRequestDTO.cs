@@ -1,5 +1,3 @@
-using MediatR;
-
 namespace Appointly.Application.Dtos.PatientDTOs;
 
 public sealed record PatientRequestDTO(
@@ -14,4 +12,4 @@ public sealed record PatientRequestDTO(
     string? ResponsibleName,
     string? ResponsibleEmail,
     string? ResponsiblePhoneNumber,
-    string? RelationshipDegree) : IRequest<PatientResponseDTO> { }
+    string? RelationshipDegree) { }

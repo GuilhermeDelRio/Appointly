@@ -1,9 +1,10 @@
+using Appointly.Application.Abstractions;
+using Appointly.Application.Common;
 using Appointly.Domain.Interfaces.Repository;
-using MediatR;
 
 namespace Appointly.Application.Features.PatientFeatures.Commands.BulkDeletePatients;
 
-public class BulkDeletePatientsHandler : IRequestHandler<BulkDeletePatientsCommand, Unit>
+public class BulkDeletePatientsHandler : ICommandHandler<BulkDeletePatientsCommand, Unit>
 {
     private readonly IPatientRepository _patientRepository;
     private readonly IUnitOfWork _unitOfWork;

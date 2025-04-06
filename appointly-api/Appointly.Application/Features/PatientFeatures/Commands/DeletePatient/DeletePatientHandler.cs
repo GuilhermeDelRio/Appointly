@@ -1,10 +1,11 @@
+using Appointly.Application.Abstractions;
+using Appointly.Application.Common;
 using Appointly.Domain.Exceptions;
 using Appointly.Domain.Interfaces.Repository;
-using MediatR;
 
 namespace Appointly.Application.Features.PatientFeatures.Commands.DeletePatient;
 
-public class DeletePatientHandler : IRequestHandler<DeletePatientCommand, Unit>
+public class DeletePatientHandler : ICommandHandler<DeletePatientCommand, Unit>
 {
     private readonly IPatientRepository _patientRepository;
     private readonly IUnitOfWork _unitOfWork;

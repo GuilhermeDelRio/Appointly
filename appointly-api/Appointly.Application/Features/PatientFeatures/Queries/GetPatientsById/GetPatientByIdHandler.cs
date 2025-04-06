@@ -1,12 +1,12 @@
+using Appointly.Application.Abstractions;
 using Appointly.Application.Dtos.PatientDTOs;
 using Appointly.Application.Mappers;
 using Appointly.Domain.Exceptions;
 using Appointly.Domain.Interfaces.Repository;
-using MediatR;
 
 namespace Appointly.Application.Features.PatientFeatures.Queries.GetPatientsById;
 
-public class GetPatientByIdHandler : IRequestHandler<GetPatientByIdQuery, PatientResponseDTO>
+public class GetPatientByIdHandler : IQueryHandler<GetPatientByIdQuery, PatientResponseDTO>
 {
     private readonly IPatientRepository _patientRepository;
 

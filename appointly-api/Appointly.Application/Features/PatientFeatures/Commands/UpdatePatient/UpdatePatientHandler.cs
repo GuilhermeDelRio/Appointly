@@ -1,13 +1,14 @@
+using Appointly.Application.Abstractions;
+using Appointly.Application.Common;
 using Appointly.Application.Interfaces.Services;
 using Appointly.Application.Mappers;
 using Appointly.Domain.Exceptions;
 using Appointly.Domain.Interfaces.Repository;
 using FluentValidation;
-using MediatR;
 
 namespace Appointly.Application.Features.PatientFeatures.Commands.UpdatePatient;
 
-public class UpdatePatientHandler : IRequestHandler<UpdatePatientCommand, Unit>
+public class UpdatePatientHandler : ICommandHandler<UpdatePatientCommand, Unit>
 {
     private readonly IPatientRepository _patientRepository;
     private readonly IPatientValidationService _patientValidationService;
@@ -41,7 +42,7 @@ public class UpdatePatientHandler : IRequestHandler<UpdatePatientCommand, Unit>
         await _patientValidationService.ValidatePatientData(patient);
         _patientRepository.Update(patient);
         await _unitOfWork.Commit(cancellationToken);
-        
+
         return Unit.Value;
     }
 }

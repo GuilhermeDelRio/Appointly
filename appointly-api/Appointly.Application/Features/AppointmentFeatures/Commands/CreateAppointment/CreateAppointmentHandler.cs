@@ -41,7 +41,7 @@ public class CreateAppointmentHandler : ICommandHandler<AppointmentRequestDTO, A
         
         _appointmentRepository.Create(appointment);
         await _unitOfWork.Commit(cancellationToken);
-        
-        return new AppointmentResponseDTO();
+
+        return appointment.ToDto();
     }
 }

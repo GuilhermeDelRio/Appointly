@@ -1,3 +1,5 @@
+using Appointly.Application.Abstractions;
+using Appointly.Application.Common;
 using Appointly.Application.Dtos.Common;
 using Appointly.Application.Dtos.PatientDTOs;
 using Appointly.Application.Features.PatientFeatures.Commands.BulkDeletePatients;
@@ -5,7 +7,6 @@ using Appointly.Application.Features.PatientFeatures.Commands.DeletePatient;
 using Appointly.Application.Features.PatientFeatures.Commands.UpdatePatient;
 using Appointly.Application.Features.PatientFeatures.Queries.GetPatients;
 using Appointly.Application.Features.PatientFeatures.Queries.GetPatientsById;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Appointly.API.Controllers;
@@ -14,11 +15,13 @@ namespace Appointly.API.Controllers;
 [Route("api/[controller]")]
 public class PatientController : ControllerBase
 {
-    private readonly IMediator _mediator;
+    private readonly IQueryDispatcher _queryDispatcher;
+    private readonly ICommandDispatcher _commandDispatcher;
 
-    public PatientController(IMediator mediator)
+    public PatientController(IQueryDispatcher queryDispatcher, ICommandDispatcher commandDispatcher)
     {
-        _mediator = mediator;
+        _queryDispatcher = queryDispatcher;
+        _commandDispatcher = commandDispatcher;
     }
 
     [HttpPost]
@@ -27,18 +30,20 @@ public class PatientController : ControllerBase
     public async Task<ActionResult<PatientResponseDTO>> CreatePatient(
         [FromBody] PatientRequestDTO requestDto, CancellationToken cancellationToken)
     {
-        var response = await _mediator.Send(requestDto, cancellationToken);
+        var response = await _commandDispatcher
+            .Dispatch<PatientRequestDTO, PatientResponseDTO>(requestDto, cancellationToken);
         return Ok(response);
     }
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<PageResponse<PatientResponseDTO>>> GetPatients(
+    public async Task<ActionResult<PageResponse<PatientResponseDTO>>> GetAllPatients(
         string? searchTerm, int page, int pageSize, CancellationToken cancellationToken)
     {
-        var patients = await _mediator.Send(
-            new GetPatientsQuery(searchTerm, page, pageSize), cancellationToken);
+        var patients = await _queryDispatcher
+            .Dispatch<GetPatientsQuery, PageResponse<PatientResponseDTO>>(
+                new GetPatientsQuery(searchTerm, page, pageSize), cancellationToken);
         
         return Ok(patients);
     }
@@ -48,8 +53,8 @@ public class PatientController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<PatientResponseDTO>> GetPatientById(Guid Id, CancellationToken cancellationToken)
     {
-        var patientCommand = new GetPatientByIdQuery { Id = Id };
-        return Ok(await _mediator.Send(patientCommand, cancellationToken));
+        var query = new GetPatientByIdQuery { Id = Id };
+        return Ok(await _queryDispatcher.Dispatch<GetPatientByIdQuery, PatientResponseDTO>(query, cancellationToken));
     }
 
     [HttpPut]
@@ -60,7 +65,8 @@ public class PatientController : ControllerBase
         [FromBody] UpdatePatientCommand patientUpdateCommand, 
         CancellationToken cancellationToken)
     {
-        await _mediator.Send(patientUpdateCommand, cancellationToken);
+        var patient = await _commandDispatcher
+            .Dispatch<UpdatePatientCommand, Unit>(patientUpdateCommand, cancellationToken);
         return NoContent();
     }
 
@@ -70,7 +76,7 @@ public class PatientController : ControllerBase
     public async Task<ActionResult> DeletePatient(Guid Id, CancellationToken cancellationToken)
     {
         var deleteCommand = new DeletePatientCommand { Id = Id };
-        await _mediator.Send(deleteCommand, cancellationToken);
+        await _commandDispatcher.Dispatch<DeletePatientCommand, Unit>(deleteCommand, cancellationToken);
         return NoContent();
     }
     
@@ -82,7 +88,9 @@ public class PatientController : ControllerBase
         [FromBody] BulkDeletePatientsCommand bulkDeleteExpensesCommand,
         CancellationToken cancellationToken)
     {
-        await _mediator.Send(bulkDeleteExpensesCommand, cancellationToken);
+        // await _mediator.Send(bulkDeleteExpensesCommand, cancellationToken);
+        await _commandDispatcher
+            .Dispatch<BulkDeletePatientsCommand, Unit>(bulkDeleteExpensesCommand, cancellationToken);
         return NoContent();
     }
 }

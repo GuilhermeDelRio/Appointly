@@ -1,13 +1,13 @@
+using Appointly.Application.Abstractions;
 using Appointly.Application.Dtos.PatientDTOs;
 using Appointly.Application.Dtos.Common;
 using Appointly.Domain.Entities;
 using Appointly.Domain.Interfaces.Repository;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Appointly.Application.Features.PatientFeatures.Queries.GetPatients;
 
-public sealed class GetPatientsQueryHandler : IRequestHandler<GetPatientsQuery, PageResponse<PatientResponseDTO>>
+public sealed class GetPatientsQueryHandler : IQueryHandler<GetPatientsQuery, PageResponse<PatientResponseDTO>>
 {
     private readonly IPatientRepository _patientRepository;
 

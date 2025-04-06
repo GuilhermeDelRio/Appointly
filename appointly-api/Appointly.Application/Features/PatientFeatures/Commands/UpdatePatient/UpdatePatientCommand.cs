@@ -1,9 +1,8 @@
 #nullable disable
-using MediatR;
 
 namespace Appointly.Application.Features.PatientFeatures.Commands.UpdatePatient;
 
-public class UpdatePatientCommand : IRequest<Unit>
+public record UpdatePatientCommand
 {
     public Guid Id { get; set; }
     public string FirstName { get; set; }
