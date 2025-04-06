@@ -23,6 +23,12 @@ public class AppointmentConfig :  IEntityTypeConfiguration<Appointment>
             .HasConversion<string>()
             .IsRequired();
         
+        builder.Property(a => a.AppointmentLocation)
+            .HasColumnName("AppointmentLocation")
+            .HasColumnType("VARCHAR(30)")
+            .HasConversion<string>()
+            .IsRequired();
+        
         builder.HasOne(a => a.Patient)
             .WithMany(p => p.Appointments)
             .HasForeignKey(a => a.PatientId)

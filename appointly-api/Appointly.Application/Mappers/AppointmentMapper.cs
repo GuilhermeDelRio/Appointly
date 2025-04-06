@@ -13,7 +13,8 @@ public static class AppointmentMapper
             InitialDate = dto.InitialDate,
             EndDate = dto.EndDate,
             PatientId = dto.PatientId,
-            AppointmentStatus = Enum.Parse<AppointmentStatus>(dto.AppointmentStatus)
+            AppointmentStatus = Enum.Parse<AppointmentStatus>(dto.AppointmentStatus),
+            AppointmentLocation = Enum.Parse<AppointmentLocation>(dto.AppointmentLocation)
         };
     }
     
@@ -25,7 +26,8 @@ public static class AppointmentMapper
             InitialDate = appointment.InitialDate,
             EndDate = appointment.EndDate,
             PatientId = appointment.PatientId,
-            AppointmentStatus = appointment.AppointmentStatus.ToString()
+            AppointmentStatus = appointment.AppointmentStatus.ToString(),
+            AppointmentLocation = appointment.AppointmentLocation.ToString()
         };
     }
     
@@ -35,5 +37,6 @@ public static class AppointmentMapper
         appointment.EndDate = dto.EndDate;
         appointment.PatientId = dto.PatientId;
         appointment.AppointmentStatus = Enum.Parse<AppointmentStatus>(dto.AppointmentStatus);
+        appointment.AppointmentLocation = Enum.Parse<AppointmentLocation>(dto.AppointmentLocation);
     }
 }

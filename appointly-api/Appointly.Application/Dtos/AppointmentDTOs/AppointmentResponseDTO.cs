@@ -8,5 +8,6 @@ public record AppointmentResponseDTO
     public DateTime InitialDate { get; set; }
     public DateTime EndDate { get; set; }
     public string AppointmentStatus { get; set; }
+    public string AppointmentLocation { get; set; }
     public Guid PatientId { get; set; }
 }

@@ -1,5 +1,6 @@
 using Appointly.Application.Dtos.AppointmentDTOs;
 using Appointly.Application.Resources;
+using Appointly.Domain.Enums;
 using FluentValidation;
 
 namespace Appointly.Application.Features.AppointmentFeatures.Commands.CreateAppointment;
@@ -23,5 +24,11 @@ public class CreateAppointmentValidator : AbstractValidator<AppointmentRequestDT
         RuleFor(a => a.PatientId)
             .NotEmpty()
             .WithMessage(x => string.Format(ValidationMessages.RequiredField, nameof(x.PatientId)));
+        
+        RuleFor(x => x.AppointmentStatus)
+            .IsEnumName(typeof(AppointmentStatus), false);
+        
+        RuleFor(x => x.AppointmentLocation)
+            .IsEnumName(typeof(AppointmentLocation), false);
     }
 }

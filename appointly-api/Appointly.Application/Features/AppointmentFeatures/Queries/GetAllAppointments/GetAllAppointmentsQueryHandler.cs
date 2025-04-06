@@ -38,6 +38,7 @@ public class GetAllAppointmentsQueryHandler : IQueryHandler<GetAllAppointmentsQu
                 InitialDate = a.InitialDate,
                 EndDate = a.EndDate,
                 AppointmentStatus = a.AppointmentStatus.ToString(),
+                AppointmentLocation = a.AppointmentLocation.ToString(),
                 PatientId = a.PatientId
             })
             .ToListAsync(cancellationToken);
