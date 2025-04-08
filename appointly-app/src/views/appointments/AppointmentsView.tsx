@@ -37,7 +37,7 @@ export function AppointmentsView() {
     return isoString
   }
 
-  const  handleFlowers = async (updatedEvent: CalendarEventExternal) => {
+  const  handleEventDragAndDrop = async (updatedEvent: CalendarEventExternal) => {
     const { id, start, end, patientId } = updatedEvent
 
     const payload = {
@@ -76,7 +76,7 @@ export function AppointmentsView() {
         actions={actions}
       />
 
-      { data.length > 0 ? <CustomCalendar handleFlowers={handleFlowers}/> : '' }
+      { data.length > 0 ? <CustomCalendar handleEventDragAndDrop={handleEventDragAndDrop}/> : '' }
     </div>
   )
 }

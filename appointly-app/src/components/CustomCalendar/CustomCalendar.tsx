@@ -17,10 +17,10 @@ import '@schedule-x/theme-default/dist/index.css'
 import { useEffect, useState } from 'react'
  
 interface CustomCalendarProps {
-  handleFlowers: (updatedEvent: CalendarEventExternal) => void;
+  handleEventDragAndDrop: (updatedEvent: CalendarEventExternal) => void;
 }
 
-function CustomCalendar({ handleFlowers }: CustomCalendarProps) {
+function CustomCalendar({ handleEventDragAndDrop }: CustomCalendarProps) {
   const { t } = useTranslation()
   const appointmentStore = useAppointmentStore()
   const eventsService = useState(() => createEventsServicePlugin())[0]
@@ -80,7 +80,7 @@ function CustomCalendar({ handleFlowers }: CustomCalendarProps) {
         console.log('onEventClick', calendarEvent)
       },
       onEventUpdate(updatedEvent) {
-        handleFlowers(updatedEvent)
+        handleEventDragAndDrop(updatedEvent)
       },
     }
   })
