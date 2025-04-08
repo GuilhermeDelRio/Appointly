@@ -1,6 +1,7 @@
 {
   "name": "Appointments",
   "btnAdd": "New appointment",
+  "singularName": "Appointment",
   "appointmentStatus": {
     "scheduled": "Scheduled",
     "completed": "Completed",

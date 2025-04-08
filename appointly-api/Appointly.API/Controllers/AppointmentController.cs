@@ -1,6 +1,7 @@
 using Appointly.Application.Abstractions;
 using Appointly.Application.Dtos.AppointmentDTOs;
 using Appointly.Application.Dtos.Common;
+using Appointly.Application.Features.AppointmentFeatures.Commands.UpdateAppointmentByDate;
 using Appointly.Application.Features.AppointmentFeatures.Queries.GetAllAppointments;
 using Microsoft.AspNetCore.Mvc;
 
@@ -41,5 +42,16 @@ public class AppointmentController : ControllerBase
                 new GetAllAppointmentsQuery(searchTerm, page, pageSize), cancellationToken);
         
         return Ok(patients);
+    }
+    
+    [HttpPatch]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<AppointmentResponseDTO>> UpdatePatient(
+        [FromBody] UpdateAppointmentByDateCommand requestDto, CancellationToken cancellationToken)
+    {
+        var response = await _commandDispatcher
+            .Dispatch<UpdateAppointmentByDateCommand, AppointmentResponseDTO>(requestDto, cancellationToken);
+        return Ok(response);
     }
 }

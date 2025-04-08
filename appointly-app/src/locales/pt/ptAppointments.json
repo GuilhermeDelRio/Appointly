@@ -1,6 +1,7 @@
 {
   "name": "Consultas",
   "btnAdd": "Nova consulta",
+  "singularName": "Consulta",
   "appointmentStatus": {
     "scheduled": "Agendado",
     "completed": "Concluído",

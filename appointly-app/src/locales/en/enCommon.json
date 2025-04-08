@@ -21,5 +21,6 @@
   "selectLabel": "Select a",
   "created": "{{field}} created with success.",
   "edited": "{{field}} edited with success.",
-  "deleted": "{{field}} deleted with success."
+  "deleted": "{{field}} deleted with success.",
+  "updated": "{{field}} updated with success."
 }

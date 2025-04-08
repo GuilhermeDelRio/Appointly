@@ -5,6 +5,7 @@ import { useCalendarApp, ScheduleXCalendar } from '@schedule-x/react'
 import { createDragAndDropPlugin } from '@schedule-x/drag-and-drop'
 import { createEventModalPlugin } from '@schedule-x/event-modal'
 import {
+  CalendarEventExternal,
   createViewDay,
   createViewMonthAgenda,
   createViewMonthGrid,
@@ -15,18 +16,22 @@ import { createEventsServicePlugin } from '@schedule-x/events-service'
 import '@schedule-x/theme-default/dist/index.css'
 import { useEffect, useState } from 'react'
  
-function CustomCalendar() {
+interface CustomCalendarProps {
+  handleFlowers: (updatedEvent: CalendarEventExternal) => void;
+}
+
+function CustomCalendar({ handleFlowers }: CustomCalendarProps) {
   const { t } = useTranslation()
   const appointmentStore = useAppointmentStore()
   const eventsService = useState(() => createEventsServicePlugin())[0]
 
   const formatDate = (isoString: string) => {
     const date = new Date(isoString)
-    const year = date.getFullYear()
-    const month = String(date.getMonth() + 1).padStart(2, '0')
-    const day = String(date.getDate()).padStart(2, '0')
-    const hours = String(date.getHours()).padStart(2, '0')
-    const minutes = String(date.getMinutes()).padStart(2, '0')
+    const year = date.getUTCFullYear()
+    const month = String(date.getUTCMonth() + 1).padStart(2, '0')
+    const day = String(date.getUTCDate()).padStart(2, '0')
+    const hours = String(date.getUTCHours()).padStart(2, '0')
+    const minutes = String(date.getUTCMinutes()).padStart(2, '0')
     return `${year}-${month}-${day} ${hours}:${minutes}`
   }
  
@@ -73,7 +78,10 @@ function CustomCalendar() {
     callbacks: {
       onEventClick(calendarEvent) {
         console.log('onEventClick', calendarEvent)
-      }
+      },
+      onEventUpdate(updatedEvent) {
+        handleFlowers(updatedEvent)
+      },
     }
   })
  
@@ -86,10 +94,10 @@ function CustomCalendar() {
           title: `${t(`appointments:appointmentStatus:${appointment.appointmentStatus.toLowerCase()}`)}`,
           start: formatDate(appointment.initialDate),
           end: formatDate(appointment.endDate),
-          description: 'Appointment description',
           location: t(`appointments:appointmentLocation:${appointment.appointmentLocation.toLowerCase()}`),
           calendarId: appointment.appointmentStatus.toLowerCase(),
           people: [`${appointment.patient.firstName} ${appointment.patient.lastName}`],
+          patientId: appointment.patient.id,
         }))
       
       eventsService.set(events)

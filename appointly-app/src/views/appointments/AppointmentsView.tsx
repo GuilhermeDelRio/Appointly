@@ -10,9 +10,12 @@ import { Header } from "@/components/header/Header"
 import CustomCalendar from '@/components/CustomCalendar/CustomCalendar'
 
 import { CalendarDays, Plus } from 'lucide-react'
+import { CalendarEventExternal } from '@schedule-x/calendar'
+import { toast } from 'sonner'
+import { useTranslation } from 'react-i18next'
 
 export function AppointmentsView() {
-
+  const { t } = useTranslation()
   const [pageIndex, setPageIndex] = useState(0)
   const [pageSize, setPageSize] = useState(10)
   const data = useAppointmentStore((state) => state.data)
@@ -28,6 +31,29 @@ export function AppointmentsView() {
       hide: false
     }
   ]
+
+  const convertToISO = (dateTimeStr: string) => {
+    const isoString = `${dateTimeStr}:00Z`.replace(' ', 'T')
+    return isoString
+  }
+
+  const  handleFlowers = async (updatedEvent: CalendarEventExternal) => {
+    const { id, start, end, patientId } = updatedEvent
+
+    const payload = {
+      id,
+      initialDate: convertToISO(start),
+      endDate: convertToISO(end),
+      patientId: patientId
+    }
+
+    try {
+      await appointmentService.patch(payload)
+      toast.success(t('common:updated', { field: t('appointments:singularName') }))
+    } catch (ex: any) {
+      toast.error(ex.message)
+    }
+  }
 
   useEffect(() => {
     const fetchPatients = async () => {
@@ -50,7 +76,7 @@ export function AppointmentsView() {
         actions={actions}
       />
 
-      { data.length > 0 ? <CustomCalendar /> : '' }
+      { data.length > 0 ? <CustomCalendar handleFlowers={handleFlowers}/> : '' }
     </div>
   )
 }

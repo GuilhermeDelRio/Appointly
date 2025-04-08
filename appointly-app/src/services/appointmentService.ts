@@ -9,5 +9,6 @@ export const appointmentService = {
   create: (data: Appointment) => requestService.post(baseUrl, data),
   update: (data: Appointment) => requestService.put(`${baseUrl}`, data),
   remove: (id: string) => requestService.delete(`${baseUrl}/${id}`),
+  patch: (data: any) => requestService.patch(`${baseUrl}`, data),
   bulkDelete: (ids: {}) => requestService.post(`${baseUrl}/bulkDelete`, ids)
 }

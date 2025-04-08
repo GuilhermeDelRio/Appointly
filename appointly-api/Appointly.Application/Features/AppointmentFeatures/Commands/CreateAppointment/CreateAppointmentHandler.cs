@@ -25,8 +25,7 @@ public class CreateAppointmentHandler : ICommandHandler<AppointmentRequestDTO, A
         _validator = validator;
         _unitOfWork = unitOfWork;
     }
-
-
+    
     public async Task<AppointmentResponseDTO> Handle(AppointmentRequestDTO request, CancellationToken cancellationToken)
     {
         var validationResult = await _validator.ValidateAsync(request, cancellationToken);
