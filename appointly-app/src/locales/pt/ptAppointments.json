@@ -14,5 +14,14 @@
   "appointmentLocation": {
     "online": "Online",
     "office": "Consultório"
+  },
+  "fields": {
+    "startTime": "Hora de início",
+    "endTime": "Hora de término",
+    "initialDate": "Data inicial",
+    "endDate": "Data final",
+    "status": "Status",
+    "location": "Local",
+    "patient": "Paciente"
   }
 }

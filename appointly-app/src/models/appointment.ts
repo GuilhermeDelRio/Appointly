@@ -23,3 +23,13 @@ export type Appointment = {
   appointmentLocation: AppointmentLocationEnum,
   patient: Patient
 }
+
+export type AppointmentRequest = {
+  id?: string
+  appointmentDate?: Date
+  initialDate: string
+  endDate: string
+  appointmentStatus: AppointmentStatusEnum,
+  appointmentLocation: AppointmentLocationEnum,
+  patientId: string
+}

@@ -14,5 +14,14 @@
   "appointmentLocation": {
     "online": "Online",
     "office": "at the office"
+  },
+  "fields": {
+    "startTime": "Start Time",
+    "endTime": "End Time",
+    "initialDate": "Start Date",
+    "endDate": "End Date",
+    "status": "Status",
+    "location": "Location",
+    "patient": "Patient"
   }
 }
