@@ -5,6 +5,7 @@ using Appointly.Application.Dtos.PatientDTOs;
 using Appointly.Application.Features.PatientFeatures.Commands.BulkDeletePatients;
 using Appointly.Application.Features.PatientFeatures.Commands.DeletePatient;
 using Appointly.Application.Features.PatientFeatures.Commands.UpdatePatient;
+using Appointly.Application.Features.PatientFeatures.Queries.GetAllPatientsNames;
 using Appointly.Application.Features.PatientFeatures.Queries.GetPatients;
 using Appointly.Application.Features.PatientFeatures.Queries.GetPatientsById;
 using Microsoft.AspNetCore.Mvc;
@@ -55,6 +56,18 @@ public class PatientController : ControllerBase
     {
         var query = new GetPatientByIdQuery { Id = Id };
         return Ok(await _queryDispatcher.Dispatch<GetPatientByIdQuery, PatientResponseDTO>(query, cancellationToken));
+    }
+    
+    [HttpGet("GetAllPatientsNames")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<List<PatientsNamesResponseDTO>>> GetAllPatientsNames(CancellationToken cancellationToken)
+    {
+        var patients = await _queryDispatcher
+            .Dispatch<GetAllPatientsNamesQuery, List<PatientsNamesResponseDTO>>(
+                new GetAllPatientsNamesQuery(), cancellationToken);
+        
+        return Ok(patients);
     }
 
     [HttpPut]

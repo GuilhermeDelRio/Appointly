@@ -24,5 +24,7 @@
   "created": "{{field}} created with success.",
   "edited": "{{field}} edited with success.",
   "deleted": "{{field}} deleted with success.",
-  "updated": "{{field}} updated with success."
+  "updated": "{{field}} updated with success.",
+  "search": "Search",
+  "pickDate": "Pick a date"
 }

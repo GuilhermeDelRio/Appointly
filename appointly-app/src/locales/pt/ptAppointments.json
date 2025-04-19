@@ -22,6 +22,7 @@
     "endDate": "Data final",
     "status": "Status",
     "location": "Local",
-    "patient": "Paciente"
+    "patient": "Paciente",
+    "selectAPatient": "Selecione um paciente"
   }
 }

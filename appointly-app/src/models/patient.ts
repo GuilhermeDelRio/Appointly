@@ -25,3 +25,8 @@ export type Patient = {
   responsiblePhoneNumber?: string | null
   relationshipDegree?: RelationshipDegreeEnum | null
 }
+
+export type PatientsNames = {
+  id: string
+  fullName: string
+}

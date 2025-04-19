@@ -1,16 +1,30 @@
 import { useTranslation } from 'react-i18next'
-// import { patientService } from '@/services/patientService'
-// import { usePatientStore } from '@/stores/patientStore'
+import { patientService } from '@/services/patientService'
+import { appointmentService } from '@/services/appointmentService'
 import { toast } from 'sonner'
-import { User, CalendarIcon, CalendarDays } from 'lucide-react'
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from 'react-hook-form'
 import { ptBR } from 'date-fns/locale'
 import { z } from "zod"
 import { format } from "date-fns"
-// import { Patient, RelationshipDegreeEnum } from '@/models/patient'
-import { AppointmentRequest, AppointmentStatusEnum, AppointmentLocationEnum } from '@/models/appointment'
+import { PatientsNames } from '@/models/patient'
+import { 
+  AppointmentRequest, 
+  AppointmentStatusEnum, 
+  AppointmentLocationEnum
+} from '@/models/appointment'
+
 import { DialogProps } from '@/types/dialogProps'
+
+import { 
+  CalendarIcon, 
+  CalendarDays, 
+  ChevronsDownUp,
+  Check
+ } from 'lucide-react'
+
+import { Button } from "@/components/ui/button"
+import { Separator } from '@/components/ui/separator'
 import { Calendar } from "@/components/ui/calendar"
 import {
   Form,
@@ -43,26 +57,24 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
-import { Button } from "@/components/ui/button"
-import { Separator } from '@/components/ui/separator'
-import { ScrollArea } from "@/components/ui/scroll-area"
-import { Input } from "@/components/ui/input"
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command"
+
 import { useDialogStore } from '@/stores/dialogStore'
 import { useEffect, useState } from 'react'
 import { cn } from '@/lib/utils'
 import { TimePicker } from '@/components/DateTimePicker/time-picker'
 
-const isNotFutureDate = (dateStr: string) => {
-  const date = new Date(dateStr)
-  const now = new Date()
-  return date <= now
-}
-
 const defaultValues = {
   id: '',
-  appointmentDate: new Date(),
-  initialDate: '',
-  endDate: '',
+  initialDate: undefined,
+  endDate: undefined,
   appointmentStatus: AppointmentStatusEnum.SCHEDULED,
   appointmentLocation: AppointmentLocationEnum.ONLINE,
   patientId: ''
@@ -71,34 +83,20 @@ const defaultValues = {
 const AppointmentFormSchema = (t: (key: string, options?: any) => string): z.ZodType<AppointmentRequest> =>
   z.object({
     id: z.string().optional(),
-    appointmentDate: z.date(),
-    initialDate: z
-    .string()
-    .nonempty({ message: t('patients:validation:requiredValidation', { field: t('patients:fields:dateOfBirth') }) })
-    .refine(isNotFutureDate, {
-      message: t('patients:validation:noFutureDate', { field: t('patients:fields:dateOfBirth') }),
-    }),
-
-    endDate: z
-    .string()
-    .nonempty({ message: t('patients:validation:requiredValidation', { field: t('patients:fields:dateOfBirth') }) })
-    .refine(isNotFutureDate, {
-      message: t('patients:validation:noFutureDate', { field: t('patients:fields:dateOfBirth') }),
-    }),
+    initialDate: z.date(),
+    endDate: z.date(),
     appointmentStatus: z.nativeEnum(AppointmentStatusEnum),
     appointmentLocation: z.nativeEnum(AppointmentLocationEnum),
-    patientId: z
-    .string()
-    .nonempty({ message: t('patients:validation:requiredValidation', { field: t('patients:fields:dateOfBirth') }) }),
+    patientId: z.string()
   })
 
-
-
 export function AppointmentDialog({ open, onOpenChange }: DialogProps) {
+  const { t } = useTranslation()
 
   const [isEdit, setIsEdit] = useState(false)
+  const [duration, setDuration] = useState(0)
+  const [patientsNames, setPatientsNames] = useState<{ label: string; value: string }[]>([])
 
-  const { t } = useTranslation()
   const appointmentFormSchema = AppointmentFormSchema(t)
 
   const { dialogData } = useDialogStore()
@@ -107,6 +105,8 @@ export function AppointmentDialog({ open, onOpenChange }: DialogProps) {
     resolver: zodResolver(appointmentFormSchema),
     defaultValues
   })
+
+  const initialDate = form.watch('initialDate')
 
   const appointmentStatusEnumLabels = {
     [AppointmentStatusEnum.CANCELED]: t('appointments:appointmentStatus:canceled'),
@@ -130,27 +130,33 @@ export function AppointmentDialog({ open, onOpenChange }: DialogProps) {
   }
 
   const onSubmit = async (values: z.infer<typeof appointmentFormSchema>) => {
-    // try {
-    //   values.dateOfBirth = new Date(values.dateOfBirth).toISOString()
+
+    try {
+      if (!isEdit) {
+        await createPatient(values)
+        toast.success(t('common:created', { field: t('appointments:singularName') }))
+      } else {
+        // await editPatient(values)
+        // toast.success(t('common:edited', { field: t('patients:singularName') }))
+      }
   
-    //   if (!isEdit) {
-    //     await createPatient(values)
-    //     toast.success(t('common:created', { field: t('patients:singularName') }))
-    //   } else {
-    //     await editPatient(values)
-    //     toast.success(t('common:edited', { field: t('patients:singularName') }))
-    //   }
-  
-    //   form.reset()
-    // } catch (ex: any) {
-    //   toast.error(ex.message)
-    // }
+      form.reset()
+    } catch (ex: any) {
+      toast.error(ex.message)
+    }
   }
 
   const createPatient = async (values: z.infer<typeof appointmentFormSchema>) => {
     // const { data: currentData, totalCount, setData } = usePatientStore.getState()
   
-    // const response = await patientService.create(values)
+
+    const data = {
+      ...values,
+      initialDate: values.initialDate.toISOString(),
+      endDate: values.endDate.toISOString()
+    }
+
+    const response = await appointmentService.create(data)
     // const newData = [response.data, ...currentData]
   
     // setData(newData, (totalCount ?? 0) + 1)
@@ -182,25 +188,59 @@ export function AppointmentDialog({ open, onOpenChange }: DialogProps) {
     onOpenChange(isOpen)
   }
 
-  // useEffect(() => {
-  //   if (open) {
-  //     const isEditing = !!dialogData
-  //     setIsEdit(isEditing)
+  const handleDateChange = (date: Date) => {
+    const updatedEndDate = new Date(date)
+    updatedEndDate.setMinutes(updatedEndDate.getMinutes() + duration)
+    form.setValue('endDate', updatedEndDate)
+  }
+
+  const getAllPatientsNames = async () => {
+    try {
+      const result = await patientService.getAllPatientsNames()
+      
+      let list = [] as any
+      result.data.forEach((item: PatientsNames) => {
+
+        list.push({
+          label: item.fullName,
+          value: item.id
+        })
+      })
+
+      setPatientsNames(list)
+
+    } catch (ex: any) {
+      toast.error(ex.message)
+    }
+  }
+
+  useEffect(() => {
+    const initializeData = async () => {
+      if (!open) return
   
-  //     const valuesToReset = {
-  //       ...defaultValues,
-  //       ...(dialogData ?? {})
-  //     }
+      try {
+        await getAllPatientsNames()
   
-  //     if (isEditing) {
-  //       valuesToReset.dateOfBirth = new Date(dialogData.dateOfBirth)
-  //         .toISOString()
-  //         .split('T')[0]
-  //     }
+        const data = localStorage.getItem('systemInfo')
+        const duration = JSON.parse(data!).appointmentDuration
+        setDuration(duration)
   
-  //     form.reset(valuesToReset)
-  //   }
-  // }, [open, dialogData])
+        if (initialDate) {
+          handleDateChange(initialDate)
+        }
+      } catch (error: any) {
+        toast.error(error?.message)
+      }
+    }
+  
+    initializeData()
+  }, [open, initialDate])
+
+  useEffect(() => {
+    if (initialDate) {
+      handleDateChange(initialDate)
+    }
+  }, [initialDate])
 
   return (
     <Dialog open={open} onOpenChange={handleDialogOpenChange}>
@@ -219,7 +259,7 @@ export function AppointmentDialog({ open, onOpenChange }: DialogProps) {
             <div className="flex gap-4">
               <FormField
                 control={form.control}
-                name="appointmentDate"
+                name="initialDate"
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
                     <FormLabel className="text-left">{t('appointments:fields:startTime')}</FormLabel>
@@ -237,7 +277,7 @@ export function AppointmentDialog({ open, onOpenChange }: DialogProps) {
                             {field.value ? (
                               format(field.value, "PPP HH:mm:ss", { locale: ptBR })
                             ) : (
-                              <span>Pick a date</span>
+                              <span>{t('common:pickDate')}</span>
                             )}
                           </Button>
                         </PopoverTrigger>
@@ -264,7 +304,7 @@ export function AppointmentDialog({ open, onOpenChange }: DialogProps) {
 
               <FormField
                 control={form.control}
-                name="appointmentDate"
+                name="endDate"
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
                     <FormLabel className="text-left">{t('appointments:fields:endTime')}</FormLabel>
@@ -283,7 +323,7 @@ export function AppointmentDialog({ open, onOpenChange }: DialogProps) {
                             {field.value ? (
                               format(field.value, "PPP HH:mm:ss", { locale: ptBR })
                             ) : (
-                              <span>Pick a date</span>
+                              <span>{t('common:pickDate')}</span>
                             )}
                           </Button>
                         </PopoverTrigger>
@@ -314,23 +354,61 @@ export function AppointmentDialog({ open, onOpenChange }: DialogProps) {
                 control={form.control}
                 name="patientId"
                 render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>{t('appointments:fields:patient')}</FormLabel>
-                    <Select onValueChange={field.onChange}>
-                      <FormControl>
-                        <SelectTrigger className="w-[180px]">
-                          <SelectValue 
-                            placeholder={`${t('common:selectLabel')} ${t('appointments:fields:patient').toLocaleLowerCase()}`} />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {Object.values(AppointmentLocationEnum).map((location) => (
-                          <SelectItem key={location} value={location}>
-                            {appointmentLocationEnumLabels[location]}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Language</FormLabel>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <FormControl>
+                          <Button
+                            variant="outline"
+                            role="combobox"
+                            className={cn(
+                              "w-[200px] justify-between",
+                              !field.value && "text-muted-foreground"
+                            )}
+                          >
+                            {field.value
+                              ? patientsNames.find(
+                                  (p: any) => p.value === field.value
+                                )?.label
+                              : t('appointments:fields:selectAPatient')}
+                            <ChevronsDownUp className="opacity-50" />
+                          </Button>
+                        </FormControl>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-[200px] p-0">
+                        <Command>
+                          <CommandInput
+                            placeholder={`${t('common:search')}...`}
+                            className="h-9"
+                          />
+                          <CommandList>
+                            <CommandEmpty>No framework found.</CommandEmpty>
+                            <CommandGroup>
+                              {patientsNames.map((p) => (
+                                <CommandItem
+                                  value={p.label}
+                                  key={p.value}
+                                  onSelect={() => {
+                                    form.setValue("patientId", p.value)
+                                  }}
+                                >
+                                  {p.label}
+                                  <Check
+                                    className={cn(
+                                      "ml-auto",
+                                      p.value === field.value
+                                        ? "opacity-100"
+                                        : "opacity-0"
+                                    )}
+                                  />
+                                </CommandItem>
+                              ))}
+                            </CommandGroup>
+                          </CommandList>
+                        </Command>
+                      </PopoverContent>
+                    </Popover>
                     <FormMessage />
                   </FormItem>
                 )}

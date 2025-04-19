@@ -26,10 +26,17 @@ export type Appointment = {
 
 export type AppointmentRequest = {
   id?: string
-  appointmentDate?: Date
+  initialDate: Date
+  endDate: Date
+  appointmentStatus: AppointmentStatusEnum
+  appointmentLocation: AppointmentLocationEnum
+  patientId: string
+}
+
+export type CreateAppointmentRequest = {
   initialDate: string
   endDate: string
-  appointmentStatus: AppointmentStatusEnum,
-  appointmentLocation: AppointmentLocationEnum,
+  appointmentStatus: AppointmentStatusEnum
+  appointmentLocation: AppointmentLocationEnum
   patientId: string
 }

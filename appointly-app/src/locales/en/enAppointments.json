@@ -22,6 +22,8 @@
     "endDate": "End Date",
     "status": "Status",
     "location": "Location",
-    "patient": "Patient"
+    "patient": "Patient",
+    "doctor": "Doctor",
+    "selectAPatient": "Select a patient"
   }
 }
