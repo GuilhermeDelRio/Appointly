@@ -56,7 +56,7 @@ export function AppointmentsView() {
   }
 
   useEffect(() => {
-    const fetchPatients = async () => {
+    const fetchAppointments = async () => {
       const config: RequestParams = { params: { page: pageIndex + 1, pageSize } }
       const response = await appointmentService.getAll(config)
 
@@ -65,7 +65,7 @@ export function AppointmentsView() {
       setDataInStore(items, totalCount)
     }
 
-    fetchPatients()
+    fetchAppointments()
   }, [pageIndex, pageSize])
   
   return (
