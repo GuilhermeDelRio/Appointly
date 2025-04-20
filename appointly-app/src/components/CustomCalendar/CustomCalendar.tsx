@@ -82,6 +82,15 @@ function CustomCalendar({ handleEventDragAndDrop }: CustomCalendarProps) {
       onEventUpdate(updatedEvent) {
         handleEventDragAndDrop(updatedEvent)
       },
+      onRangeUpdate(range) {
+        console.log('new calendar range start date', range.start)
+        console.log('new calendar range end date', range.end)
+      },
+      beforeRender($app) {
+        const range = $app.calendarState.range.value
+        console.log('beforeRender', range)
+        // fetchYourEventsFor(range.start, range.end)
+      },
     }
   })
  

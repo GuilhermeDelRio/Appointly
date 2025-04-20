@@ -1,0 +1,3 @@
+namespace Appointly.Application.Features.AppointmentFeatures.Queries.GetAppointmentsBetweenDates;
+
+public record GetAppointmentsBetweenDatesQuery(DateTime StartDate, DateTime EndDate);

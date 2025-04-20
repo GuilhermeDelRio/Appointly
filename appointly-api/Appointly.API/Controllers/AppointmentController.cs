@@ -3,6 +3,7 @@ using Appointly.Application.Dtos.AppointmentDTOs;
 using Appointly.Application.Dtos.Common;
 using Appointly.Application.Features.AppointmentFeatures.Commands.UpdateAppointmentByDate;
 using Appointly.Application.Features.AppointmentFeatures.Queries.GetAllAppointments;
+using Appointly.Application.Features.AppointmentFeatures.Queries.GetAppointmentsBetweenDates;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Appointly.API.Controllers;
@@ -40,6 +41,19 @@ public class AppointmentController : ControllerBase
         var patients = await _queryDispatcher
             .Dispatch<GetAllAppointmentsQuery, PageResponse<AppointmentResponseDTO>>(
                 new GetAllAppointmentsQuery(searchTerm, page, pageSize), cancellationToken);
+        
+        return Ok(patients);
+    }
+    
+    [HttpGet("GetAppointmentsBetweenDates")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<List<AppointmentResponseDTO>>> GetAppointmentsBetweenDates(
+        DateTime startDate, DateTime endDate, CancellationToken cancellationToken)
+    {
+        var patients = await _queryDispatcher
+            .Dispatch<GetAppointmentsBetweenDatesQuery, List<AppointmentResponseDTO>>(
+                new GetAppointmentsBetweenDatesQuery(startDate, endDate), cancellationToken);
         
         return Ok(patients);
     }
