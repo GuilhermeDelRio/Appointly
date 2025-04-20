@@ -18,11 +18,12 @@ import { useEffect, useState } from 'react'
  
 interface CustomCalendarProps {
   handleEventDragAndDrop: (updatedEvent: CalendarEventExternal) => void;
+  handleQueryBetweenDates: (start: Date, end: Date ) => void;
 }
 
-function CustomCalendar({ handleEventDragAndDrop }: CustomCalendarProps) {
+function CustomCalendar({ handleEventDragAndDrop, handleQueryBetweenDates }: CustomCalendarProps) {
   const { t } = useTranslation()
-  const appointmentStore = useAppointmentStore()
+  const data = useAppointmentStore((state) => state.data)
   const eventsService = useState(() => createEventsServicePlugin())[0]
 
   const formatDate = (isoString: string) => {
@@ -83,38 +84,41 @@ function CustomCalendar({ handleEventDragAndDrop }: CustomCalendarProps) {
         handleEventDragAndDrop(updatedEvent)
       },
       onRangeUpdate(range) {
-        console.log('new calendar range start date', range.start)
-        console.log('new calendar range end date', range.end)
+        if (range) {
+          const startDate = new Date(range.start)
+          const endDate = new Date(range.end)
+          handleQueryBetweenDates(startDate, endDate)
+        }
       },
       beforeRender($app) {
         const range = $app.calendarState.range.value
-        console.log('beforeRender', range)
-        // fetchYourEventsFor(range.start, range.end)
+        if (range) {
+          const startDate = new Date(range.start)
+          const endDate = new Date(range.end)
+          handleQueryBetweenDates(startDate, endDate)
+        }
       },
     }
   })
- 
-  useEffect(() => {
-    const fetchEvents = async () => {
-      const events = appointmentStore.data
-        .filter((appointment) => appointment.id !== undefined)
-        .map((appointment) => ({
-          id: appointment.id as string,
-          title: `${t(`appointments:appointmentStatus:${appointment.appointmentStatus.toLowerCase()}`)}`,
-          start: formatDate(appointment.initialDate),
-          end: formatDate(appointment.endDate),
-          location: t(`appointments:appointmentLocation:${appointment.appointmentLocation.toLowerCase()}`),
-          calendarId: appointment.appointmentStatus.toLowerCase(),
-          people: [`${appointment.patient.firstName} ${appointment.patient.lastName}`],
-          patientId: appointment.patient.id,
-        }))
-      
-      eventsService.set(events)
-    }
 
-    fetchEvents()
-  }, [])
- 
+  useEffect(() => {
+    console.log('event:', data)
+    const events = data
+      .filter((appointment) => appointment.id !== undefined)
+      .map((appointment) => ({
+        id: appointment.id as string,
+        title: `${t(`appointments:appointmentStatus:${appointment.appointmentStatus.toLowerCase()}`)}`,
+        start: formatDate(appointment.initialDate),
+        end: formatDate(appointment.endDate),
+        location: t(`appointments:appointmentLocation:${appointment.appointmentLocation.toLowerCase()}`),
+        calendarId: appointment.appointmentStatus.toLowerCase(),
+        people: [`${appointment.patient.firstName} ${appointment.patient.lastName}`],
+        patientId: appointment.patient.id,
+      }))
+
+      eventsService.set(events)
+  }, [data])
+  
   return (
     <div>
       <ScheduleXCalendar calendarApp={calendar} />

@@ -6,6 +6,8 @@ const baseUrl = '/appointment'
 export const appointmentService = {
   getAll: (config = {}) => requestService.get(baseUrl, config),
   getById: (id: string) => requestService.get(`${baseUrl}/${id}`),
+  getAppointmentsBetweenDates: (startDate: string, endDate: string) =>
+    requestService.get(`${baseUrl}/GetAppointmentsBetweenDates`, { params: { startDate, endDate } }),
   create: (data: CreateAppointmentRequest) => requestService.post(baseUrl, data),
   update: (data: Appointment) => requestService.put(`${baseUrl}`, data),
   remove: (id: string) => requestService.delete(`${baseUrl}/${id}`),

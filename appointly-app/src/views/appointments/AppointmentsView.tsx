@@ -1,10 +1,7 @@
-import { useEffect, useState } from 'react'
-
 import { appointmentService } from '@/services/appointmentService'
 import { useAppointmentStore } from '@/stores/appointmentStore'
 
 import { Actions } from '@/types/headerActions'
-import { RequestParams } from '@/types/http'
 
 import { Header } from "@/components/header/Header"
 import CustomCalendar from '@/components/CustomCalendar/CustomCalendar'
@@ -16,10 +13,6 @@ import { useTranslation } from 'react-i18next'
 
 export function AppointmentsView() {
   const { t } = useTranslation()
-  const [pageIndex, setPageIndex] = useState(0)
-  const [pageSize, setPageSize] = useState(10)
-  const data = useAppointmentStore((state) => state.data)
-  const totalCount = useAppointmentStore((state) => state.totalCount)
   const setDataInStore = useAppointmentStore((state) => state.setData)
 
   const actions: Actions[] = [
@@ -55,18 +48,17 @@ export function AppointmentsView() {
     }
   }
 
-  useEffect(() => {
-    const fetchAppointments = async () => {
-      const config: RequestParams = { params: { page: pageIndex + 1, pageSize } }
-      const response = await appointmentService.getAll(config)
+  const handleQueryBetweenDates = async (start: Date, end: Date ) => {
 
-      const { items, totalCount } = response.data
+    const response = await appointmentService.getAppointmentsBetweenDates(
+      start.toISOString(),
+      end.toISOString()
+    )
 
-      setDataInStore(items, totalCount)
-    }
+    console.log(response.data)
 
-    fetchAppointments()
-  }, [pageIndex, pageSize])
+    setDataInStore(response.data)
+  }
   
   return (
     <div className="flex flex-col p-2">
@@ -76,7 +68,10 @@ export function AppointmentsView() {
         actions={actions}
       />
 
-      { data.length > 0 ? <CustomCalendar handleEventDragAndDrop={handleEventDragAndDrop}/> : '' }
+      <CustomCalendar 
+        handleEventDragAndDrop={handleEventDragAndDrop}
+        handleQueryBetweenDates={handleQueryBetweenDates}
+      /> 
     </div>
   )
 }
