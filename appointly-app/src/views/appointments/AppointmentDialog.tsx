@@ -19,7 +19,7 @@ import { DialogProps } from '@/types/dialogProps'
 import { 
   CalendarIcon, 
   CalendarDays, 
-  ChevronsDownUp,
+  ChevronDown,
   Check
  } from 'lucide-react'
 
@@ -355,7 +355,7 @@ export function AppointmentDialog({ open, onOpenChange }: DialogProps) {
                 name="patientId"
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
-                    <FormLabel>Language</FormLabel>
+                    <FormLabel>{t('appointments:fields:patient')}</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
                         <FormControl>
@@ -372,7 +372,7 @@ export function AppointmentDialog({ open, onOpenChange }: DialogProps) {
                                   (p: any) => p.value === field.value
                                 )?.label
                               : t('appointments:fields:selectAPatient')}
-                            <ChevronsDownUp className="opacity-50" />
+                            <ChevronDown className="opacity-50" />
                           </Button>
                         </FormControl>
                       </PopoverTrigger>
