@@ -1,5 +1,6 @@
 using Appointly.API.Middlewares;
 using Appointly.Application;
+using Appointly.Infrastructure;
 using Appointly.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,7 @@ builder.Services.AddCors(options =>
 });
 
 builder.Services.ConfigurePersistence(builder.Configuration);
+builder.Services.AddInfrastructureServices(builder.Configuration);
 builder.Services.ConfigureApplication();
 
 builder.Services.AddControllers();

@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Appointly.Application", "Ap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Appointly.API", "Appointly.API\Appointly.API.csproj", "{07FE77C1-5D2C-4971-8A01-375D792FA85A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Appointly.Infrastructure", "Appointly.Infrastructure\Appointly.Infrastructure.csproj", "{0F674CDD-6401-42E6-A152-B6AF094AD75F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{07FE77C1-5D2C-4971-8A01-375D792FA85A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07FE77C1-5D2C-4971-8A01-375D792FA85A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{07FE77C1-5D2C-4971-8A01-375D792FA85A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F674CDD-6401-42E6-A152-B6AF094AD75F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F674CDD-6401-42E6-A152-B6AF094AD75F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F674CDD-6401-42E6-A152-B6AF094AD75F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F674CDD-6401-42E6-A152-B6AF094AD75F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
